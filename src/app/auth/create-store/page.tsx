@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { ArrowLeft, CheckCircle, CircleDot, Plus, Upload } from "lucide-react"
+import { ArrowLeft, CheckCircle, CircleDot, Globe, Plus, Store, Upload } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -24,9 +24,13 @@ export default function CreateStorePage() {
     firstName: "",
     lastName: "",
     storeName: "",
+    storeUrl: "",
     storeType: "",
+    businessType: "",
     currentRevenue: "",
     industry: "",
+    storeDescription: "",
+    storeLogo: "",
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +44,7 @@ export default function CreateStorePage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (step < 3) {
+    if (step < 4) {
       setStep(step + 1)
     } else {
       // In a real app, this would submit the form data to create the store
@@ -93,7 +97,7 @@ export default function CreateStorePage() {
                     <h3 className="font-medium mb-1">Add your first product</h3>
                     <p className="text-sm text-gray-600 mb-3">Write a description, add photos, and set pricing for the products you plan to sell.</p>
                     <div className="flex gap-2">
-                      <Button className="bg-black text-white hover:bg-gray-800">
+                      <Button className="bg-black text-white hover:bg-gray-800" onClick={() => router.push("/dashboard/products/new")}>
                         <Plus className="h-4 w-4 mr-2" />
                         Add product
                       </Button>
@@ -116,22 +120,36 @@ export default function CreateStorePage() {
 
                 <div className="p-4 border border-gray-200 rounded-lg">
                   <h3 className="font-medium mb-1">Design your online store in seconds</h3>
-                  <Button variant="link" className="text-sm p-0">Customize theme</Button>
+                  <p className="text-sm text-gray-600 mb-3">Customize your store&apos;s look and feel with our easy-to-use theme editor.</p>
+                  <Button variant="outline" onClick={() => router.push("/dashboard/theme")}>
+                    <Store className="h-4 w-4 mr-2" />
+                    Customize theme
+                  </Button>
                 </div>
 
                 <div className="p-4 border border-gray-200 rounded-lg">
                   <h3 className="font-medium mb-1">Pick a plan</h3>
-                  <Button variant="link" className="text-sm p-0">Compare plans</Button>
+                  <p className="text-sm text-gray-600 mb-3">Choose the plan that best fits your business needs.</p>
+                  <Button variant="outline" onClick={() => router.push("/pricing")}>
+                    <Globe className="h-4 w-4 mr-2" />
+                    Compare plans
+                  </Button>
                 </div>
 
                 <div className="p-4 border border-gray-200 rounded-lg">
                   <h3 className="font-medium mb-1">Confirm your shipping rates</h3>
-                  <Button variant="link" className="text-sm p-0">Set up shipping</Button>
+                  <p className="text-sm text-gray-600 mb-3">Set up shipping zones and rates for your products.</p>
+                  <Button variant="outline" onClick={() => router.push("/dashboard/settings?tab=shipping")}>
+                    Set up shipping
+                  </Button>
                 </div>
 
                 <div className="p-4 border border-gray-200 rounded-lg">
                   <h3 className="font-medium mb-1">Place a test order</h3>
-                  <Button variant="link" className="text-sm p-0">Create test order</Button>
+                  <p className="text-sm text-gray-600 mb-3">Test your store&apos;s checkout process with a test order.</p>
+                  <Button variant="outline">
+                    Create test order
+                  </Button>
                 </div>
               </div>
             </div>
@@ -185,7 +203,8 @@ export default function CreateStorePage() {
               <CardDescription>
                 {step === 1 && "Create your account to start your 14-day free trial"}
                 {step === 2 && "Tell us about your store"}
-                {step === 3 && "Just a few more details to get you started"}
+                {step === 3 && "Tell us about your business"}
+                {step === 4 && "Customize your store"}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -257,6 +276,23 @@ export default function CreateStorePage() {
                       />
                     </div>
                     <div className="space-y-2">
+                      <Label htmlFor="storeUrl">Store URL</Label>
+                      <div className="flex">
+                        <Input
+                          id="storeUrl"
+                          name="storeUrl"
+                          placeholder="my-store"
+                          required
+                          value={formData.storeUrl}
+                          onChange={handleChange}
+                          className="rounded-r-none"
+                        />
+                        <div className="flex items-center px-3 bg-gray-100 border border-l-0 rounded-r-md text-gray-500">
+                          .sokoby.com
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
                       <Label htmlFor="storeType">What are you planning to sell?</Label>
                       <Select
                         value={formData.storeType}
@@ -278,6 +314,22 @@ export default function CreateStorePage() {
 
                 {step === 3 && (
                   <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="businessType">Business type</Label>
+                      <Select
+                        value={formData.businessType}
+                        onValueChange={(value) => handleSelectChange("businessType", value)}
+                      >
+                        <SelectTrigger id="businessType">
+                          <SelectValue placeholder="Select business type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="new">New business</SelectItem>
+                          <SelectItem value="existing">Existing business</SelectItem>
+                          <SelectItem value="side">Side business</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                     <div className="space-y-2">
                       <Label htmlFor="currentRevenue">Current business revenue</Label>
                       <Select
@@ -320,8 +372,37 @@ export default function CreateStorePage() {
                   </div>
                 )}
 
+                {step === 4 && (
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="storeDescription">Store description</Label>
+                      <Input
+                        id="storeDescription"
+                        name="storeDescription"
+                        placeholder="Tell us about your store"
+                        value={formData.storeDescription}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Store logo</Label>
+                      <div className="flex items-center gap-4">
+                        <div className="relative h-20 w-20 overflow-hidden rounded-lg border">
+                          <Image
+                            src={formData.storeLogo || "/placeholder.svg"}
+                            alt="Store logo"
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <Button variant="outline">Upload logo</Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <Button type="submit" className="w-full mt-6 bg-red-800 hover:bg-red-700">
-                  {step < 3 ? "Continue" : "Create your store"}
+                  {step < 4 ? "Continue" : "Create your store"}
                 </Button>
               </form>
             </CardContent>

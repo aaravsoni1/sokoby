@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowLeft, CreditCard, Globe } from "lucide-react"
+import { ArrowLeft, CreditCard, Globe, Plus } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
