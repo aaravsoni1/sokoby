@@ -225,7 +225,7 @@ export default function ContactPage() {
                   <div className="rounded-lg overflow-hidden">
                     <div className="relative h-64 w-full">
                       <Image
-                        src="/placeholder.svg?height=300&width=600"
+                        src="https://images.unsplash.com/photo-1669093374970-368f9a1af2cc?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Headquarters Office"
                         fill
                         className="object-cover"
@@ -264,7 +264,7 @@ export default function ContactPage() {
                   <div className="rounded-lg overflow-hidden">
                     <div className="relative h-64 w-full">
                       <Image
-                        src="/placeholder.svg?height=300&width=600"
+                        src="https://images.unsplash.com/photo-1590744164217-7496fb94b700?q=80&w=2040&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Europe Office"
                         fill
                         className="object-cover"
@@ -303,7 +303,7 @@ export default function ContactPage() {
                   <div className="rounded-lg overflow-hidden">
                     <div className="relative h-64 w-full">
                       <Image
-                        src="/placeholder.svg?height=300&width=600"
+                        src="https://images.unsplash.com/photo-1531973576160-7125cd663d86?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="Asia-Pacific Office"
                         fill
                         className="object-cover"

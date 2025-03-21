@@ -155,7 +155,9 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-12 text-center">
+            <Link href="/auth/create-store">
             <Button className="bg-red-800 hover:bg-red-700">Create Your Store Now</Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -400,13 +402,13 @@ export default function Home() {
             {[
               {
                 name: "Basic",
-                price: "$29",
+                price: "$11",
                 description: "Perfect for new businesses",
                 features: ["Up to 100 products", "2% transaction fee", "Basic analytics", "24/7 support"],
               },
               {
                 name: "Professional",
-                price: "$79",
+                price: "$25",
                 description: "For growing businesses",
                 features: [
                   "Up to 1,000 products",
@@ -419,7 +421,7 @@ export default function Home() {
               },
               {
                 name: "Enterprise",
-                price: "$199",
+                price: "$49",
                 description: "For large businesses",
                 features: [
                   "Unlimited products",
@@ -568,12 +570,16 @@ export default function Home() {
                 Join thousands of successful businesses on our platform and start growing your online presence today.
               </p>
               <div className="flex flex-col space-y-3 sm:flex-row sm:justify-center sm:space-x-4 sm:space-y-0">
+              <Link href="/auth/create-store">
                 <Button size="lg" className="bg-white text-red-900 hover:bg-gray-100">
                   Start your 14-day free trial
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-red-800">
+                </Link>
+                <Link href="/contact">
+                <Button size="lg" variant="outline" className="bg-white text-red-900 hover:bg-gray-100">
                   Contact sales
                 </Button>
+                </Link>
               </div>
             </div>
           </div>

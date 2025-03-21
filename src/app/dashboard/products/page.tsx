@@ -2,61 +2,22 @@
 
 import {
   AlertCircle,
-  ArrowUpDown,
   CheckCircle,
-  Copy,
-  Download,
-  Edit,
-  Eye,
-  Grid,
-  List,
-  MoreHorizontal,
-  Package,
+  Filter,
   Plus,
   Search,
-  Tag,
-  Trash2,
-  Upload,
+  Settings2
 } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 import { useState } from "react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
 
 // Sample product data
 const products = [
@@ -324,658 +285,110 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Products</h1>
-          <p className="mt-1 text-sm text-gray-500">Manage your product catalog, inventory, and pricing</p>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="border-b bg-white">
+        <div className="container flex h-16 items-center justify-between px-4">
+          <h1 className="text-xl font-semibold">Products</h1>
+          <Link href="/dashboard/products/new">
+            <Button className="bg-red-800 hover:bg-red-700">
+              <Plus className="h-4 w-4 mr-2" />
+              Add product
+            </Button>
+          </Link>
         </div>
+      </header>
 
-        <div className="flex items-center gap-2">
-          <Dialog open={isAddProductOpen} onOpenChange={setIsAddProductOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-red-800 hover:bg-red-700">
-                <Plus className="mr-2 h-4 w-4" />
-                Add Product
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px]">
-              <DialogHeader>
-                <DialogTitle>Add New Product</DialogTitle>
-                <DialogDescription>Fill in the details to add a new product to your store.</DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="col-span-2">
-                    <Label htmlFor="product-name" className="text-right">
-                      Product Name
-                    </Label>
-                    <Input id="product-name" placeholder="Enter product name" className="mt-1" />
-                  </div>
-                  <div>
-                    <Label htmlFor="product-price" className="text-right">
-                      Price
-                    </Label>
-                    <Input id="product-price" placeholder="0.00" className="mt-1" />
-                  </div>
-                  <div>
-                    <Label htmlFor="product-sku" className="text-right">
-                      SKU
-                    </Label>
-                    <Input id="product-sku" placeholder="SKU-123" className="mt-1" />
-                  </div>
-                  <div>
-                    <Label htmlFor="product-category" className="text-right">
-                      Category
-                    </Label>
-                    <Select>
-                      <SelectTrigger id="product-category" className="mt-1">
-                        <SelectValue placeholder="Select category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {categories.map((category) => (
-                          <SelectItem key={category} value={category}>
-                            {category}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label htmlFor="product-inventory" className="text-right">
-                      Inventory
-                    </Label>
-                    <Input id="product-inventory" type="number" placeholder="0" className="mt-1" />
-                  </div>
-                  <div className="col-span-2">
-                    <Label htmlFor="product-description" className="text-right">
-                      Description
-                    </Label>
-                    <Textarea id="product-description" placeholder="Enter product description" className="mt-1" />
-                  </div>
+      <main className="container py-8">
+        {/* Filters and Search */}
+        <Card className="mb-8">
+          <CardContent className="pt-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div className="flex-1">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+                  <Input
+                    placeholder="Search products..."
+                    className="pl-9"
+                  />
                 </div>
               </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setIsAddProductOpen(false)}>
-                  Cancel
+              <div className="flex items-center gap-4">
+                <Select defaultValue="all">
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All status</SelectItem>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="draft">Draft</SelectItem>
+                    <SelectItem value="archived">Archived</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button variant="outline">
+                  <Filter className="h-4 w-4 mr-2" />
+                  Filters
                 </Button>
-                <Button type="submit" className="bg-red-800 hover:bg-red-700">
-                  Add Product
+                <Button variant="outline">
+                  <Settings2 className="h-4 w-4" />
                 </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">
-                <Download className="mr-2 h-4 w-4" />
-                Export
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>Export All Products</DropdownMenuItem>
-              <DropdownMenuItem>Export Selected Products</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Export as CSV</DropdownMenuItem>
-              <DropdownMenuItem>Export as Excel</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">
-                <Upload className="mr-2 h-4 w-4" />
-                Import
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>Import Products</DropdownMenuItem>
-              <DropdownMenuItem>Import Inventory</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Download Import Template</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </div>
-
-      <Tabs defaultValue="all-products" className="space-y-4">
-        <div className="flex justify-between">
-          <TabsList>
-            <TabsTrigger value="all-products">All Products</TabsTrigger>
-            <TabsTrigger value="active">Active</TabsTrigger>
-            <TabsTrigger value="low-inventory">Low Inventory</TabsTrigger>
-            <TabsTrigger value="out-of-stock">Out of Stock</TabsTrigger>
-          </TabsList>
-
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className={viewMode === "table" ? "bg-gray-100" : ""}
-              onClick={() => setViewMode("table")}
-            >
-              <List className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className={viewMode === "grid" ? "bg-gray-100" : ""}
-              onClick={() => setViewMode("grid")}
-            >
-              <Grid className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="md:w-1/4 lg:w-1/5 space-y-4">
-            <Card>
-              <CardHeader className="py-4">
-                <CardTitle className="text-base">Filters</CardTitle>
-              </CardHeader>
-              <CardContent className="py-2 space-y-6">
-                <div>
-                  <h3 className="text-sm font-medium mb-2">Status</h3>
-                  <div className="space-y-1">
-                    <div className="flex items-center">
-                      <input
-                        type="radio"
-                        id="status-all"
-                        name="status"
-                        value="all"
-                        checked={filterStatus === "all"}
-                        onChange={() => setFilterStatus("all")}
-                        className="mr-2"
-                      />
-                      <label htmlFor="status-all" className="text-sm">
-                        All
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input
-                        type="radio"
-                        id="status-active"
-                        name="status"
-                        value="active"
-                        checked={filterStatus === "active"}
-                        onChange={() => setFilterStatus("active")}
-                        className="mr-2"
-                      />
-                      <label htmlFor="status-active" className="text-sm">
-                        Active
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input
-                        type="radio"
-                        id="status-low"
-                        name="status"
-                        value="low_inventory"
-                        checked={filterStatus === "low_inventory"}
-                        onChange={() => setFilterStatus("low_inventory")}
-                        className="mr-2"
-                      />
-                      <label htmlFor="status-low" className="text-sm">
-                        Low Inventory
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input
-                        type="radio"
-                        id="status-out"
-                        name="status"
-                        value="out_of_stock"
-                        checked={filterStatus === "out_of_stock"}
-                        onChange={() => setFilterStatus("out_of_stock")}
-                        className="mr-2"
-                      />
-                      <label htmlFor="status-out" className="text-sm">
-                        Out of Stock
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div>
-                  <h3 className="text-sm font-medium mb-2">Category</h3>
-                  <div className="space-y-1">
-                    <div className="flex items-center">
-                      <input
-                        type="radio"
-                        id="category-all"
-                        name="category"
-                        value="all"
-                        checked={filterCategory === "all"}
-                        onChange={() => setFilterCategory("all")}
-                        className="mr-2"
-                      />
-                      <label htmlFor="category-all" className="text-sm">
-                        All Categories
-                      </label>
-                    </div>
-                    {categories.map((category) => (
-                      <div key={category} className="flex items-center">
-                        <input
-                          type="radio"
-                          id={`category-${category}`}
-                          name="category"
-                          value={category}
-                          checked={filterCategory === category}
-                          onChange={() => setFilterCategory(category)}
-                          className="mr-2"
-                        />
-                        <label htmlFor={`category-${category}`} className="text-sm">
-                          {category}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div>
-                  <h3 className="text-sm font-medium mb-2">Collections</h3>
-                  <div className="space-y-1">
-                    {collections.map((collection) => (
-                      <div key={collection.id} className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <Checkbox id={`collection-${collection.id}`} className="mr-2" />
-                          <label htmlFor={`collection-${collection.id}`} className="text-sm">
-                            {collection.name}
-                          </label>
-                        </div>
-                        <span className="text-xs text-gray-500">{collection.count}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div>
-                  <h3 className="text-sm font-medium mb-2">Vendor</h3>
-                  <Select value={filterVendor} onValueChange={setFilterVendor}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="All Vendors" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Vendors</SelectItem>
-                      {vendors.map((vendor) => (
-                        <SelectItem key={vendor.id} value={vendor.name}>
-                          {vendor.name} ({vendor.count})
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => {
-                    setFilterStatus("all")
-                    setFilterCategory("all")
-                    setFilterVendor("all")
-                  }}
-                >
-                  Clear Filters
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="md:w-3/4 lg:w-4/5 space-y-4">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-grow">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input
-                  type="search"
-                  placeholder="Search products by name, SKU, or ID..."
-                  className="pl-10"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
               </div>
-
-              {selectedProducts.length > 0 && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline">Bulk Actions ({selectedProducts.length})</Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => handleBulkAction("edit")}>Edit Selected</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleBulkAction("delete")}>Delete Selected</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => handleBulkAction("archive")}>Archive Selected</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleBulkAction("duplicate")}>
-                      Duplicate Selected
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => handleBulkAction("add-to-collection")}>
-                      Add to Collection
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleBulkAction("remove-from-collection")}>
-                      Remove from Collection
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
             </div>
+          </CardContent>
+        </Card>
 
-            <TabsContent value="all-products" className="m-0">
-              {viewMode === "table" ? (
-                <Card>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="w-12">
-                          <Checkbox
-                            checked={currentProducts.length > 0 && selectedProducts.length === currentProducts.length}
-                            onCheckedChange={toggleSelectAll}
-                            aria-label="Select all products"
-                          />
-                        </TableHead>
-                        <TableHead>
-                          <Button
-                            variant="ghost"
-                            className="flex items-center p-0 hover:bg-transparent"
-                            onClick={() => handleSort("name")}
-                          >
-                            Product
-                            <ArrowUpDown className="ml-2 h-4 w-4" />
-                          </Button>
-                        </TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>
-                          <Button
-                            variant="ghost"
-                            className="flex items-center p-0 hover:bg-transparent"
-                            onClick={() => handleSort("inventory")}
-                          >
-                            Inventory
-                            <ArrowUpDown className="ml-2 h-4 w-4" />
-                          </Button>
-                        </TableHead>
-                        <TableHead>
-                          <Button
-                            variant="ghost"
-                            className="flex items-center p-0 hover:bg-transparent"
-                            onClick={() => handleSort("price")}
-                          >
-                            Price
-                            <ArrowUpDown className="ml-2 h-4 w-4" />
-                          </Button>
-                        </TableHead>
-                        <TableHead>Category</TableHead>
-                        <TableHead>SKU</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {currentProducts.length === 0 ? (
-                        <TableRow>
-                          <TableCell colSpan={8} className="text-center py-8">
-                            <div className="flex flex-col items-center justify-center">
-                              <Package className="h-12 w-12 text-gray-300 mb-2" />
-                              <h3 className="text-lg font-medium text-gray-900">No products found</h3>
-                              <p className="text-gray-500 mt-1">
-                                {searchQuery
-                                  ? "Try adjusting your search or filters"
-                                  : "Add your first product to get started"}
-                              </p>
-                              {!searchQuery && (
-                                <Button
-                                  className="mt-4 bg-red-800 hover:bg-red-700"
-                                  onClick={() => setIsAddProductOpen(true)}
-                                >
-                                  <Plus className="mr-2 h-4 w-4" />
-                                  Add Product
-                                </Button>
-                              )}
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ) : (
-                        currentProducts.map((product) => (
-                          <TableRow key={product.id}>
-                            <TableCell>
-                              <Checkbox
-                                checked={selectedProducts.includes(product.id)}
-                                onCheckedChange={() => toggleProductSelection(product.id)}
-                                aria-label={`Select ${product.name}`}
-                              />
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex items-center">
-                                <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                  <Image
-                                    src={product.image || "/placeholder.svg"}
-                                    alt={product.name}
-                                    width={40}
-                                    height={40}
-                                    className="h-full w-full object-cover object-center"
-                                  />
-                                </div>
-                                <div className="ml-4">
-                                  <div className="font-medium text-gray-900">{product.name}</div>
-                                  <div className="text-xs text-gray-500">ID: {product.id}</div>
-                                </div>
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              <StatusBadge status={product.status} />
-                            </TableCell>
-                            <TableCell>
-                              <div className={`${product.inventory <= 5 ? "text-red-600 font-medium" : ""}`}>
-                                {product.inventory} in stock
-                              </div>
-                            </TableCell>
-                            <TableCell>${product.price.toFixed(2)}</TableCell>
-                            <TableCell>{product.category}</TableCell>
-                            <TableCell>{product.sku}</TableCell>
-                            <TableCell className="text-right">
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <Button variant="ghost" size="icon">
-                                    <MoreHorizontal className="h-4 w-4" />
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                  <DropdownMenuItem>
-                                    <Edit className="mr-2 h-4 w-4" />
-                                    Edit
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem>
-                                    <Eye className="mr-2 h-4 w-4" />
-                                    View
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem>
-                                    <Copy className="mr-2 h-4 w-4" />
-                                    Duplicate
-                                  </DropdownMenuItem>
-                                  <DropdownMenuSeparator />
-                                  <DropdownMenuItem>
-                                    <Tag className="mr-2 h-4 w-4" />
-                                    Add to Collection
-                                  </DropdownMenuItem>
-                                  <DropdownMenuSeparator />
-                                  <DropdownMenuItem className="text-red-600">
-                                    <Trash2 className="mr-2 h-4 w-4" />
-                                    Delete
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </TableCell>
-                          </TableRow>
-                        ))
-                      )}
-                    </TableBody>
-                  </Table>
-                </Card>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {currentProducts.length === 0 ? (
-                    <div className="col-span-full text-center py-8">
-                      <div className="flex flex-col items-center justify-center">
-                        <Package className="h-12 w-12 text-gray-300 mb-2" />
-                        <h3 className="text-lg font-medium text-gray-900">No products found</h3>
-                        <p className="text-gray-500 mt-1">
-                          {searchQuery
-                            ? "Try adjusting your search or filters"
-                            : "Add your first product to get started"}
-                        </p>
-                        {!searchQuery && (
-                          <Button
-                            className="mt-4 bg-red-800 hover:bg-red-700"
-                            onClick={() => setIsAddProductOpen(true)}
-                          >
-                            <Plus className="mr-2 h-4 w-4" />
-                            Add Product
-                          </Button>
-                        )}
+        {/* Products Table */}
+        <Card>
+          <CardHeader>
+            <CardTitle>All products</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">Image</TableHead>
+                  <TableHead>Product</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Inventory</TableHead>
+                  <TableHead>Price</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {products.map((product) => (
+                  <TableRow key={product.id}>
+                    <TableCell>
+                      <div className="relative h-16 w-16">
+                        <Image
+                          src={product.image}
+                          alt={product.name}
+                          fill
+                          className="object-cover rounded-md"
+                        />
                       </div>
-                    </div>
-                  ) : (
-                    currentProducts.map((product) => (
-                      <Card key={product.id} className="overflow-hidden">
-                        <div className="relative">
-                          <div className="aspect-square overflow-hidden">
-                            <Image
-                              src={product.image || "/placeholder.svg"}
-                              alt={product.name}
-                              width={300}
-                              height={300}
-                              className="h-full w-full object-cover object-center"
-                            />
-                          </div>
-                          <div className="absolute top-2 left-2">
-                            <StatusBadge status={product.status} />
-                          </div>
-                          <div className="absolute top-2 right-2">
-                            <Checkbox
-                              checked={selectedProducts.includes(product.id)}
-                              onCheckedChange={() => toggleProductSelection(product.id)}
-                              aria-label={`Select ${product.name}`}
-                            />
-                          </div>
-                        </div>
-                        <CardContent className="p-4">
-                          <h3 className="font-medium text-gray-900 line-clamp-1">{product.name}</h3>
-                          <div className="mt-1 flex items-center justify-between">
-                            <div className="text-sm font-medium">${product.price.toFixed(2)}</div>
-                            <div className="text-xs text-gray-500">SKU: {product.sku}</div>
-                          </div>
-                          <div className="mt-1 flex items-center justify-between">
-                            <div
-                              className={`text-xs ${product.inventory <= 5 ? "text-red-600 font-medium" : "text-gray-500"}`}
-                            >
-                              {product.inventory} in stock
-                            </div>
-                            <div className="text-xs text-gray-500">{product.category}</div>
-                          </div>
-                          <div className="mt-3 flex items-center justify-between">
-                            <Button variant="outline" size="sm" className="w-full">
-                              <Edit className="mr-2 h-3 w-3" />
-                              Edit
-                            </Button>
-                            <Button variant="ghost" size="icon" className="ml-2">
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))
-                  )}
-                </div>
-              )}
-
-              {currentProducts.length > 0 && (
-                <div className="flex items-center justify-between mt-4">
-                  <div className="text-sm text-gray-500">
-                    Showing {indexOfFirstProduct + 1} to {Math.min(indexOfLastProduct, sortedProducts.length)} of{" "}
-                    {sortedProducts.length} products
-                  </div>
-                  <Pagination>
-                    <PaginationContent>
-                      <PaginationItem>
-                        <PaginationPrevious
-                          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                          aria-disabled={currentPage === 1}
-                        />
-                      </PaginationItem>
-                      {Array.from({ length: Math.min(totalPages, 5) }).map((_, index) => {
-                        let pageNumber = currentPage
-                        if (totalPages <= 5) {
-                          pageNumber = index + 1
-                        } else if (currentPage <= 3) {
-                          pageNumber = index + 1
-                        } else if (currentPage >= totalPages - 2) {
-                          pageNumber = totalPages - 4 + index
-                        } else {
-                          pageNumber = currentPage - 2 + index
-                        }
-
-                        return (
-                          <PaginationItem key={index}>
-                            <PaginationLink
-                              isActive={currentPage === pageNumber}
-                              onClick={() => setCurrentPage(pageNumber)}
-                            >
-                              {pageNumber}
-                            </PaginationLink>
-                          </PaginationItem>
-                        )
-                      })}
-                      {totalPages > 5 && currentPage < totalPages - 2 && (
-                        <PaginationItem>
-                          <PaginationEllipsis />
-                        </PaginationItem>
-                      )}
-                      <PaginationItem>
-                        <PaginationNext
-                          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                          aria-disabled={currentPage === totalPages}
-                        />
-                      </PaginationItem>
-                    </PaginationContent>
-                  </Pagination>
-                </div>
-              )}
-            </TabsContent>
-
-            <TabsContent value="active" className="m-0">
-              {/* Similar content as all-products but filtered for active products */}
-              <Card>
-                <CardContent className="p-6">
-                  <p>Active products content would go here, filtered to show only active products.</p>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="low-inventory" className="m-0">
-              <Card>
-                <CardContent className="p-6">
-                  <p>Low inventory products content would go here, filtered to show only products with low stock.</p>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="out-of-stock" className="m-0">
-              <Card>
-                <CardContent className="p-6">
-                  <p>
-                    Out of stock products content would go here, filtered to show only products with zero inventory.
-                  </p>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </div>
-        </div>
-      </Tabs>
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      <Link href={`/dashboard/products/${product.id}`} className="hover:text-red-800">
+                        {product.name}
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
+                        product.status === "active"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-gray-100 text-gray-700"
+                      }`}>
+                        {product.status}
+                      </span>
+                    </TableCell>
+                    <TableCell>{product.inventory} in stock</TableCell>
+                    <TableCell>${product.price.toFixed(2)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </main>
     </div>
   )
 }

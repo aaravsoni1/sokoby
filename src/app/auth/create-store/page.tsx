@@ -64,7 +64,7 @@ export default function CreateStorePage() {
               />
             </Link>
             <div className="flex items-center gap-4">
-              <Button variant="outline" onClick={() => router.push("/dashboard")}>
+              <Button variant="outline" onClick={() => router.push("/")}>
                 Go to Dashboard
               </Button>
             </div>
