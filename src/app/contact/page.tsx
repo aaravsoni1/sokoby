@@ -384,10 +384,12 @@ export default function ContactPage() {
             <p className="mb-8 text-xl text-white/90">
               Join thousands of merchants who trust Sokoby to power their online businesses.
             </p>
+            <Link href="/auth/create-store">
             <Button size="lg" className="bg-white text-red-900 hover:bg-gray-100">
               Start your free trial
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
+            </Link>
             <p className="mt-4 text-sm text-white/80">No credit card required</p>
           </div>
         </div>

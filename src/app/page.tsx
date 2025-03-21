@@ -75,17 +75,17 @@ export default function Home() {
               <div className="flex flex-col space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
                 <Link href="/auth/create-store">
                   <Button size="lg" className="bg-white text-red-900 hover:bg-gray-100">
-                    Start for free
+                    Start free trial
                   </Button>
                 </Link>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-red-800">
+                <Button size="lg" variant="outline" className="border-white text-black hover:bg-gray-100">
                   Watch demo
                 </Button>
               </div>
             </div>
             <div className="hidden md:block">
               <Image
-                src="/placeholder.svg?height=400&width=500"
+                src="https://images.unsplash.com/photo-1674027392851-7b34f21b07ee?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="E-commerce platform dashboard"
                 width={500}
                 height={400}
@@ -173,7 +173,7 @@ export default function Home() {
             <div className="group overflow-hidden rounded-lg border bg-white shadow-sm transition-all hover:shadow-md">
               <div className="aspect-video overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=200&width=400"
+                  src="https://images.unsplash.com/photo-1723905103559-f2af9240200a?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Sale promotion"
                   width={400}
                   height={200}
@@ -193,7 +193,7 @@ export default function Home() {
             <div className="group overflow-hidden rounded-lg border bg-white shadow-sm transition-all hover:shadow-md">
               <div className="aspect-video overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=200&width=400"
+                  src="https://plus.unsplash.com/premium_photo-1683288295814-84a199da83d9?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Create your store"
                   width={400}
                   height={200}
@@ -213,7 +213,7 @@ export default function Home() {
             <div className="group overflow-hidden rounded-lg border bg-white shadow-sm transition-all hover:shadow-md">
               <div className="aspect-video overflow-hidden">
                 <Image
-                  src="/placeholder.svg?height=200&width=400"
+                  src="https://images.unsplash.com/photo-1619498560614-9bbfab571365?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Success stories"
                   width={400}
                   height={200}
@@ -515,7 +515,7 @@ export default function Home() {
       </section>
 
       {/* Partners Section */}
-      <section className="py-16">
+      {/* <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <h2 className="mb-2 text-3xl font-bold text-gray-900">Trusted by Leading Brands</h2>
@@ -535,7 +535,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Newsletter Section */}
       <section className="bg-red-900 py-16">

@@ -6,18 +6,18 @@ import Link from "next/link"
 import { useState } from "react"
 
 import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
 } from "@/components/ui/tooltip"
 import React from "react"
 
@@ -26,8 +26,8 @@ const plans = [
   {
     name: "Basic",
     description: "Everything you need to start selling online",
-    monthlyPrice: 29,
-    yearlyPrice: 24,
+    monthlyPrice: 11,
+    yearlyPrice: 9,
     features: [
       "Online store with unlimited products",
       "24/7 support",
@@ -49,8 +49,8 @@ const plans = [
   {
     name: "Standard",
     description: "Level up your growing business",
-    monthlyPrice: 79,
-    yearlyPrice: 69,
+    monthlyPrice: 25,
+    yearlyPrice: 20,
     popular: true,
     features: [
       "Everything in Basic, plus:",
@@ -73,8 +73,8 @@ const plans = [
   {
     name: "Advanced",
     description: "Advanced features for scaling your business",
-    monthlyPrice: 299,
-    yearlyPrice: 269,
+    monthlyPrice: 49,
+    yearlyPrice: 40,
     features: [
       "Everything in Standard, plus:",
       "15 staff accounts",
@@ -302,7 +302,7 @@ export default function PricingPage() {
               </span>
             </div>
             
-            <div className="grid gap-8 md:grid-cols-3">
+            <div className="grid gap-6 lg:grid-cols-3 max-w-[2000px] mx-auto px-auto">
               {plans.map((plan) => (
                 <div 
                   key={plan.name} 
@@ -330,11 +330,13 @@ export default function PricingPage() {
                       </p>
                     )}
                   </div>
+                  <Link href="/auth/create-store">
                   <Button 
                     className={`w-full ${plan.popular ? "bg-red-800 hover:bg-red-700" : "bg-gray-900 hover:bg-gray-800"}`}
-                  >
+                    >
                     Start free trial
                   </Button>
+                    </Link>
                   <div className="mt-6">
                     <p className="mb-2 text-sm font-medium text-gray-900">Plan includes:</p>
                     <ul className="space-y-2">
@@ -545,10 +547,12 @@ export default function PricingPage() {
             <p className="mb-8 text-xl text-gray-600">
               Join thousands of businesses that use Sokoby to sell online. Start your 14-day free trial today.
             </p>
+            <Link href="/auth/create-store">
             <Button size="lg" className="bg-red-800 hover:bg-red-700">
               Start your free trial
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
+            </Link>
             <p className="mt-4 text-sm text-gray-500">No credit card required</p>
           </div>
         </div>
