@@ -1,13 +1,13 @@
 "use client";
 
 import {
-  ArrowRight,
-  Building2,
-  Globe,
-  Heart,
-  ShoppingBag,
-  Star,
-  Users,
+    ArrowRight,
+    Building2,
+    Globe,
+    Heart,
+    ShoppingBag,
+    Star,
+    Users,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,10 +32,10 @@ export default function AboutPage() {
           </Link>
           <nav className="hidden space-x-6 md:flex">
             <Link
-              href="/products"
+              href="/support"
               className="text-sm font-medium text-gray-700 hover:text-red-800"
             >
-              Products
+              Support
             </Link>
             <Link
               href="/solutions"
@@ -97,11 +97,11 @@ export default function AboutPage() {
                   className="hover:bg-red-200"
                 >
                   Watch our story
-                </Button>
+              </Button>
               </Link>
             </div>
-          </div>
-        </div>
+                  </div>
+                  </div>
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
       </section>
 
@@ -110,7 +110,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-12 md:grid-cols-2 md:items-center">
-              <div>
+                  <div>
                 <h2 className="mb-6 text-4xl font-bold text-gray-900">
                   Our Story
                 </h2>
@@ -128,7 +128,7 @@ export default function AboutPage() {
                   intuitive design, making it easier than ever to start, run,
                   and grow an online store.
                 </p>
-              </div>
+                  </div>
               <div className="relative h-96 overflow-hidden rounded-lg">
                 <Image
                   src="https://images.unsplash.com/photo-1632910121591-29e2484c0259?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -136,10 +136,10 @@ export default function AboutPage() {
                   fill
                   className="object-cover transition-transform hover:scale-105"
                 />
-              </div>
-            </div>
-          </div>
-        </div>
+                  </div>
+                  </div>
+                  </div>
+                </div>
       </section>
 
       {/* Stats Section */}
@@ -229,7 +229,7 @@ export default function AboutPage() {
                   empowers entrepreneurs worldwide to reach customers anywhere.
                 </p>
               </Card>
-            </div>
+      </div>
           </div>
         </div>
       </section>
@@ -239,7 +239,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-12 md:grid-cols-2 md:items-center">
-              <div>
+                <div>
                 <h2 className="mb-6 text-4xl font-bold">Our Mission</h2>
                 <p className="mb-8 text-lg text-gray-300">
                   We&apos;re on a mission to make Ecommerce better for everyone.
@@ -276,8 +276,8 @@ export default function AboutPage() {
                   <li className="flex items-start">
                     <div className="mr-4 rounded-full bg-red-800 p-2">
                       <Globe className="h-6 w-6" />
-                    </div>
-                    <div>
+                </div>
+                <div>
                       <h3 className="text-xl font-bold">Driving Innovation</h3>
                       <p className="text-gray-300">
                         Constantly evolving to meet the future of Ecommerce
@@ -285,7 +285,7 @@ export default function AboutPage() {
                     </div>
                   </li>
                 </ul>
-              </div>
+                      </div>
               <div className="relative h-96">
                 <Image
                   src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
@@ -295,8 +295,8 @@ export default function AboutPage() {
                 />
               </div>
             </div>
-          </div>
-        </div>
+                                </div>
+                              </div>
       </section>
 
       {/* CTA Section */}
@@ -314,13 +314,13 @@ export default function AboutPage() {
               <Button size="lg" className="bg-red-800 hover:bg-red-700">
                 Start free trial
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+                                  </Button>
             </Link>
             <p className="mt-4 text-sm text-gray-500">
               No credit card required
             </p>
-          </div>
-        </div>
+                      </div>
+                    </div>
       </section>
 
       {/* Footer */}
@@ -329,7 +329,7 @@ export default function AboutPage() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
             <div className="lg:col-span-2">
               <Link href="/" className="mb-4 inline-block">
-                <Image
+                            <Image
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
                   alt="Sokoby"
                   width={150}
@@ -341,7 +341,7 @@ export default function AboutPage() {
                 The complete e-Ecommerce platform that helps you sell online, on
                 social media, or in person.
               </p>
-            </div>
+                          </div>
             <div>
               <h3 className="mb-4 text-lg font-semibold">Company</h3>
               <ul className="space-y-2">
@@ -378,7 +378,7 @@ export default function AboutPage() {
                   </Link>
                 </li>
               </ul>
-            </div>
+                            </div>
             <div>
               <h3 className="mb-4 text-lg font-semibold">Products</h3>
               <ul className="space-y-2">
@@ -398,7 +398,7 @@ export default function AboutPage() {
                   </Link>
                 </li>
               </ul>
-            </div>
+                          </div>
             <div>
               <h3 className="mb-4 text-lg font-semibold">Resources</h3>
               <ul className="space-y-2">
@@ -418,8 +418,8 @@ export default function AboutPage() {
                   </Link>
                 </li>
               </ul>
-            </div>
-          </div>
+                          </div>
+                </div>
           <div className="mt-12 border-t border-gray-800 pt-8 text-center">
             <p className="text-sm text-gray-400">
               &copy; {new Date().getFullYear()} Sokoby. All rights reserved.

@@ -255,8 +255,8 @@ export default function PricingPage() {
             />
           </Link>
           <nav className="hidden space-x-6 md:flex">
-            <Link href="/products" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Products
+            <Link href="/support" className="text-sm font-medium text-gray-700 hover:text-red-800">
+              Support
             </Link>
             <Link href="/solutions" className="text-sm font-medium text-gray-700 hover:text-red-800">
               Solutions

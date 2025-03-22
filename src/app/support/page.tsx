@@ -1,17 +1,17 @@
-import Link from "next/link"
+import { ArrowRight, BookOpen, ChevronRight, FileText, HelpCircle, Mail, MessageSquare, Phone, Search, Users, Video } from 'lucide-react'
 import Image from "next/image"
-import { Search, MessageSquare, Phone, Mail, FileText, HelpCircle, ChevronRight, ArrowRight, BookOpen, Video, Users } from 'lucide-react'
+import Link from "next/link"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { 
-  Accordion, 
-  AccordionContent, 
-  AccordionItem, 
-  AccordionTrigger 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
 } from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 // Sample FAQ categories
 const faqCategories = [
@@ -205,7 +205,7 @@ export default function SupportPage() {
                   Mon-Fri, 9am-5pm EST
                 </p>
               </CardContent>
-            </Card>src/
+            </Card>
             
             <Card className="border-0 shadow-sm hover:shadow-md transition-shadow">
               <CardContent className="p-6">
