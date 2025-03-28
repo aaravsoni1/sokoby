@@ -15,11 +15,11 @@ export default function Home() {
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <Link href="/" className="flex items-center">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
+              src="/sokobylogo.png" 
               alt="Sokoby"
-              width={120}
-              height={40}
-              className="h-8 w-auto"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
             />
           </Link>
           <nav className="hidden space-x-6 md:flex">
@@ -40,7 +40,7 @@ export default function Home() {
             </Link>
           </nav>
           <div className="hidden md:flex md:items-center md:space-x-4">
-            <Link href="/login" className="text-sm font-medium text-gray-700 hover:text-red-800">
+            <Link href="/auth" className="text-sm font-medium text-gray-700 hover:text-red-800">
               Log in
             </Link>
             <Button className="bg-red-800 hover:bg-red-700">Get Started</Button>
@@ -592,13 +592,13 @@ export default function Home() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
             <div className="lg:col-span-2">
               <Link href="/" className="mb-4 inline-block">
-                <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
-                  alt="Sokoby"
-                  width={150}
-                  height={50}
-                  className="h-10 w-auto"
-                />
+              <Image
+              src="/sokobylogo.png" 
+              alt="Sokoby"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
+            />
               </Link>
               <p className="mb-4 max-w-md text-gray-400">
                 The complete e-commerce platform that helps you sell online, on social media, or in person.

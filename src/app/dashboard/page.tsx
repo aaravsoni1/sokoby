@@ -289,13 +289,13 @@ export default function DashboardPage() {
           <SidebarHeader>
             <div className="flex h-16 items-center px-4">
               <Link href="/" className="flex items-center">
-                <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
-                  alt="Sokoby"
-                  width={120}
-                  height={40}
-                  className="h-8 w-auto"
-                />
+              <Image
+              src="/sokobylogo.png" 
+              alt="Sokoby"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
+            />
               </Link>
             </div>
           </SidebarHeader>

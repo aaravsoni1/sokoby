@@ -70,13 +70,13 @@ export default function CheckoutPage() {
         <header className="mb-8">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center">
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
-                alt="Sokoby"
-                width={120}
-                height={40}
-                className="h-8 w-auto"
-              />
+            <Image
+              src="/sokobylogo.png" 
+              alt="Sokoby"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
+            />
             </Link>
             <Link href="/cart" className="text-sm font-medium text-gray-600 hover:text-gray-900">
               Return to cart

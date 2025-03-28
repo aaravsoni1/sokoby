@@ -34,12 +34,12 @@ export default function ForgotPasswordPage() {
           </div>
 
           <div className="relative z-10 max-w-2xl p-16 text-white">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
+          <Image
+              src="/sokobylogo.png" 
               alt="Sokoby"
-              width={200}
-              height={70}
-              className="h-16 w-auto mb-16"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
             />
 
             <h2 className="text-4xl font-bold leading-tight tracking-tight">Account Recovery</h2>
@@ -85,13 +85,13 @@ export default function ForgotPasswordPage() {
         <div className="w-full max-w-2xl">
           <div className="mb-10 text-center lg:hidden">
             <Link href="/">
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
-                alt="Sokoby"
-                width={180}
-                height={60}
-                className="h-12 w-auto mx-auto"
-              />
+            <Image
+              src="/sokobylogo.png" 
+              alt="Sokoby"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
+            />
             </Link>
           </div>
 

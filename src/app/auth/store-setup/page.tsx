@@ -1,28 +1,23 @@
 "use client"
 
-import type React from "react"
-
-import { ArrowLeft, CheckCircle, CircleDot, Globe, Plus, Store, Upload } from "lucide-react"
+import { ArrowLeft, CircleDot, Globe, Plus, Store, Upload } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-export default function CreateStorePage() {
+export default function StoreSetupPage() {
   const router = useRouter()
   const [step, setStep] = useState(1)
   const [storeCreated, setStoreCreated] = useState(false)
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
     storeName: "",
     storeUrl: "",
     storeType: "",
@@ -42,14 +37,18 @@ export default function CreateStorePage() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (step < 4) {
+    if (step < 3) {
       setStep(step + 1)
     } else {
-      // In a real app, this would submit the form data to create the store
-      console.log("Form submitted:", formData)
-      setStoreCreated(true)
+      try {
+        // Here you would typically make an API call to save the store details
+        // For now, we'll just simulate success
+        setStoreCreated(true)
+      } catch {
+        toast.error("Failed to setup store. Please try again.")
+      }
     }
   }
 
@@ -59,16 +58,16 @@ export default function CreateStorePage() {
         <header className="border-b bg-white">
           <div className="container flex h-16 items-center justify-between px-4 md:px-6">
             <Link href="/" className="flex items-center">
-            <Image
-              src="/sokobylogo.png" 
-              alt="Sokoby"
-              width={150} 
-              height={50} 
-              className="h-11 w-auto"
-            />
+              <Image
+                src="/sokobylogo.png" 
+                alt="Sokoby"
+                width={150} 
+                height={50} 
+                className="h-11 w-auto"
+              />
             </Link>
             <div className="flex items-center gap-4">
-              <Button variant="outline" onClick={() => router.push("/")}>
+              <Button variant="outline" onClick={() => router.push("/dashboard")}>
                 Go to Dashboard
               </Button>
             </div>
@@ -170,21 +169,14 @@ export default function CreateStorePage() {
       <header className="border-b bg-white">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center">
-          <Image
+            <Image
               src="/sokobylogo.png" 
               alt="Sokoby"
               width={150} 
               height={50} 
               className="h-11 w-auto"
             />
-            <span className="ml-2 text-xl font-bold">Sokoby</span>
           </Link>
-          <div className="flex items-center gap-4">
-            <div className="text-sm text-gray-500">Already have an account?</div>
-            <Link href="/auth">
-              <Button variant="outline">Log in</Button>
-            </Link>
-          </div>
         </div>
       </header>
 
@@ -198,71 +190,17 @@ export default function CreateStorePage() {
                     <ArrowLeft className="h-4 w-4" />
                   </Button>
                 )}
-                <CardTitle>Start your free trial</CardTitle>
+                <CardTitle>Set up your store</CardTitle>
               </div>
               <CardDescription>
-                {step === 1 && "Create your account to start your 14-day free trial"}
-                {step === 2 && "Tell us about your store"}
-                {step === 3 && "Tell us about your business"}
-                {step === 4 && "Customize your store"}
+                {step === 1 && "Tell us about your store"}
+                {step === 2 && "Tell us about your business"}
+                {step === 3 && "Customize your store"}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit}>
                 {step === 1 && (
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email address</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="you@example.com"
-                        required
-                        value={formData.email}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="password">Password</Label>
-                      <Input
-                        id="password"
-                        name="password"
-                        type="password"
-                        placeholder="••••••••"
-                        required
-                        value={formData.password}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="firstName">First name</Label>
-                        <Input
-                          id="firstName"
-                          name="firstName"
-                          placeholder="John"
-                          required
-                          value={formData.firstName}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="lastName">Last name</Label>
-                        <Input
-                          id="lastName"
-                          name="lastName"
-                          placeholder="Doe"
-                          required
-                          value={formData.lastName}
-                          onChange={handleChange}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {step === 2 && (
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="storeName">Store name</Label>
@@ -312,7 +250,7 @@ export default function CreateStorePage() {
                   </div>
                 )}
 
-                {step === 3 && (
+                {step === 2 && (
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="businessType">Business type</Label>
@@ -372,7 +310,7 @@ export default function CreateStorePage() {
                   </div>
                 )}
 
-                {step === 4 && (
+                {step === 3 && (
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="storeDescription">Store description</Label>
@@ -402,26 +340,10 @@ export default function CreateStorePage() {
                 )}
 
                 <Button type="submit" className="w-full mt-6 bg-red-800 hover:bg-red-700">
-                  {step < 4 ? "Continue" : "Create your store"}
+                  {step < 3 ? "Continue" : "Complete Setup"}
                 </Button>
               </form>
             </CardContent>
-            <CardFooter className="flex flex-col items-center text-center border-t pt-6">
-              <div className="text-sm text-gray-500 mb-4">
-                By creating an account, you agree to our{" "}
-                <Link href="#" className="text-red-800 hover:underline">
-                  Terms of Service
-                </Link>{" "}
-                and{" "}
-                <Link href="#" className="text-red-800 hover:underline">
-                  Privacy Policy
-                </Link>
-              </div>
-              <div className="flex items-center text-sm text-gray-500">
-                <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                No credit card required
-              </div>
-            </CardFooter>
           </Card>
         </div>
       </main>
@@ -433,5 +355,4 @@ export default function CreateStorePage() {
       </footer>
     </div>
   )
-}
-
+} 

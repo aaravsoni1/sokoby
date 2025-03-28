@@ -13,12 +13,12 @@ export default function FeaturesPage() {
       <header className="sticky top-0 z-50 border-b bg-white">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <Link href="/" className="flex items-center">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
+          <Image
+              src="/sokobylogo.png" 
               alt="Sokoby"
-              width={120}
-              height={40}
-              className="h-8 w-auto"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
             />
           </Link>
           <nav className="hidden space-x-6 md:flex">
@@ -124,7 +124,7 @@ export default function FeaturesPage() {
                 </div>
                 <div className="relative h-[400px] w-full rounded-lg overflow-hidden shadow-xl">
                   <Image
-                    src="/placeholder.svg?height=400&width=600"
+                    src="https://images.unsplash.com/photo-1727976822548-d097770638f3?q=80&w=2067&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Online Store Builder"
                     fill
                     className="object-cover"
@@ -137,7 +137,7 @@ export default function FeaturesPage() {
               <div className="grid gap-8 md:grid-cols-2 items-center">
                 <div className="order-2 md:order-1 relative h-[400px] w-full rounded-lg overflow-hidden shadow-xl">
                   <Image
-                    src="/placeholder.svg?height=400&width=600"
+                    src="https://images.unsplash.com/photo-1514471157964-06459a4b9241?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Multi-channel Selling"
                     fill
                     className="object-cover"
@@ -230,7 +230,7 @@ export default function FeaturesPage() {
                 </div>
                 <div className="relative h-[400px] w-full rounded-lg overflow-hidden shadow-xl">
                   <Image
-                    src="/placeholder.svg?height=400&width=600"
+                    src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Marketing Tools"
                     fill
                     className="object-cover"
@@ -243,7 +243,7 @@ export default function FeaturesPage() {
               <div className="grid gap-8 md:grid-cols-2 items-center">
                 <div className="order-2 md:order-1 relative h-[400px] w-full rounded-lg overflow-hidden shadow-xl">
                   <Image
-                    src="/placeholder.svg?height=400&width=600"
+                    src="https://images.unsplash.com/photo-1542626991-cbc4e32524cc?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     alt="Store Management"
                     fill
                     className="object-cover"
@@ -472,13 +472,13 @@ export default function FeaturesPage() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
             <div className="lg:col-span-2">
               <Link href="/" className="mb-4 inline-block">
-                <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
-                  alt="Sokoby"
-                  width={150}
-                  height={50}
-                  className="h-10 w-auto"
-                />
+              <Image
+              src="/sokobylogo.png" 
+              alt="Sokoby"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
+            />
               </Link>
               <p className="mb-4 max-w-md text-gray-400">
                 The complete e-commerce platform that helps you sell online, on social media, or in person.

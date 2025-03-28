@@ -1,20 +1,93 @@
 "use client"
 
-import { useState } from "react"
+import { AlertCircle, ArrowRight, Building, CheckCircle, Eye, EyeOff, Lock, Mail, Shield, User } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { Eye, EyeOff, Mail, Lock, User, ArrowRight, CheckCircle, AlertCircle, Building, Shield } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Checkbox } from "@/components/ui/checkbox"
+import { authService, LoginDto, MerchantDto } from "@/services/authService"
 
 export default function AuthPage() {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [activeTab, setActiveTab] = useState("login")
+  const [isLoading, setIsLoading] = useState(false)
+
+  // Form states
+  const [loginForm, setLoginForm] = useState<LoginDto>({
+    email: "",
+    password: "",
+  })
+
+  const [signupForm, setSignupForm] = useState<MerchantDto>({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+  })
+
+  // Handle login form submission
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    try {
+      const response = await authService.login(loginForm)
+      if (response.token) {
+        // Store token in localStorage or secure cookie
+        localStorage.setItem("auth_token", response.token)
+        toast.success("Login successful!")
+        router.push("/auth/store-setup")
+      }
+    } catch (error) {
+      toast.error("Invalid email or password")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // Handle signup form submission
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    try {
+      await authService.signup(signupForm)
+      toast.success("Account created successfully!")
+      setActiveTab("login")
+      setLoginForm({ email: signupForm.email, password: "" })
+    } catch (error) {
+      toast.error("Failed to create account. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // Handle Google login
+  const handleGoogleLogin = async () => {
+    await authService.googleLogin()
+  }
+
+  // Handle form input changes
+  const handleLoginInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginForm({
+      ...loginForm,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const handleSignupInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSignupForm({
+      ...signupForm,
+      [e.target.name]: e.target.value,
+    })
+  }
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -31,12 +104,12 @@ export default function AuthPage() {
           </div>
 
           <div className="relative z-10 max-w-2xl p-16 text-white">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
+          <Image
+              src="/sokobylogo.png" 
               alt="Sokoby"
-              width={200}
-              height={70}
-              className="h-16 w-auto mb-16"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
             />
 
             <h2 className="text-4xl font-bold leading-tight tracking-tight">
@@ -117,13 +190,13 @@ export default function AuthPage() {
         <div className="w-full max-w-2xl">
           <div className="mb-10 text-center lg:hidden">
             <Link href="/">
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
-                alt="Sokoby"
-                width={180}
-                height={60}
-                className="h-12 w-auto mx-auto"
-              />
+            <Image
+              src="/sokobylogo.png" 
+              alt="Sokoby"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
+            />
             </Link>
           </div>
 
@@ -151,7 +224,7 @@ export default function AuthPage() {
             {/* Login Form */}
             <TabsContent value="login">
               <div className="rounded-xl border bg-white p-10 shadow-md">
-                <form className="space-y-8">
+                <form className="space-y-8" onSubmit={handleLogin}>
                   <div className="space-y-6">
                     <div className="space-y-3">
                       <Label htmlFor="email" className="text-base font-medium">
@@ -161,9 +234,13 @@ export default function AuthPage() {
                         <Mail className="absolute left-4 top-4 h-5 w-5 text-gray-500" />
                         <Input
                           id="email"
+                          name="email"
                           type="email"
                           placeholder="name@company.com"
                           className="pl-12 py-7 text-base border-gray-300"
+                          value={loginForm.email}
+                          onChange={handleLoginInputChange}
+                          required
                         />
                       </div>
                     </div>
@@ -184,9 +261,13 @@ export default function AuthPage() {
                         <Lock className="absolute left-4 top-4 h-5 w-5 text-gray-500" />
                         <Input
                           id="password"
+                          name="password"
                           type={showPassword ? "text" : "password"}
                           placeholder="Enter your password"
                           className="pl-12 py-7 text-base border-gray-300"
+                          value={loginForm.password}
+                          onChange={handleLoginInputChange}
+                          required
                         />
                         <button
                           type="button"
@@ -213,8 +294,12 @@ export default function AuthPage() {
                     </div>
                   </div>
 
-                  <Button type="submit" className="w-full bg-red-800 hover:bg-red-700 py-7 text-base font-medium">
-                    Sign in to Dashboard
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-red-800 hover:bg-red-700 py-7 text-base font-medium"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Logging in..." : "Log in "}
                   </Button>
 
                   <div className="relative my-8">
@@ -227,7 +312,12 @@ export default function AuthPage() {
                   </div>
 
                   <div className="grid grid-cols-3 gap-4">
-                    <Button variant="outline" className="h-14 border-gray-300 hover:bg-gray-50">
+                    <Button 
+                      type="button"
+                      variant="outline" 
+                      className="h-14 border-gray-300 hover:bg-gray-50"
+                      onClick={handleGoogleLogin}
+                    >
                       <svg className="h-5 w-5" viewBox="0 0 24 24">
                         <path
                           d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -268,66 +358,76 @@ export default function AuthPage() {
             {/* Sign Up Form */}
             <TabsContent value="signup">
               <div className="rounded-xl border bg-white p-10 shadow-md">
-                <form className="space-y-8">
+                <form className="space-y-8" onSubmit={handleSignup}>
                   <div className="space-y-6">
                     <div className="grid grid-cols-2 gap-6">
                       <div className="space-y-3">
-                        <Label htmlFor="first-name" className="text-base font-medium">
+                        <Label htmlFor="firstName" className="text-base font-medium">
                           First name
                         </Label>
                         <div className="relative">
                           <User className="absolute left-4 top-4 h-5 w-5 text-gray-500" />
-                          <Input id="first-name" placeholder="John" className="pl-12 py-7 text-base border-gray-300" />
+                          <Input 
+                            id="firstName" 
+                            name="firstName"
+                            placeholder="John" 
+                            className="pl-12 py-7 text-base border-gray-300"
+                            value={signupForm.firstName}
+                            onChange={handleSignupInputChange}
+                            required
+                          />
                         </div>
                       </div>
                       <div className="space-y-3">
-                        <Label htmlFor="last-name" className="text-base font-medium">
+                        <Label htmlFor="lastName" className="text-base font-medium">
                           Last name
                         </Label>
-                        <Input id="last-name" placeholder="Doe" className="py-7 text-base border-gray-300" />
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <Label htmlFor="company-name" className="text-base font-medium">
-                        Company name
-                      </Label>
-                      <div className="relative">
-                        <Building className="absolute left-4 top-4 h-5 w-5 text-gray-500" />
-                        <Input
-                          id="company-name"
-                          placeholder="Your Business LLC"
-                          className="pl-12 py-7 text-base border-gray-300"
+                        <Input 
+                          id="lastName" 
+                          name="lastName"
+                          placeholder="Doe" 
+                          className="py-7 text-base border-gray-300"
+                          value={signupForm.lastName}
+                          onChange={handleSignupInputChange}
+                          required
                         />
                       </div>
                     </div>
 
                     <div className="space-y-3">
-                      <Label htmlFor="business-email" className="text-base font-medium">
+                      <Label htmlFor="email" className="text-base font-medium">
                         Business email
                       </Label>
                       <div className="relative">
                         <Mail className="absolute left-4 top-4 h-5 w-5 text-gray-500" />
                         <Input
-                          id="business-email"
+                          id="email"
+                          name="email"
                           type="email"
                           placeholder="name@company.com"
                           className="pl-12 py-7 text-base border-gray-300"
+                          value={signupForm.email}
+                          onChange={handleSignupInputChange}
+                          required
                         />
                       </div>
                     </div>
 
                     <div className="space-y-3">
-                      <Label htmlFor="signup-password" className="text-base font-medium">
+                      <Label htmlFor="password" className="text-base font-medium">
                         Password
                       </Label>
                       <div className="relative">
                         <Lock className="absolute left-4 top-4 h-5 w-5 text-gray-500" />
                         <Input
-                          id="signup-password"
+                          id="password"
+                          name="password"
                           type={showPassword ? "text" : "password"}
                           placeholder="Create a secure password"
                           className="pl-12 py-7 text-base border-gray-300"
+                          value={signupForm.password}
+                          onChange={handleSignupInputChange}
+                          required
                         />
                         <button
                           type="button"
@@ -336,29 +436,6 @@ export default function AuthPage() {
                         >
                           {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                           <span className="sr-only">{showPassword ? "Hide password" : "Show password"}</span>
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <Label htmlFor="confirm-password" className="text-base font-medium">
-                        Confirm password
-                      </Label>
-                      <div className="relative">
-                        <Lock className="absolute left-4 top-4 h-5 w-5 text-gray-500" />
-                        <Input
-                          id="confirm-password"
-                          type={showConfirmPassword ? "text" : "password"}
-                          placeholder="Confirm your password"
-                          className="pl-12 py-7 text-base border-gray-300"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                          className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
-                        >
-                          {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                          <span className="sr-only">{showConfirmPassword ? "Hide password" : "Show password"}</span>
                         </button>
                       </div>
                     </div>
@@ -395,9 +472,9 @@ export default function AuthPage() {
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <Checkbox id="terms" className="mt-1 h-5 w-5 rounded border-gray-300" />
+                    <Checkbox id="terms" className="mt-1 h-5 w-5 rounded border-gray-300" required />
                     <Label htmlFor="terms" className="text-sm">
-                      By creating an account, I agree to Sokoby&apos;s{" "}src/
+                      By creating an account, I agree to Sokoby&apos;s{" "}
                       <Link href="/terms" className="font-medium text-red-800 hover:underline">
                         Terms of Service
                       </Link>
@@ -412,8 +489,12 @@ export default function AuthPage() {
                     </Label>
                   </div>
 
-                  <Button type="submit" className="w-full bg-red-800 hover:bg-red-700 py-7 text-base font-medium">
-                    Create Business Account
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-red-800 hover:bg-red-700 py-7 text-base font-medium"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Creating account..." : "Create Business Account"}
                   </Button>
 
                   <div className="relative my-8">

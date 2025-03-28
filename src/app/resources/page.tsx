@@ -17,7 +17,7 @@ const blogPosts = [
     category: "Marketing",
     date: "May 15, 2023",
     readTime: "8 min read",
-    image: "/placeholder.svg?height=200&width=400",
+    image: "https://images.unsplash.com/photo-1657812159103-1b2a52a7f5e8?q=80&w=2067&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     author: {
       name: "Sarah Johnson",
       avatar: "/placeholder.svg?height=40&width=40",
@@ -30,7 +30,7 @@ const blogPosts = [
     category: "Shipping",
     date: "April 28, 2023",
     readTime: "12 min read",
-    image: "/placeholder.svg?height=200&width=400",
+    image: "https://images.unsplash.com/photo-1688561809321-e51e8a4d6651?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     author: {
       name: "Michael Chen",
       avatar: "/placeholder.svg?height=40&width=40",
@@ -43,7 +43,7 @@ const blogPosts = [
     category: "Product Management",
     date: "April 10, 2023",
     readTime: "6 min read",
-    image: "/placeholder.svg?height=200&width=400",
+    image: "https://images.unsplash.com/photo-1642543349642-0d04e91511c9?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     author: {
       name: "Emily Rodriguez",
       avatar: "/placeholder.svg?height=40&width=40",
@@ -110,12 +110,12 @@ export default function ResourcesPage() {
       <header className="sticky top-0 z-50 border-b bg-white">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <Link href="/" className="flex items-center">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
+          <Image
+              src="/sokobylogo.png" 
               alt="Sokoby"
-              width={120}
-              height={40}
-              className="h-8 w-auto"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
             />
           </Link>
           <nav className="hidden space-x-6 md:flex">
@@ -505,13 +505,13 @@ export default function ResourcesPage() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
             <div className="lg:col-span-2">
               <Link href="/" className="mb-4 inline-block">
-                <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
-                  alt="Sokoby"
-                  width={150}
-                  height={50}
-                  className="h-10 w-auto"
-                />
+              <Image
+              src="/sokobylogo.png" 
+              alt="Sokoby"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
+            />
               </Link>
               <p className="mb-4 max-w-md text-gray-400">
                 The complete e-commerce platform that helps you sell online, on social media, or in person.

@@ -1,16 +1,14 @@
-"use client"
-
 import {
-    BarChart,
-    ChevronRight,
-    CreditCard,
-    Globe,
-    Megaphone,
-    Package,
-    ShoppingCart,
-    Store,
-    Truck,
-    Users
+  BarChart,
+  ChevronRight,
+  CreditCard,
+  Globe,
+  Megaphone,
+  Package,
+  ShoppingCart,
+  Store,
+  Truck,
+  Users
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -98,12 +96,12 @@ export default function SolutionsPage() {
       <header className="sticky top-0 z-50 border-b bg-white">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <Link href="/" className="flex items-center">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
+          <Image
+              src="/sokobylogo.png" 
               alt="Sokoby"
-              width={120}
-              height={40}
-              className="h-8 w-auto"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
             />
           </Link>
           <nav className="hidden space-x-6 md:flex">

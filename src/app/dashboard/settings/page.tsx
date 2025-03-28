@@ -73,12 +73,13 @@ export default function SettingsPage() {
               <CardContent>
                 <div className="flex items-center gap-4">
                   <div className="relative h-20 w-20 overflow-hidden rounded-lg border">
-                    <Image
-                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
-                      alt="Store logo"
-                      fill
-                      className="object-cover"
-                    />
+                  <Image
+              src="/sokobylogo.png" 
+              alt="Sokoby"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
+            />
                   </div>
                   <Button variant="outline">Change logo</Button>
                 </div>

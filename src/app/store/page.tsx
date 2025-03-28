@@ -129,13 +129,13 @@ export default function StorePage() {
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center">
             <Link href="/" className="mr-6">
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sokoby%20mk.png-gToWGGxndAiqQ6pEyC5uaZnjZdJgdq.jpeg"
-                alt="Sokoby"
-                width={120}
-                height={40}
-                className="h-8 w-auto"
-              />
+            <Image
+              src="/sokobylogo.png" 
+              alt="Sokoby"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
+            />
             </Link>
             <nav className="hidden space-x-6 md:flex">
               <Link href="/store" className="text-sm font-medium text-red-800 hover:text-red-700">
