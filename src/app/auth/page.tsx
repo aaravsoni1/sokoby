@@ -17,7 +17,6 @@ import { authService, LoginDto, MerchantDto } from "@/services/authService"
 export default function AuthPage() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [activeTab, setActiveTab] = useState("login")
   const [isLoading, setIsLoading] = useState(false)
 
@@ -44,9 +43,17 @@ export default function AuthPage() {
         // Store token in localStorage or secure cookie
         localStorage.setItem("auth_token", response.token)
         toast.success("Login successful!")
-        router.push("/auth/store-setup")
+        
+        // Check if coming from create-store page
+        const fromCreateStore = localStorage.getItem('from_create_store')
+        if (fromCreateStore) {
+          localStorage.removeItem('from_create_store')
+          router.push("/auth/store-setup")
+        } else {
+          router.push("/")
+        }
       }
-    } catch (error) {
+    } catch {
       toast.error("Invalid email or password")
     } finally {
       setIsLoading(false)
@@ -62,7 +69,7 @@ export default function AuthPage() {
       toast.success("Account created successfully!")
       setActiveTab("login")
       setLoginForm({ email: signupForm.email, password: "" })
-    } catch (error) {
+    } catch {
       toast.error("Failed to create account. Please try again.")
     } finally {
       setIsLoading(false)

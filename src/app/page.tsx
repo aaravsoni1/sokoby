@@ -1,13 +1,37 @@
+"use client"
+
 import { BarChart3, ChevronRight, CreditCard, Headphones, Mail, Shield, ShoppingBag, Star, Truck } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { UserProfileDropdown } from "@/components/UserProfileDropdown"
 
 export default function Home() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  const checkAuthentication = () => {
+    const token = localStorage.getItem("auth_token")
+    setIsAuthenticated(!!token)
+  }
+
+  useEffect(() => {
+    // Check initial authentication
+    checkAuthentication()
+
+    // Add event listener for storage changes (for cross-tab logout)
+    window.addEventListener('storage', checkAuthentication)
+
+    // Cleanup listener
+    return () => {
+      window.removeEventListener('storage', checkAuthentication)
+    }
+  }, [])
+
   return (
     <div className="flex min-h-screen flex-col">
       {/* Navigation */}
@@ -39,11 +63,32 @@ export default function Home() {
               Contact
             </Link>
           </nav>
+          
           <div className="hidden md:flex md:items-center md:space-x-4">
-            <Link href="/auth" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Log in
-            </Link>
-            <Button className="bg-red-800 hover:bg-red-700">Get Started</Button>
+            {isAuthenticated ? (
+              <UserProfileDropdown />
+            ) : (
+              <>
+                <Link href="/auth" className="text-sm font-medium text-gray-700 hover:text-red-800">
+                  Log in
+                </Link>
+                <Button className="bg-red-800 hover:bg-red-700">Get Started</Button>
+              </>
+            )}
+          </div>
+
+          {/* Mobile Navigation */}
+          <div className="md:hidden">
+            {isAuthenticated ? (
+              <UserProfileDropdown />
+            ) : (
+              <div className="flex items-center space-x-2">
+                <Link href="/auth" className="text-sm font-medium text-gray-700 hover:text-red-800">
+                  Log in
+                </Link>
+                <Button size="sm" className="bg-red-800 hover:bg-red-700">Get Started</Button>
+              </div>
+            )}
           </div>
         </div>
       </header>

@@ -181,7 +181,7 @@ export default function CreateStorePage() {
           </Link>
           <div className="flex items-center gap-4">
             <div className="text-sm text-gray-500">Already have an account?</div>
-            <Link href="/auth">
+            <Link href="/auth" onClick={() => localStorage.setItem('from_create_store', 'true')}>
               <Button variant="outline">Log in</Button>
             </Link>
           </div>
