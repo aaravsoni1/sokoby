@@ -118,7 +118,7 @@ export default function Home() {
                 </li>
               </ul>
               <div className="flex flex-col space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
-                <Link href="/auth/create-store">
+                <Link href={isAuthenticated ? "/auth/store-setup" : "/auth/create-store"}>
                   <Button size="lg" className="bg-white text-red-900 hover:bg-gray-100">
                     Start free trial
                   </Button>
@@ -615,9 +615,9 @@ export default function Home() {
                 Join thousands of successful businesses on our platform and start growing your online presence today.
               </p>
               <div className="flex flex-col space-y-3 sm:flex-row sm:justify-center sm:space-x-4 sm:space-y-0">
-              <Link href="/auth/create-store">
+              <Link href={isAuthenticated ? "/auth/store-setup" : "/auth/create-store"}>
                 <Button size="lg" className="bg-white text-red-900 hover:bg-gray-100">
-                  Start your 14-day free trial
+                  Start free trial
                 </Button>
                 </Link>
                 <Link href="/contact">
