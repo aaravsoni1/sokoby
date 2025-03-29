@@ -1,22 +1,7 @@
 import axios from 'axios';
+import { JWTTokenDto, LoginDto, MerchantDto } from './types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
-
-export interface LoginDto {
-  email: string;
-  password: string;
-}
-
-export interface MerchantDto {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-}
-
-export interface JWTTokenDto {
-  token: string;
-}
 
 export const authService = {
   // Merchant signup
@@ -39,11 +24,22 @@ export const authService = {
 
   // Logout
   logout: async (): Promise<void> => {
-    await axios.post(`${API_URL}/auth/logout`);
+    // Note: Implement logout endpoint in backend if needed
+    localStorage.removeItem('auth_token');
   },
 
   // Google login
   googleLogin: async (): Promise<void> => {
     window.location.href = `${API_URL}/auth/google/login`;
+  },
+
+  // Check if user is authenticated
+  isAuthenticated: (): boolean => {
+    return !!localStorage.getItem('auth_token');
+  },
+
+  // Get current user token
+  getToken: (): string | null => {
+    return localStorage.getItem('auth_token');
   }
 }; 

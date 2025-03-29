@@ -12,7 +12,8 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { authService, LoginDto, MerchantDto } from "@/services/authService"
+import { authService} from "@/services/authService"
+import {LoginDto, MerchantDto} from "@/services/types"
 
 export default function AuthPage() {
   const router = useRouter()

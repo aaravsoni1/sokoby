@@ -1,0 +1,39 @@
+{
+  "name": "Dawn",
+  "version": "1.0.0",
+  "description": "A clean, modern theme optimized for performance",
+  "settings": {
+    "colors": {
+      "primary": "#000000",
+      "secondary": "#6B7280",
+      "background": "#FFFFFF",
+      "accent": "#DC2626"
+    },
+    "typography": {
+      "font_family": "Inter, sans-serif",
+      "heading_font": "Inter, sans-serif",
+      "base_font_size": "16px"
+    },
+    "layout": {
+      "max_width": "1200px",
+      "content_padding": "20px"
+    }
+  },
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {
+        "show_menu": true,
+        "show_search": true,
+        "show_cart": true
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "show_newsletter": true,
+        "show_social": true
+      }
+    }
+  }
+} 
