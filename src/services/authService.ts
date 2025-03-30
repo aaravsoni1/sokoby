@@ -7,12 +7,29 @@ export const authService = {
   // Merchant signup
   signup: async (merchantData: MerchantDto): Promise<MerchantDto> => {
     const response = await axios.post(`${API_URL}/auth/signup`, merchantData);
+    
+    // Store merchant ID in localStorage after successful signup
+    if (response.data.id) {
+      localStorage.setItem('merchantId', response.data.id);
+    }
+    
     return response.data;
   },
 
   // Merchant login
   login: async (loginData: LoginDto): Promise<JWTTokenDto> => {
     const response = await axios.post(`${API_URL}/auth/login`, loginData);
+    
+    // Store token and merchant ID in localStorage after successful login
+    if (response.data.token) {
+      localStorage.setItem('auth_token', response.data.token);
+      
+      // If merchant ID is part of the login response, store it
+      if (response.data.merchantId) {
+        localStorage.setItem('merchantId', response.data.merchantId);
+      }
+    }
+    
     return response.data;
   },
 
@@ -24,8 +41,8 @@ export const authService = {
 
   // Logout
   logout: async (): Promise<void> => {
-    // Note: Implement logout endpoint in backend if needed
     localStorage.removeItem('auth_token');
+    localStorage.removeItem('merchantId');
   },
 
   // Google login

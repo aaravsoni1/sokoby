@@ -7,17 +7,20 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { storeService } from "@/services/storeService"
 
 export default function CreateStorePage() {
   const router = useRouter()
   const [step, setStep] = useState(1)
   const [storeCreated, setStoreCreated] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -30,7 +33,7 @@ export default function CreateStorePage() {
     currentRevenue: "",
     industry: "",
     storeDescription: "",
-    storeLogo: "",
+    storeLogo: null as File | null,
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,14 +45,56 @@ export default function CreateStorePage() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setFormData(prev => ({ ...prev, storeLogo: file }))
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (step < 4) {
+    
+    if (step < 3) {
       setStep(step + 1)
-    } else {
-      // In a real app, this would submit the form data to create the store
-      console.log("Form submitted:", formData)
+      return
+    }
+
+    // Final step - create store
+    setIsLoading(true)
+    try {
+      // Assuming you have the merchantId from previous authentication step
+      const merchantId = localStorage.getItem('merchantId')
+      if (!merchantId) {
+        throw new Error('Merchant ID not found')
+      }
+
+      const storeData = {
+        name: formData.storeName,
+        domain: formData.storeUrl,
+        description: formData.storeDescription,
+        productType: formData.storeType,
+        businessType: formData.businessType,
+        revenue: formData.currentRevenue,
+        industry: formData.industry,
+      }
+
+      const createdStore = await storeService.createStore(
+        merchantId, 
+        storeData, 
+        formData.storeLogo || undefined
+      )
+
+      toast.success('Store created successfully!')
       setStoreCreated(true)
+      
+      // Redirect to store dashboard or next step
+      router.push(`/store/${createdStore.id}`)
+    } catch (error) {
+      console.error('Store creation failed:', error)
+      toast.error('Failed to create store. Please try again.')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -389,20 +434,37 @@ export default function CreateStorePage() {
                       <div className="flex items-center gap-4">
                         <div className="relative h-20 w-20 overflow-hidden rounded-lg border">
                           <Image
-                            src={formData.storeLogo || "/placeholder.svg"}
+                            src={formData.storeLogo ? URL.createObjectURL(formData.storeLogo) : "/placeholder.svg"}
                             alt="Store logo"
                             fill
                             className="object-cover"
                           />
                         </div>
-                        <Button variant="outline">Upload logo</Button>
+                        <Button 
+                          type="button"
+                          variant="outline" 
+                          onClick={() => document.getElementById('logo-upload')?.click()}
+                        >
+                          Upload logo
+                        </Button>
+                        <input 
+                          type="file" 
+                          id="logo-upload"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleLogoUpload}
+                        />
                       </div>
                     </div>
                   </div>
                 )}
 
-                <Button type="submit" className="w-full mt-6 bg-red-800 hover:bg-red-700">
-                  {step < 4 ? "Continue" : "Create your store"}
+                <Button 
+                  type="submit" 
+                  className="w-full mt-6 bg-red-800 hover:bg-red-700"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Creating store..." : (step < 4 ? "Continue" : "Create your store")}
                 </Button>
               </form>
             </CardContent>

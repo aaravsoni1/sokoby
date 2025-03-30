@@ -1,36 +1,97 @@
 import axios from 'axios';
 import { StoreDto } from './types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+// Create a custom axios instance with more robust configuration
+const apiClient = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api',
+  timeout: 10000, // 10 second timeout
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+});
+
+// Add a request interceptor to include the auth token
+apiClient.interceptors.request.use(
+  config => {
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
 
 export const storeService = {
   // Create a store for a specific merchant with logo upload
   createStore: async (
     merchantId: string, 
-    storeData: StoreDto, 
+    storeData: {
+      name: string;
+      domain: string;
+      description?: string;
+      stripeAccountId?: string;
+      productType?: string;
+      businessType?: string;
+      revenue?: string;
+      industry?: string;
+    }, 
     logo?: File
   ): Promise<StoreDto> => {
-    const formData = new FormData();
-    
-    // Append store data fields
-    Object.keys(storeData).forEach(key => {
-      const value = storeData[key as keyof StoreDto];
-      if (value !== undefined && value !== null) {
-        formData.append(key, value.toString());
-      }
-    });
+    try {
+      console.log('Attempting to create store with data:', {
+        merchantId,
+        storeData,
+        hasLogo: !!logo
+      });
 
-    // Append logo if provided
-    if (logo) {
-      formData.append('logo', logo);
+      const formData = new FormData();
+      
+      // Append store data fields
+      Object.keys(storeData).forEach(key => {
+        const value = storeData[key as keyof typeof storeData];
+        if (value !== undefined && value !== null) {
+          formData.append(key, value.toString());
+        }
+      });
+
+      // Append logo if provided
+      if (logo) {
+        formData.append('logo', logo);
+      }
+
+      // Log the FormData contents
+      for (let [key, value] of formData.entries()) {
+        console.log(`FormData entry: ${key}`, value);
+      }
+
+      const response = await apiClient.post(`/store/create/${merchantId}`, formData);
+      
+      console.log('Store creation response:', response.data);
+      return response.data;
+    } catch (error: any) {
+      console.error('Detailed store creation error:', {
+        error: error.message,
+        response: error.response,
+        request: error.request
+      });
+
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error('Server error response:', error.response.data);
+        throw new Error(error.response.data.message || 'Failed to create store');
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+        throw new Error('No response from server. Please check your network connection.');
+      } else {
+        // Something happened in setting up the request
+        console.error('Error setting up request:', error.message);
+        throw new Error('Error setting up store creation request');
+      }
     }
-
-    const response = await axios.post(`${API_URL}/store/create/${merchantId}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-    return response.data;
   },
 
   // Get a store by its ID

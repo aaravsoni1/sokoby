@@ -12,11 +12,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { storeService } from "@/services/storeService"
 
 export default function StoreSetupPage() {
   const router = useRouter()
   const [step, setStep] = useState(1)
   const [storeCreated, setStoreCreated] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     storeName: "",
     storeUrl: "",
@@ -25,7 +27,7 @@ export default function StoreSetupPage() {
     currentRevenue: "",
     industry: "",
     storeDescription: "",
-    storeLogo: "",
+    storeLogo: null as File | null,
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,18 +39,79 @@ export default function StoreSetupPage() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setFormData(prev => ({ ...prev, storeLogo: file }))
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
     if (step < 3) {
       setStep(step + 1)
-    } else {
-      try {
-        // Here you would typically make an API call to save the store details
-        // For now, we'll just simulate success
-        setStoreCreated(true)
-      } catch {
-        toast.error("Failed to setup store. Please try again.")
+      return
+    }
+
+    // Final step - create store
+    setIsLoading(true)
+    try {
+      // Validate required fields
+      if (!formData.storeName || !formData.storeUrl) {
+        toast.error('Please fill in all required fields');
+        setIsLoading(false);
+        return;
       }
+
+      const merchantId = localStorage.getItem('merchantId')
+      const authToken = localStorage.getItem('auth_token')
+
+      console.log('Merchant ID:', merchantId);
+      console.log('Auth Token:', authToken);
+
+      if (!merchantId) {
+        toast.error('Merchant ID not found. Please log in again.');
+        router.push('/auth');
+        setIsLoading(false);
+        return;
+      }
+
+      const storeData = {
+        name: formData.storeName,
+        domain: formData.storeUrl,
+        description: formData.storeDescription,
+        productType: formData.storeType,
+        businessType: formData.businessType,
+        revenue: formData.currentRevenue,
+        industry: formData.industry,
+      }
+
+      const createdStore = await storeService.createStore(
+        merchantId, 
+        storeData, 
+        formData.storeLogo || undefined
+      )
+
+      toast.success('Store created successfully!')
+      setStoreCreated(true)
+      
+      // Redirect to store dashboard or next step
+      router.push(`/dashboard/products/new`)
+    } catch (error: any) {
+      console.error('Comprehensive store creation error:', error);
+      
+      // More detailed error handling
+      if (error.message.includes('Network')) {
+        toast.error('Network error. Please check your internet connection.');
+      } else if (error.message.includes('Merchant ID')) {
+        toast.error('Session expired. Please log in again.');
+        router.push('/auth');
+      } else {
+        toast.error(error.message || 'Failed to create store. Please try again.');
+      }
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -327,20 +390,37 @@ export default function StoreSetupPage() {
                       <div className="flex items-center gap-4">
                         <div className="relative h-20 w-20 overflow-hidden rounded-lg border">
                           <Image
-                            src={formData.storeLogo || "/placeholder.svg"}
+                            src={formData.storeLogo ? URL.createObjectURL(formData.storeLogo) : "/placeholder.svg"}
                             alt="Store logo"
                             fill
                             className="object-cover"
                           />
                         </div>
-                        <Button variant="outline">Upload logo</Button>
+                        <Button 
+                          type="button"
+                          variant="outline" 
+                          onClick={() => document.getElementById('logo-upload')?.click()}
+                        >
+                          Upload logo
+                        </Button>
+                        <input 
+                          type="file" 
+                          id="logo-upload"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleLogoUpload}
+                        />
                       </div>
                     </div>
                   </div>
                 )}
 
-                <Button type="submit" className="w-full mt-6 bg-red-800 hover:bg-red-700">
-                  {step < 3 ? "Continue" : "Complete Setup"}
+                <Button 
+                  type="submit" 
+                  className="w-full mt-6 bg-red-800 hover:bg-red-700"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Creating store..." : (step < 3 ? "Continue" : "Complete Setup")}
                 </Button>
               </form>
             </CardContent>

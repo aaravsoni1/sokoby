@@ -18,6 +18,7 @@ export interface MerchantDto {
 export interface JWTTokenDto {
   type: string;
   token: string;
+  merchantId?: string; 
 }
 
 // Product DTOs
