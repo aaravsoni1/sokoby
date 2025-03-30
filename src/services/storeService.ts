@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { StoreDto } from './types';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+
 // Create a custom axios instance with more robust configuration
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api',
+  baseURL: API_URL,
   timeout: 10000, // 10 second timeout
   headers: {
     'Content-Type': 'multipart/form-data'
@@ -40,58 +42,23 @@ export const storeService = {
     }, 
     logo?: File
   ): Promise<StoreDto> => {
-    try {
-      console.log('Attempting to create store with data:', {
-        merchantId,
-        storeData,
-        hasLogo: !!logo
-      });
-
-      const formData = new FormData();
-      
-      // Append store data fields
-      Object.keys(storeData).forEach(key => {
-        const value = storeData[key as keyof typeof storeData];
-        if (value !== undefined && value !== null) {
-          formData.append(key, value.toString());
-        }
-      });
-
-      // Append logo if provided
-      if (logo) {
-        formData.append('logo', logo);
+    const formData = new FormData();
+    
+    // Append store data fields
+    Object.keys(storeData).forEach(key => {
+      const value = storeData[key as keyof typeof storeData];
+      if (value !== undefined && value !== null) {
+        formData.append(key, value.toString());
       }
+    });
 
-      // Log the FormData contents
-      for (let [key, value] of formData.entries()) {
-        console.log(`FormData entry: ${key}`, value);
-      }
-
-      const response = await apiClient.post(`/store/create/${merchantId}`, formData);
-      
-      console.log('Store creation response:', response.data);
-      return response.data;
-    } catch (error: any) {
-      console.error('Detailed store creation error:', {
-        error: error.message,
-        response: error.response,
-        request: error.request
-      });
-
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        console.error('Server error response:', error.response.data);
-        throw new Error(error.response.data.message || 'Failed to create store');
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error('No response received:', error.request);
-        throw new Error('No response from server. Please check your network connection.');
-      } else {
-        // Something happened in setting up the request
-        console.error('Error setting up request:', error.message);
-        throw new Error('Error setting up store creation request');
-      }
+    // Append logo if provided
+    if (logo) {
+      formData.append('logo', logo);
     }
+
+    const response = await apiClient.post(`/store/create/${merchantId}`, formData);
+    return response.data;
   },
 
   // Get a store by its ID

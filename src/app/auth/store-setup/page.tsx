@@ -60,20 +60,13 @@ export default function StoreSetupPage() {
       // Validate required fields
       if (!formData.storeName || !formData.storeUrl) {
         toast.error('Please fill in all required fields');
-        setIsLoading(false);
         return;
       }
 
       const merchantId = localStorage.getItem('merchantId')
-      const authToken = localStorage.getItem('auth_token')
-
-      console.log('Merchant ID:', merchantId);
-      console.log('Auth Token:', authToken);
-
       if (!merchantId) {
         toast.error('Merchant ID not found. Please log in again.');
         router.push('/auth');
-        setIsLoading(false);
         return;
       }
 
@@ -87,29 +80,23 @@ export default function StoreSetupPage() {
         industry: formData.industry,
       }
 
-      const createdStore = await storeService.createStore(
+      const storeResponse = await storeService.createStore(
         merchantId, 
         storeData, 
         formData.storeLogo || undefined
       )
 
+      // Store the store ID in localStorage
+      localStorage.setItem('currentStoreId', storeResponse.id || '')
+
       toast.success('Store created successfully!')
       setStoreCreated(true)
       
-      // Redirect to store dashboard or next step
-      router.push(`/dashboard/products/new`)
-    } catch (error: any) {
-      console.error('Comprehensive store creation error:', error);
-      
-      // More detailed error handling
-      if (error.message.includes('Network')) {
-        toast.error('Network error. Please check your internet connection.');
-      } else if (error.message.includes('Merchant ID')) {
-        toast.error('Session expired. Please log in again.');
-        router.push('/auth');
-      } else {
-        toast.error(error.message || 'Failed to create store. Please try again.');
-      }
+      // Redirect to product creation page
+      router.push('/dashboard/products/new')
+    } catch (error: unknown) {
+      console.error('Store creation failed:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to create store. Please try again.')
     } finally {
       setIsLoading(false)
     }
