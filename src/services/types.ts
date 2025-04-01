@@ -24,16 +24,63 @@ export interface JWTTokenDto {
 // Product DTOs
 export interface ProductDto {
   id?: string;
-  name: string;
+  title: string;
   storeId?: string;
-  imageUrl?: string;
+  imageUrls: {
+    id: string;
+    imageUrl: string;
+    productId: string;
+  }[];
   description?: string;
-  variantId?: string;
-  stock?: number;
+  variant: {
+    variantId: string;
+    productId: string;
+    skuCode: string;
+    price: number;
+    stockQuantity: number;
+  }[];
+  stock: number;
+  status: string;
+  sku: string;
+  comparedPrice: number;
   price: number;
-  categories?: CategoryDto[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  collections: {
+    id: string;
+    type: string;
+    storeId: string;
+    vendor: string;
+    products: ProductDto[] | null;
+    createdAt: string;
+    updatedAt: string | null;
+  }[];
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+// Product Creation DTOs
+export interface ProductCreateFormData {
+  title: string;
+  description: string;
+  price: string;
+  comparedPrice: string;
+  skuCode: string;
+  stockQuantity: string;
+  status: string;
+  barcode: string;
+  storeId: string;
+  collection: {
+    type: string;
+    vendor: string;
+  };
+  variants: ProductVariantFormData[];
+  files: File[];
+}
+
+export interface ProductVariantFormData {
+  name: string;
+  price: string;
+  skuCode: string;
+  stockQuantity: string;
 }
 
 export interface CategoryDto {

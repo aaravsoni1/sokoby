@@ -3,7 +3,43 @@ import { ProductDto } from './types'; // Create a types file for DTOs
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
 
+// Create axios instance with default config
+const axiosInstance = axios.create({
+  baseURL: API_URL,
+  withCredentials: true
+});
+
+// Add request interceptor to add auth token
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export const productService = {
+
+
+  createProductWithFormData: async (formData: FormData): Promise<ProductDto> => {
+    const response = await axiosInstance.post('/product/create/form-data', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+
+  getAllProducts: async (): Promise<ProductDto[]> => {
+    const response = await axiosInstance.get('/product/getAll');
+    return response.data;
+  },
+
   // Create a product for a specific store
   createProduct: async (storeId: string, productData: ProductDto): Promise<ProductDto> => {
     const response = await axios.post(`${API_URL}/product/create/${storeId}`, productData);

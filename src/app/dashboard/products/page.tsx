@@ -8,50 +8,93 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { productService } from "@/services/productService"
 
-// Mock data - replace with actual data from your backend
-const products = [
-  {
-    id: 1,
-    title: "Classic T-Shirt",
-    status: "Active",
-    inventory: 100,
-    price: 29.99,
-    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=2080&auto=format&fit=crop",
-  },
-  {
-    id: 2,
-    title: "Denim Jeans",
-    status: "Active",
-    inventory: 50,
-    price: 79.99,
-    image: "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=2026&auto=format&fit=crop",
-  },
-  {
-    id: 3,
-    title: "Running Shoes",
-    status: "Draft",
-    inventory: 0,
-    price: 99.99,
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop",
-  },
-]
+interface ProductImage {
+  id: string
+  imageUrl: string
+  productId: string
+}
+
+interface ProductVariant {
+  variantId: string
+  productId: string
+  skuCode: string
+  price: number
+  stockQuantity: number
+}
+
+interface Collection {
+  id: string
+  type: string
+  storeId: string
+  vendor: string
+  products: Product[] | null
+  createdAt: string
+  updatedAt: string | null
+}
+
+interface Product {
+  id?: string
+  title: string
+  storeId?: string
+  imageUrls: ProductImage[]
+  description?: string
+  variant: ProductVariant[]
+  stock: number
+  status: string
+  sku: string
+  comparedPrice: number
+  price: number
+  collections: Collection[]
+  createdAt?: string
+  updatedAt?: string
+}
 
 export default function ProductsPage() {
+  const router = useRouter()
   const [searchQuery, setSearchQuery] = useState("")
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const authToken = localStorage.getItem("auth_token")
+        if (!authToken) {
+          toast.error("Please login first")
+          router.push("/login")
+          return
+        }
+
+        const data = await productService.getAllProducts()
+        setProducts(data)
+      } catch (error) {
+        console.error("Error fetching products:", error)
+        toast.error("Failed to fetch products")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProducts()
+  }, [router])
 
   // Filter products based on search query
   const filteredProducts = products.filter((product) => {
     const matchesSearch =
       searchQuery === "" ||
       product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.id.toString().includes(searchQuery)
+      product.id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.sku.toLowerCase().includes(searchQuery.toLowerCase())
 
     return matchesSearch
   })
@@ -108,37 +151,53 @@ export default function ProductsPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredProducts.map((product) => (
-                <TableRow key={product.id}>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <div className="relative h-10 w-10 overflow-hidden rounded-lg">
-                        <Image
-                          src={product.image}
-                          alt={product.title}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div>
-                        <div className="font-medium">{product.title}</div>
-                        <div className="text-sm text-gray-500">SKU: {product.id}</div>
-                      </div>
-                    </div>
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={4} className="text-center">
+                    Loading products...
                   </TableCell>
-                  <TableCell>
-                    <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                      product.status === "Active" 
-                        ? "bg-green-100 text-green-700" 
-                        : "bg-gray-100 text-gray-700"
-                    }`}>
-                      {product.status}
-                    </span>
-                  </TableCell>
-                  <TableCell>{product.inventory}</TableCell>
-                  <TableCell>${product.price}</TableCell>
                 </TableRow>
-              ))}
+              ) : filteredProducts.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={4} className="text-center">
+                    No products found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                filteredProducts.map((product) => (
+                  <TableRow key={product.id}>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <div className="relative h-10 w-10 overflow-hidden rounded-lg">
+                          <Image
+                            src={product.imageUrls[0]?.imageUrl || "/placeholder.png"}
+                            alt={product.title}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div>
+                          <div className="font-medium">{product.title}</div>
+                          <div className="text-sm text-gray-500">SKU: {product.sku}</div>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
+                        product.status === "ACTIVE" 
+                          ? "bg-green-100 text-green-700" 
+                          : product.status === "DRAFT"
+                          ? "bg-gray-100 text-gray-700"
+                          : "bg-red-100 text-red-700"
+                      }`}>
+                        {product.status}
+                      </span>
+                    </TableCell>
+                    <TableCell>{product.stock}</TableCell>
+                    <TableCell>${product.price.toFixed(2)}</TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </CardContent>
