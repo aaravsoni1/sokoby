@@ -88,6 +88,6 @@ export const productService = {
 
   // Delete a product
   deleteProduct: async (productId: string): Promise<void> => {
-    await axios.delete(`${API_URL}/product/delete/${productId}`);
+    await axiosInstance.delete(`${API_URL}/product/delete/${productId}`);
   }
 }; 

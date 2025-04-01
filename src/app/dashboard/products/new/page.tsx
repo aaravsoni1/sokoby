@@ -116,12 +116,19 @@ export default function NewProductPage() {
       }
 
       const response = await productService.createProductWithFormData(formDataToSend)
+      console.log('Product creation response:', response)
+      
       // Store the product ID in localStorage
-      if (response.id) {
-        localStorage.setItem('currentProductId', response.id)
+      if (response && response.productId) {
+        console.log('Setting product ID in localStorage:', response.productId)
+        localStorage.setItem('currentProductId', response.productId)
+        toast.success("Product created successfully")
+        console.log('Redirecting to products page...')
+        await router.replace("/dashboard/products")
+      } else {
+        console.log('No product ID in response:', response)
+        toast.error("Failed to create product: No product ID received")
       }
-      toast.success("Product created successfully")
-      router.push("/dashboard/products")
     } catch (error: unknown) {
       console.error("Error creating product:", error)
       

@@ -24,6 +24,7 @@ export interface JWTTokenDto {
 // Product DTOs
 export interface ProductDto {
   id?: string;
+  productId?: string;
   title: string;
   storeId?: string;
   imageUrls: {

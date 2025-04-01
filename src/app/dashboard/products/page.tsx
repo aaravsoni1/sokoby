@@ -4,7 +4,8 @@ import {
   Filter,
   Plus,
   Search,
-  Settings2
+  Settings2,
+  Trash2
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -44,6 +45,7 @@ interface Collection {
 
 interface Product {
   id?: string
+  productId?: string
   title: string
   storeId?: string
   imageUrls: ProductImage[]
@@ -64,6 +66,18 @@ export default function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
+
+  const handleDeleteProduct = async (productId: string) => {
+    try {
+      await productService.deleteProduct(productId)
+      // Remove the deleted product from the state
+      setProducts(products.filter(product => product.id !== productId))
+      toast.success("Product deleted successfully")
+    } catch (error) {
+      console.error("Error deleting product:", error)
+      toast.error("Failed to delete product")
+    }
+  }
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -148,18 +162,19 @@ export default function ProductsPage() {
                 <TableHead>Status</TableHead>
                 <TableHead>Inventory</TableHead>
                 <TableHead>Price</TableHead>
+                <TableHead className="w-[100px]">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={4} className="text-center">
+                  <TableCell colSpan={5} className="text-center">
                     Loading products...
                   </TableCell>
                 </TableRow>
               ) : filteredProducts.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={4} className="text-center">
+                  <TableCell colSpan={5} className="text-center">
                     No products found
                   </TableCell>
                 </TableRow>
@@ -195,6 +210,16 @@ export default function ProductsPage() {
                     </TableCell>
                     <TableCell>{product.stock}</TableCell>
                     <TableCell>${product.price.toFixed(2)}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        onClick={() => handleDeleteProduct(product.id!)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))
               )}
