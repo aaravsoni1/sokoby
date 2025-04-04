@@ -26,51 +26,73 @@ apiClient.interceptors.request.use(
   }
 );
 
-export const storeService = {
-  // Create a store for a specific merchant with logo upload
-  createStore: async (
-    merchantId: string, 
-    storeData: {
-      name: string;
-      domain: string;
-      description?: string;
-      stripeAccountId?: string;
-      productType?: string;
-      businessType?: string;
-      revenue?: string;
-      industry?: string;
-    }, 
-    logo?: File
-  ): Promise<StoreDto> => {
-    const formData = new FormData();
-    
-    // Append store data fields
-    Object.keys(storeData).forEach(key => {
-      const value = storeData[key as keyof typeof storeData];
-      if (value !== undefined && value !== null) {
-        formData.append(key, value.toString());
-      }
-    });
+interface Store {
+  id: string
+  name: string
+  domain: string
+  stripeAccountId: string | null
+  description: string
+  createdAt: string
+  updatedAt: string
+  merchantId: string
+  productType: string
+  businessType: string
+  revenue: string
+  industry: string
+  imageUrl: string
+}
 
-    // Append logo if provided
-    if (logo) {
-      formData.append('logo', logo);
+export const storeService = {
+  async getStore(storeId: string): Promise<Store> {
+    const authToken = localStorage.getItem("auth_token")
+    if (!authToken) {
+      throw new Error("No auth token found")
     }
 
-    const response = await apiClient.post(`/store/create/${merchantId}`, formData);
-    return response.data;
+    const response = await axios.get(`${API_URL}/store/${storeId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
+    return response.data
   },
 
-  // Get a store by its ID
-  getStoreById: async (storeId: string): Promise<StoreDto> => {
-    const response = await axios.get(`${API_URL}/store/${storeId}`);
-    return response.data;
+  // Create a store for a specific merchant with logo upload
+  createStore: async (
+    merchantId: string,
+    formData: FormData
+  ): Promise<Store> => {
+    const authToken = localStorage.getItem("auth_token")
+    if (!authToken) {
+      throw new Error("No auth token found")
+    }
+
+    const response = await axios.post(
+      `${API_URL}/store/create/${merchantId}`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    return response.data
   },
 
   // Get store by merchant ID
-  getStoreByMerchantId: async (merchantId: string): Promise<StoreDto> => {
-    const response = await axios.get(`${API_URL}/store/merchant/${merchantId}`);
-    return response.data;
+  getStoreByMerchantId: async (merchantId: string): Promise<Store> => {
+    const authToken = localStorage.getItem("auth_token")
+    if (!authToken) {
+      throw new Error("No auth token found")
+    }
+
+    const response = await axios.get(`${API_URL}/store/merchant/${merchantId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
+    return response.data
   },
 
   // Search stores with pagination and filtering
@@ -126,6 +148,15 @@ export const storeService = {
 
   // Delete a store
   deleteStore: async (storeId: string): Promise<void> => {
-    await axios.delete(`${API_URL}/store/delete/${storeId}`);
+    const authToken = localStorage.getItem("auth_token")
+    if (!authToken) {
+      throw new Error("No auth token found")
+    }
+
+    await axios.delete(`${API_URL}/store/delete/${storeId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
   }
-}; 
+} 

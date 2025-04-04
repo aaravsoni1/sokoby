@@ -80,10 +80,17 @@ export default function StoreSetupPage() {
         industry: formData.industry,
       }
 
+      const formDataObj = new FormData()
+      Object.entries(storeData).forEach(([key, value]) => {
+        formDataObj.append(key, value)
+      })
+      if (formData.storeLogo) {
+        formDataObj.append('logo', formData.storeLogo)
+      }
+
       const storeResponse = await storeService.createStore(
         merchantId, 
-        storeData, 
-        formData.storeLogo || undefined
+        formDataObj
       )
 
       // Store the store ID in localStorage

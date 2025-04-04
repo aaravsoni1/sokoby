@@ -32,6 +32,7 @@ export default function NewProductPage() {
     barcode: "",
     productType: "",
     vendor: "",
+    collectionType: "",
   })
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export default function NewProductPage() {
     const authToken = localStorage.getItem("auth_token")
     const currentStoreId = localStorage.getItem("currentStoreId")
     if (!authToken || !currentStoreId) {
-      router.push("/login")
+      router.push("/auth")
     }
   }, [router])
 
@@ -96,8 +97,9 @@ export default function NewProductPage() {
       formDataToSend.append("storeId", currentStoreId)
 
       // Add collection information
-      formDataToSend.append("collection.type", formData.productType)
+      formDataToSend.append("collection.productType", formData.productType)
       formDataToSend.append("collection.vendor", formData.vendor)
+      formDataToSend.append("collection.type", formData.collectionType)
 
       // Add variants information
       variants.forEach((variant, index) => {
@@ -453,6 +455,21 @@ export default function NewProductPage() {
                     onChange={handleInputChange}
                     placeholder="Enter vendor name" 
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="collectionType">Collection type</Label>
+                  <Select
+                    value={formData.collectionType}
+                    onValueChange={(value) => setFormData(prev => ({ ...prev, collectionType: value }))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select collection type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="NEW_ARRIVAL">New Arrival</SelectItem>
+                      <SelectItem value="SALE">Sale</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </CardContent>
             </Card>

@@ -1,11 +1,11 @@
 "use client"
 
 import {
-  Filter,
-  Plus,
-  Search,
-  Settings2,
-  Trash2
+    Filter,
+    Plus,
+    Search,
+    Settings2,
+    Trash2
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -120,12 +120,20 @@ export default function ProductsPage() {
           <h1 className="text-2xl font-bold">Products</h1>
           <p className="text-gray-500">Manage your products and inventory</p>
         </div>
-        <Link href="/dashboard/products/new">
-          <Button className="bg-red-800 hover:bg-red-700">
-            <Plus className="h-4 w-4 mr-2" />
-            Add product
+        <div className="flex items-center gap-4">
+          <Button 
+            variant="outline"
+            onClick={() => window.open(`/store/${products[0]?.storeId}`, '_blank')}
+          >
+            Preview your store
           </Button>
-        </Link>
+          <Link href="/dashboard/products/new">
+            <Button className="bg-red-800 hover:bg-red-700">
+              <Plus className="h-4 w-4 mr-2" />
+              Add product
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <Card>
@@ -211,14 +219,16 @@ export default function ProductsPage() {
                     <TableCell>{product.stock}</TableCell>
                     <TableCell>${product.price.toFixed(2)}</TableCell>
                     <TableCell>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                        onClick={() => handleDeleteProduct(product.id!)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          onClick={() => handleDeleteProduct(product.id!)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))
