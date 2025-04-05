@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
@@ -26,6 +26,7 @@ interface CartItem {
 
 export default function CartPage() {
   const params = useParams()
+  const router = useRouter()
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -60,6 +61,13 @@ export default function CartPage() {
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
   const tax = subtotal * 0.1 // 10% tax
   const total = subtotal + tax
+
+  const handleCheckout = () => {
+    const storeId = params.storeId as string
+    if (storeId) {
+      router.push(`/store/${storeId}/checkout`)
+    }
+  }
 
   if (loading) {
     return <div className="container py-8">Loading...</div>
@@ -161,7 +169,11 @@ export default function CartPage() {
                   </div>
                 </div>
               </div>
-              <Button className="w-full mt-6" size="lg">
+              <Button 
+                className="w-full mt-6" 
+                size="lg" 
+                onClick={handleCheckout}
+              >
                 Proceed to Checkout
               </Button>
             </div>

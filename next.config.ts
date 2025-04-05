@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       'images.unsplash.com',
       'unsplash.com',
       'plus.unsplash.com',
+      'sokobybucket.s3.us-east-2.amazonaws.com',
     ], // Add this for your image domain
   },
   // Add other necessary config options

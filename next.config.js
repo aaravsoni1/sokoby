@@ -6,7 +6,7 @@ const nextConfig = {
       'images.unsplash.com',
       'unsplash.com',
       'plus.unsplash.com',
-      'soni007.s3.eu-north-1.amazonaws.com',
+      'sokobybucket.s3.us-east-2.amazonaws.com',
     ],
   },
 }

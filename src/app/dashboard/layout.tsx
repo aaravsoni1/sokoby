@@ -5,10 +5,11 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
+import { SidebarProvider } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
 
 const navigation = [
-  { name: "Overview", href: "/dashboard", icon: Home },
+  { name: "Dashboard", href: "/dashboard", icon: Home },
   { name: "Products", href: "/dashboard/products", icon: Package },
   { name: "Theme", href: "/dashboard/theme", icon: Store },
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
@@ -22,16 +23,16 @@ export default function DashboardLayout({
   const pathname = usePathname()
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Sidebar */}
-      <div className="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r">
-        <div className="flex flex-col h-full">
+    <SidebarProvider>
+      <div className="flex h-full w-full">
+        {/* Sidebar */}
+        <div className="flex h-full w-64 flex-col fixed inset-y-0 z-50 bg-white border-r">
           <div className="flex h-16 items-center px-4 border-b">
             <Link href="/" className="flex items-center">
               <span className="text-xl font-bold">Sokoby</span>
             </Link>
           </div>
-          <nav className="flex-1 space-y-1 p-4">
+          <nav className="flex-1 overflow-y-auto p-4">
             {navigation.map((item) => {
               const isActive = pathname.startsWith(item.href)
               return (
@@ -39,7 +40,7 @@ export default function DashboardLayout({
                   <Button
                     variant={isActive ? "secondary" : "ghost"}
                     className={cn(
-                      "w-full justify-start gap-2",
+                      "w-full justify-start gap-2 mb-1",
                       isActive && "bg-gray-100"
                     )}
                   >
@@ -51,13 +52,15 @@ export default function DashboardLayout({
             })}
           </nav>
         </div>
-      </div>
 
-      {/* Main content */}
-      <div className="pl-64">
-        {children}
+        {/* Main content */}
+        <div className="flex-1 pl-64">
+          <main className="h-screen overflow-y-auto">
+            {children}
+          </main>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   )
 }
 

@@ -7,9 +7,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
 const apiClient = axios.create({
   baseURL: API_URL,
   timeout: 10000, // 10 second timeout
-  headers: {
-    'Content-Type': 'multipart/form-data'
-  }
+  withCredentials: true
 });
 
 // Add a request interceptor to include the auth token
@@ -44,17 +42,8 @@ interface Store {
 
 export const storeService = {
   async getStore(storeId: string): Promise<Store> {
-    const authToken = localStorage.getItem("auth_token")
-    if (!authToken) {
-      throw new Error("No auth token found")
-    }
-
-    const response = await axios.get(`${API_URL}/store/${storeId}`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
-    return response.data
+    const response = await apiClient.get(`/store/${storeId}`);
+    return response.data;
   },
 
   // Create a store for a specific merchant with logo upload
@@ -62,37 +51,22 @@ export const storeService = {
     merchantId: string,
     formData: FormData
   ): Promise<Store> => {
-    const authToken = localStorage.getItem("auth_token")
-    if (!authToken) {
-      throw new Error("No auth token found")
-    }
-
-    const response = await axios.post(
-      `${API_URL}/store/create/${merchantId}`,
+    const response = await apiClient.post(
+      `/store/create/${merchantId}`,
       formData,
       {
         headers: {
-          Authorization: `Bearer ${authToken}`,
           "Content-Type": "multipart/form-data",
         },
       }
-    )
-    return response.data
+    );
+    return response.data;
   },
 
   // Get store by merchant ID
   getStoreByMerchantId: async (merchantId: string): Promise<Store> => {
-    const authToken = localStorage.getItem("auth_token")
-    if (!authToken) {
-      throw new Error("No auth token found")
-    }
-
-    const response = await axios.get(`${API_URL}/store/merchant/${merchantId}`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
-    return response.data
+    const response = await apiClient.get(`/store/merchant/${merchantId}`);
+    return response.data;
   },
 
   // Search stores with pagination and filtering
@@ -111,7 +85,7 @@ export const storeService = {
       direction = 'asc' 
     } = params;
 
-    const response = await axios.get(`${API_URL}/store/search`, {
+    const response = await apiClient.get(`/store/search`, {
       params: { query, page, size, sortBy, direction }
     });
     return response.data;
@@ -138,7 +112,7 @@ export const storeService = {
       formData.append('logo', logo);
     }
 
-    const response = await axios.put(`${API_URL}/store/update/${storeId}`, formData, {
+    const response = await apiClient.put(`/store/update/${storeId}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -148,15 +122,6 @@ export const storeService = {
 
   // Delete a store
   deleteStore: async (storeId: string): Promise<void> => {
-    const authToken = localStorage.getItem("auth_token")
-    if (!authToken) {
-      throw new Error("No auth token found")
-    }
-
-    await axios.delete(`${API_URL}/store/delete/${storeId}`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
+    await apiClient.delete(`/store/delete/${storeId}`);
   }
-} 
+}; 
