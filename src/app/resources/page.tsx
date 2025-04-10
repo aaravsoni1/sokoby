@@ -1,12 +1,15 @@
-import Link from "next/link"
-import Image from "next/image"
-import { ChevronRight, Search, BookOpen, FileText, Video, Users, MessageSquare, ArrowRight, Clock, Calendar } from 'lucide-react'
+"use client"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ArrowRight, BookOpen, Calendar, ChevronRight, Clock, FileText, MessageSquare, Search, Users, Video } from 'lucide-react'
+import Image from "next/image"
+import Link from "next/link"
+
+import { Header } from "@/components/Header"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 // Sample blog posts
 const blogPosts = [
@@ -106,40 +109,7 @@ const upcomingWebinars = [
 export default function ResourcesPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Header - Reused from other pages */}
-      <header className="sticky top-0 z-50 border-b bg-white">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center">
-          <Image
-              src="/sokobylogo.png" 
-              alt="Sokoby"
-              width={150} 
-              height={50} 
-              className="h-11 w-auto"
-            />
-          </Link>
-          <nav className="hidden space-x-6 md:flex">
-            <Link href="/features" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Features
-            </Link>
-            <Link href="/pricing" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Pricing
-            </Link>
-            <Link href="/resources" className="text-sm font-medium text-red-800 hover:text-red-700">
-              Resources
-            </Link>
-            <Link href="/support" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Support
-            </Link>
-          </nav>
-          <div className="hidden md:flex md:items-center md:space-x-4">
-            <Link href="/auth" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Log in
-            </Link>
-            <Button className="bg-red-800 hover:bg-red-700">Get Started</Button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-red-900 to-red-800 py-16 md:py-24">

@@ -134,7 +134,7 @@ export default function OurStoryPage() {
             <p className="mb-8 text-xl">
               Join thousands of entrepreneurs who are writing their success stories with Sokoby
             </p>
-            <Link href="/auth/create-store">
+            <Link href="/auth/store-setup">
               <Button size="lg" className="bg-white text-gray-900 hover:bg-gray-100">
                 Start your story
                 <ChevronRight className="ml-2 h-5 w-5" />

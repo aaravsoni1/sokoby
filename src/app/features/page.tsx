@@ -1,7 +1,10 @@
-import Link from "next/link"
-import Image from "next/image"
-import { ShoppingBag, Globe, CreditCard, BarChart3, Smartphone, Truck, Shield, Zap, Search, Tag, Mail, ArrowRight, Check, ChevronRight } from 'lucide-react'
+"use client"
 
+import { ArrowRight, BarChart3, Check, ChevronRight, CreditCard, Globe, Mail, Search, Shield, ShoppingBag, Smartphone, Tag, Truck, Zap } from 'lucide-react'
+import Image from "next/image"
+import Link from "next/link"
+
+import { Header } from "@/components/Header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -9,43 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 export default function FeaturesPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Header - Reused from homepage */}
-      <header className="sticky top-0 z-50 border-b bg-white">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center">
-          <Image
-              src="/sokobylogo.png" 
-              alt="Sokoby"
-              width={150} 
-              height={50} 
-              className="h-11 w-auto"
-            />
-          </Link>
-          <nav className="hidden space-x-6 md:flex">
-            <Link href="/features" className="text-sm font-medium text-red-800 hover:text-red-700">
-              Features
-            </Link>
-            <Link href="/solutions" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Solutions
-            </Link>
-            <Link href="/pricing" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Pricing
-            </Link>
-            <Link href="/about" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              About
-            </Link>
-            <Link href="/contact" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Contact
-            </Link>
-          </nav>
-          <div className="hidden md:flex md:items-center md:space-x-4">
-            <Link href="/auth" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Log in
-            </Link>
-            <Button className="bg-red-800 hover:bg-red-700">Get Started</Button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="bg-red-900 py-20 text-white">

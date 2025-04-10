@@ -1,11 +1,12 @@
 "use client"
 
 import {
-    Filter,
-    Plus,
-    Search,
-    Settings2,
-    Trash2
+  Edit,
+  Filter,
+  Plus,
+  Search,
+  Settings2,
+  Trash2
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -79,13 +80,48 @@ export default function ProductsPage() {
     }
   }
 
+  const handleEditProduct = async (productId: string) => {
+    try {
+      // Store the current product ID in localStorage
+      localStorage.setItem("currentProductId", productId)
+      
+      // Fetch the product data
+      const authToken = localStorage.getItem("auth_token")
+      if (!authToken) {
+        toast.error("Please login first")
+        router.push("/auth")
+        return
+      }
+      
+      const response = await fetch(`http://localhost:8080/api/product/${productId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        credentials: 'include'
+      })
+      
+      if (!response.ok) {
+        throw new Error("Failed to fetch product data")
+      }
+      
+      // Navigate to the edit page
+      router.push(`/dashboard/products/edit`)
+    } catch (error) {
+      console.error("Error fetching product data:", error)
+      toast.error("Failed to fetch product data")
+    }
+  }
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const authToken = localStorage.getItem("auth_token")
         if (!authToken) {
           toast.error("Please login first")
-          router.push("/login")
+          router.push("/auth")
           return
         }
 
@@ -220,6 +256,14 @@ export default function ProductsPage() {
                     <TableCell>${product.price.toFixed(2)}</TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                          onClick={() => handleEditProduct(product.id!)}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
                         <Button
                           variant="ghost"
                           size="icon"

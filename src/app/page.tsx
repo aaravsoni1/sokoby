@@ -5,14 +5,26 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
+import { Header } from "@/components/Header"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { UserProfileDropdown } from "@/components/UserProfileDropdown"
+
+// Define a type for the plan
+interface Plan {
+  name: string;
+  price: string;
+  description: string;
+  features: string[];
+  highlighted?: boolean;
+}
 
 export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [hasSubscription, setHasSubscription] = useState(false)
 
   const checkAuthentication = () => {
     const token = localStorage.getItem("auth_token")
@@ -26,72 +38,86 @@ export default function Home() {
     // Add event listener for storage changes (for cross-tab logout)
     window.addEventListener('storage', checkAuthentication)
 
+    // Check if user already has a subscription
+    const subscriptionId = localStorage.getItem("subscriptionId")
+    setHasSubscription(!!subscriptionId)
+
     // Cleanup listener
     return () => {
       window.removeEventListener('storage', checkAuthentication)
     }
   }, [])
 
+  // Function to handle subscription API call
+  const handleSubscribe = async (plan: Plan) => {
+    try {
+      setIsLoading(true)
+      setError(null)
+      
+      // Check if user already has a subscription
+      const existingSubscriptionId = localStorage.getItem("subscriptionId")
+      if (existingSubscriptionId) {
+        setError("You already have an active subscription")
+        return
+      }
+      
+      // Get merchantId and auth_token from localStorage
+      const merchantId = localStorage.getItem("merchantId")
+      const authToken = localStorage.getItem("auth_token")
+      
+      if (!merchantId || !authToken) {
+        setError("Please log in to subscribe to a plan")
+        return
+      }
+      
+      // Determine the amount based on the plan
+      const amount = plan.price.replace("$", "")
+      
+      // Call the subscription API
+      const response = await fetch("http://localhost:8080/api/subscription", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${authToken}`
+        },
+        body: JSON.stringify({
+          merchant: merchantId,
+          amount: amount,
+          interval: "MONTH"
+        })
+      })
+      
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || "Failed to create subscription")
+      }
+      
+      const data = await response.json()
+      
+      // Store the subscription ID in localStorage
+      if (data.id) {
+        localStorage.setItem("subscriptionId", data.id)
+        setHasSubscription(true)
+      }
+      
+      // Redirect to the payment gateway URL
+      if (data.session_url) {
+        window.location.href = data.session_url
+      } else {
+        setError("No payment URL received from the server")
+      }
+    } catch (err) {
+      console.error("Subscription error:", err)
+      setError(err instanceof Error ? err.message : "An error occurred while processing your subscription. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       {/* Navigation */}
-      <header className="sticky top-0 z-50 border-b bg-white">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/sokobylogo.png" 
-              alt="Sokoby"
-              width={150} 
-              height={50} 
-              className="h-11 w-auto"
-            />
-          </Link>
-          <nav className="hidden space-x-6 md:flex">
-            <Link href="/support" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Support
-            </Link>
-            <Link href="/solutions" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Solutions
-            </Link>
-            <Link href="/pricing" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Pricing
-            </Link>
-            <Link href="/about" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              About
-            </Link>
-            <Link href="/contact" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Contact
-            </Link>
-          </nav>
-          
-          <div className="hidden md:flex md:items-center md:space-x-4">
-            {isAuthenticated ? (
-              <UserProfileDropdown />
-            ) : (
-              <>
-                <Link href="/auth" className="text-sm font-medium text-gray-700 hover:text-red-800">
-                  Log in
-                </Link>
-                <Button className="bg-red-800 hover:bg-red-700">Get Started</Button>
-              </>
-            )}
-          </div>
-
-          {/* Mobile Navigation */}
-          <div className="md:hidden">
-            {isAuthenticated ? (
-              <UserProfileDropdown />
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Link href="/auth" className="text-sm font-medium text-gray-700 hover:text-red-800">
-                  Log in
-                </Link>
-                <Button size="sm" className="bg-red-800 hover:bg-red-700">Get Started</Button>
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="bg-red-900 py-16 md:py-24">
@@ -118,14 +144,37 @@ export default function Home() {
                 </li>
               </ul>
               <div className="flex flex-col space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
-                <Link href={isAuthenticated ? "/auth/store-setup" : "/auth/create-store"}>
-                  <Button size="lg" className="bg-white text-red-900 hover:bg-gray-100">
-                    Start free trial
-                  </Button>
-                </Link>
-                <Button size="lg" variant="outline" className="border-white text-black hover:bg-gray-100">
-                  Watch demo
-                </Button>
+                {!isAuthenticated && (
+                  <>
+                    <Link href="/auth">
+                      <Button size="lg" className="bg-white text-red-900 hover:bg-gray-100">
+                        Start free trial
+                      </Button>
+                    </Link>
+                    {/* <Button size="lg" variant="outline" className="border-white text-black hover:bg-gray-100">
+                      Watch demo
+                    </Button> */}
+                  </>
+                )}
+                {isAuthenticated && !localStorage.getItem("currentStoreId") && (
+                  <>
+                    <Link href="/auth/store-setup">
+                      <Button size="lg" className="bg-white text-red-900 hover:bg-gray-100">
+                        Start free trial
+                      </Button>
+                    </Link>
+                    {/* <Button size="lg" variant="outline" className="border-white text-black hover:bg-gray-100">
+                      Watch demo
+                    </Button> */}
+                  </>
+                )}
+                {isAuthenticated && localStorage.getItem("currentStoreId") && (
+                  <Link href="/stores">
+                    <Button size="lg" variant="outline" className="border-white text-black hover:bg-gray-100">
+                      View My Stores
+                    </Button>
+                  </Link>
+                )}
               </div>
             </div>
             <div className="hidden md:block">
@@ -200,7 +249,7 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-12 text-center">
-            <Link href="/auth/create-store">
+            <Link href="/auth/store-setup">
             <Button className="bg-red-800 hover:bg-red-700">Create Your Store Now</Button>
             </Link>
           </div>
@@ -443,6 +492,44 @@ export default function Home() {
             <h2 className="mb-2 text-3xl font-bold text-gray-900">Simple, Transparent Pricing</h2>
             <p className="mx-auto max-w-2xl text-gray-600">Choose the plan that&apos;s right for your business</p>
           </div>
+          
+          {error && (
+            <div className="mb-8 max-w-md mx-auto bg-red-50 border border-red-200 rounded-md p-4">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-red-800">{error}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {hasSubscription && (
+            <div className="mb-8 max-w-md mx-auto bg-green-50 border border-green-200 rounded-md p-4">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="ml-3 flex-1">
+                  <p className="text-sm font-medium text-green-800">You already have an active subscription.</p>
+                  <div className="mt-2">
+                    <Link href="/subscriptions">
+                      <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
+                        View Subscription
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          
           <div className="grid gap-8 md:grid-cols-3">
             {[
               {
@@ -505,8 +592,10 @@ export default function Home() {
                     className={`w-full ${
                       plan.highlighted ? "bg-red-800 hover:bg-red-700" : "bg-gray-100 text-gray-900 hover:bg-gray-200"
                     }`}
+                    onClick={() => handleSubscribe(plan)}
+                    disabled={isLoading || hasSubscription}
                   >
-                    Choose Plan
+                    {isLoading ? "Processing..." : hasSubscription ? "Already Subscribed" : "Choose Plan"}
                   </Button>
                 </CardContent>
               </Card>
@@ -615,7 +704,7 @@ export default function Home() {
                 Join thousands of successful businesses on our platform and start growing your online presence today.
               </p>
               <div className="flex flex-col space-y-3 sm:flex-row sm:justify-center sm:space-x-4 sm:space-y-0">
-              <Link href={isAuthenticated ? "/auth/store-setup" : "/auth/create-store"}>
+              <Link href={isAuthenticated ? "/auth/store-setup" : "/auth"}>
                 <Button size="lg" className="bg-white text-red-900 hover:bg-gray-100">
                   Start free trial
                 </Button>

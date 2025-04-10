@@ -2,18 +2,19 @@
 
 import { Button } from "@/components/ui/button"
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import {
-    ChevronDown,
-    Languages,
-    LogOut,
-    User
+  ChevronDown,
+  CreditCard,
+  Languages,
+  LogOut,
+  User
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -25,8 +26,9 @@ export function UserProfileDropdown() {
 
   const handleLogout = () => {
     try {
-      // Clear authentication token
+      // Clear authentication token and merchant ID
       localStorage.removeItem("auth_token")
+      localStorage.removeItem("merchantId")
       
       // Dispatch storage event for cross-tab logout
       window.dispatchEvent(new Event('storage'))
@@ -45,12 +47,61 @@ export function UserProfileDropdown() {
     }
   }
 
-  const handleProfileClick = () => {
-    router.push("/profile")
+  const handleProfileClick = async () => {
+    try {
+      const merchantId = localStorage.getItem("merchantId")
+      const authToken = localStorage.getItem("auth_token")
+      
+      if (!merchantId) {
+        toast.error("Merchant ID not found. Please log in again.")
+        return
+      }
+
+      if (!authToken) {
+        toast.error("Authentication token not found. Please log in again.")
+        return
+      }
+
+      const response = await fetch(`http://localhost:8080/api/merchant/getById?id=${merchantId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      
+      if (!response.ok) {
+        // Check for specific error status
+        if (response.status === 401) {
+          toast.error("Unauthorized. Please log in again.")
+          // Clear tokens and redirect to login
+          localStorage.removeItem("auth_token")
+          localStorage.removeItem("merchantId")
+          router.push("/auth")
+          return
+        }
+        throw new Error('Failed to fetch profile')
+      }
+
+      const profileData = await response.json()
+      
+      // Store profile data in localStorage for profile page to use
+      localStorage.setItem("merchantProfile", JSON.stringify(profileData))
+      
+      // Navigate to profile page
+      router.push("/profile")
+    } catch (error) {
+      console.error("Profile fetch failed:", error)
+      toast.error("Failed to load profile. Please try again.")
+    }
   }
 
   const handleLanguageClick = () => {
     router.push("/settings/language")
+  }
+
+  const handleSubscriptionsClick = () => {
+    router.push("/subscriptions")
   }
 
   return (
@@ -68,6 +119,10 @@ export function UserProfileDropdown() {
         <DropdownMenuItem onClick={handleProfileClick}>
           <User className="mr-2 h-4 w-4" />
           <span>My Profile</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={handleSubscriptionsClick}>
+          <CreditCard className="mr-2 h-4 w-4" />
+          <span>Subscriptions</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleLanguageClick}>
           <Languages className="mr-2 h-4 w-4" />

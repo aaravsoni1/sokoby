@@ -30,6 +30,14 @@ export default function StoreSetupPage() {
     storeLogo: null as File | null,
   })
 
+  const clearLocalStorage = () => {
+    // Clear store-related items
+    localStorage.removeItem('currentStoreId')
+    localStorage.removeItem('currentProductId')
+    localStorage.removeItem('merchantProfile')
+    // Keep auth_token and merchantId as they are needed for authentication
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -57,6 +65,9 @@ export default function StoreSetupPage() {
     // Final step - create store
     setIsLoading(true)
     try {
+      // Clear localStorage before creating new store
+      clearLocalStorage()
+
       // Validate required fields
       if (!formData.storeName || !formData.storeUrl) {
         toast.error('Please fill in all required fields');

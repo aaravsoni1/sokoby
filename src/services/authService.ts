@@ -24,9 +24,9 @@ export const authService = {
     if (response.data.token) {
       localStorage.setItem('auth_token', response.data.token);
       
-      // If merchant ID is part of the login response, store it
-      if (response.data.merchantId) {
-        localStorage.setItem('merchantId', response.data.merchantId);
+      // Store merchant ID from the nested merchant object
+      if (response.data.merchant && response.data.merchant.id) {
+        localStorage.setItem('merchantId', response.data.merchant.id);
       }
     }
     

@@ -1,7 +1,10 @@
+"use client"
+
 import { ArrowRight, BookOpen, ChevronRight, FileText, HelpCircle, Mail, MessageSquare, Phone, Search, Users, Video } from 'lucide-react'
 import Image from "next/image"
 import Link from "next/link"
 
+import { Header } from "@/components/Header"
 import {
   Accordion,
   AccordionContent,
@@ -108,60 +111,25 @@ const faqCategories = [
 export default function SupportPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Header - Reused from other pages */}
-      <header className="sticky top-0 z-50 border-b bg-white">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center">
-          <Image
-              src="/sokobylogo.png" 
-              alt="Sokoby"
-              width={150} 
-              height={50} 
-              className="h-11 w-auto"
-            />
-          </Link>
-          <nav className="hidden space-x-6 md:flex">
-            <Link href="/features" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Features
-            </Link>
-            <Link href="/pricing" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Pricing
-            </Link>
-            <Link href="/resources" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Resources
-            </Link>
-            <Link href="/support" className="text-sm font-medium text-red-800 hover:text-red-700">
-              Support
-            </Link>
-          </nav>
-          <div className="hidden md:flex md:items-center md:space-x-4">
-            <Link href="/auth" className="text-sm font-medium text-gray-700 hover:text-red-800">
-              Log in
-            </Link>
-            <Button className="bg-red-800 hover:bg-red-700">Get Started</Button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-red-900 to-red-800 py-16 md:py-24">
+      <section className="bg-gradient-to-b from-primary/5 to-background py-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-6 text-3xl font-bold text-white md:text-5xl">
+            <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
               How can we help you?
             </h1>
-            <p className="mb-8 text-lg text-white/90">
-              Find answers to your questions or contact our support team for assistance.
+            <p className="mb-8 text-lg text-muted-foreground">
+              We&apos;re here to help you with any questions or issues you may have.
             </p>
-            <div className="mx-auto max-w-lg">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-                <Input 
-                  type="search" 
-                  placeholder="Search for help..." 
-                  className="pl-10 py-6 bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:bg-white focus:text-gray-900 focus:placeholder:text-gray-500"
-                />
-              </div>
+            <div className="relative">
+              <Input
+                type="search"
+                placeholder="Search for help..."
+                className="w-full py-6 pl-12 text-lg"
+              />
+              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
             </div>
           </div>
         </div>
@@ -397,12 +365,11 @@ export default function SupportPage() {
                 Our support team is available 24/7 to assist you with any questions or issues you may have.
               </p>
               <div className="flex flex-col space-y-3 sm:flex-row sm:justify-center sm:space-x-4 sm:space-y-0">
-                <Button size="lg" className="bg-white text-red-900 hover:bg-gray-100">
+                <Link href="/contact">
+                <Button  size="lg" className="bg-white text-red-900 hover:bg-gray-100">
                   Contact Support
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-red-800">
-                  View Help Center
-                </Button>
+                </Link>
               </div>
             </div>
           </div>

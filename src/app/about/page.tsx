@@ -1,75 +1,25 @@
 "use client";
 
 import {
-    ArrowRight,
-    Building2,
-    Globe,
-    Heart,
-    ShoppingBag,
-    Star,
-    Users,
+  ArrowRight,
+  Building2,
+  Globe,
+  Heart,
+  ShoppingBag,
+  Star,
+  Users,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 export default function AboutPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Header */}
-      <header className="sticky top-0 z-50 border-b bg-white">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center">
-          <Image
-              src="/sokobylogo.png" 
-              alt="Sokoby"
-              width={150} 
-              height={50} 
-              className="h-11 w-auto"
-            />
-          </Link>
-          <nav className="hidden space-x-6 md:flex">
-            <Link
-              href="/support"
-              className="text-sm font-medium text-gray-700 hover:text-red-800"
-            >
-              Support
-            </Link>
-            <Link
-              href="/solutions"
-              className="text-sm font-medium text-gray-700 hover:text-red-800"
-            >
-              Solutions
-            </Link>
-            <Link
-              href="/pricing"
-              className="text-sm font-medium text-gray-700 hover:text-red-800"
-            >
-              Pricing
-            </Link>
-            <Link href="/about" className="text-sm font-medium text-red-800">
-              About
-            </Link>
-            <Link
-              href="/contact"
-              className="text-sm font-medium text-gray-700 hover:text-red-800"
-            >
-              Contact
-            </Link>
-          </nav>
-          <div className="hidden md:flex md:items-center md:space-x-4">
-            <Link
-              href="/auth"
-              className="text-sm font-medium text-gray-700 hover:text-red-800"
-            >
-              Log in
-            </Link>
-            <Button className="bg-red-800 hover:bg-red-700">Get Started</Button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="relative bg-gray-50 py-24">
@@ -85,7 +35,7 @@ export default function AboutPage() {
               marketplace.
             </p>
             <div className="flex justify-center space-x-5">
-              <Link href="/auth/create-store" passHref>
+              <Link href="/auth/store-setup" passHref>
                 <Button size="lg" className="bg-red-800 hover:bg-red-700">
                   Start your journey
                 </Button>
@@ -310,7 +260,7 @@ export default function AboutPage() {
               Start your journey with Sokoby today and be part of the next
               generation of successful online businesses.
             </p>
-            <Link href="/auth/create-store">
+            <Link href="/auth/store-setup">
               <Button size="lg" className="bg-red-800 hover:bg-red-700">
                 Start free trial
                 <ArrowRight className="ml-2 h-5 w-5" />
