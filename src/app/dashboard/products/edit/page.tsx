@@ -251,7 +251,7 @@ export default function EditProductPage() {
       if (newImageFiles && newImageFiles.length > 0) {
         newImageFiles.forEach((file) => {
           if (file) {
-            formDataToSubmit.append('newImages', file)
+            formDataToSubmit.append('files', file)
           }
         })
       }

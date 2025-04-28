@@ -19,7 +19,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 export default function NewProductPage() {
   const router = useRouter()
-  const [images, setImages] = useState<string[]>([])
+  const [images, setImages] = useState<{url: string, file: File}[]>([])
   const [variants, setVariants] = useState([{ id: 1, title: "", price: "", sku: "", stock: "" }])
   const [formData, setFormData] = useState({
     title: "",
@@ -47,7 +47,10 @@ export default function NewProductPage() {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     if (files) {
-      const newImages = Array.from(files).map(file => URL.createObjectURL(file))
+      const newImages = Array.from(files).map(file => ({
+        url: URL.createObjectURL(file),
+        file: file
+      }))
       setImages([...images, ...newImages])
     }
   }
@@ -109,13 +112,10 @@ export default function NewProductPage() {
         formDataToSend.append(`variants[${index}].stockQuantity`, variant.stock)
       })
 
-      // Add images
-      const imageFiles = document.querySelector('input[type="file"]') as HTMLInputElement
-      if (imageFiles.files) {
-        Array.from(imageFiles.files).forEach((file) => {
-          formDataToSend.append("files", file)
-        })
-      }
+      // Add images using the stored File objects
+      images.forEach((image) => {
+        formDataToSend.append("files", image.file)
+      })
 
       const response = await productService.createProductWithFormData(formDataToSend)
       console.log('Product creation response:', response)
@@ -396,7 +396,7 @@ export default function NewProductPage() {
                     {images.map((image, index) => (
                       <div key={index} className="relative aspect-square">
                         <Image
-                          src={image}
+                          src={image.url}
                           alt={`Product image ${index + 1}`}
                           fill
                           className="object-cover rounded-lg"
