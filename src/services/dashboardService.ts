@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { CustomerDto, OrderDto, ProductDto } from './types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 // Create axios instance with default config
 const apiClient = axios.create({
   baseURL: API_URL,

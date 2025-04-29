@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ProductDto } from './types'; // Create a types file for DTOs
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Create axios instance with default config
 const axiosInstance = axios.create({

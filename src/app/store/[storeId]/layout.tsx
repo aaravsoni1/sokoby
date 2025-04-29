@@ -37,7 +37,7 @@ export default function StoreLayout({
   useEffect(() => {
     const fetchStore = async () => {
       try {
-        const storeData = await storeService.getStore(params.storeId as string)
+        const storeData = await storeService.getStore(params?.storeId as string)
         setStore(storeData)
       } catch (error) {
         console.error("Error fetching store:", error)
@@ -48,7 +48,7 @@ export default function StoreLayout({
     }
 
     fetchStore()
-  }, [params.storeId])
+  }, [params?.storeId])
 
   if (loading) {
     return <div className="min-h-screen bg-white">Loading...</div>
@@ -65,7 +65,7 @@ export default function StoreLayout({
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href={`/store/${params.storeId}`} className="flex items-center gap-2">
+            <Link href={`/store/${params?.storeId || ''}`} className="flex items-center gap-2">
               {store.imageUrl && (
                 <div className="relative w-20 h-20">
                   <Image
@@ -81,16 +81,16 @@ export default function StoreLayout({
 
             {/* Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
-              <Link href={`/store/${params.storeId}`} className="text-gray-600 hover:text-gray-900">
+              <Link href={`/store/${params?.storeId || ''}`} className="text-gray-600 hover:text-gray-900">
                 Home
               </Link>
-              <Link href={`/store/${params.storeId}/collections/all`} className="text-gray-600 hover:text-gray-900">
+              <Link href={`/store/${params?.storeId || ''}/collections/all`} className="text-gray-600 hover:text-gray-900">
                 Products
               </Link>
-              <Link href={`/store/${params.storeId}/collections/new`} className="text-gray-600 hover:text-gray-900">
+              <Link href={`/store/${params?.storeId || ''}/collections/new`} className="text-gray-600 hover:text-gray-900">
                 New Arrivals
               </Link>
-              <Link href={`/store/${params.storeId}/collections/sale`} className="text-gray-600 hover:text-gray-900">
+              <Link href={`/store/${params?.storeId || ''}/collections/sale`} className="text-gray-600 hover:text-gray-900">
                 Sale
               </Link>
             </nav>
@@ -100,7 +100,7 @@ export default function StoreLayout({
               <button className="p-2 hover:bg-gray-100 rounded-full">
                 <Search className="h-5 w-5 text-gray-600" />
               </button>
-              <Link href={`/store/${params.storeId}/cart`} className="p-2 hover:bg-gray-100 rounded-full relative">
+              <Link href={`/store/${params?.storeId || ''}`} className="p-2 hover:bg-gray-100 rounded-full relative">
                 <ShoppingBag className="h-5 w-5 text-gray-600" />
                 <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
                   {JSON.parse(localStorage.getItem('cart') || '[]').length}

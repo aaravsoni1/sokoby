@@ -72,7 +72,7 @@ export default function EditProductPage() {
           return
         }
         
-        const response = await fetch(`http://localhost:8080/api/product/${productId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/${productId}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${authToken}`,
@@ -261,7 +261,7 @@ export default function EditProductPage() {
         type: 'application/json'
       }), 'productData.json')
       
-      const response = await fetch(`http://localhost:8080/api/product/update/${productId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/update/${productId}`, {
         method: "PUT",
         headers: {
           'Authorization': `Bearer ${authToken}`

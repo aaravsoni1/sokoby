@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { PaymentDto, PaymentIntentDto } from './types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const paymentService = {
   // Create a payment for a specific order

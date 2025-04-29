@@ -57,6 +57,8 @@ interface CartItem {
 
 export default function CollectionPage() {
   const params = useParams()
+  const storeId = params?.storeId as string || ''
+  const collectionType = params?.type === "new" ? "New_arrival" : "sale"
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -69,9 +71,8 @@ export default function CollectionPage() {
           return
         }
 
-        const collectionType = params.type === "new" ? "New_arrival" : "sale"
         const response = await fetch(
-          `http://localhost:8080/api/product/getByCollection?collectionType=${collectionType}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/product/getByCollection?collectionType=${collectionType}`,
           {
             headers: {
               Authorization: `Bearer ${authToken}`,
@@ -88,7 +89,7 @@ export default function CollectionPage() {
     }
 
     fetchProducts()
-  }, [params.type])
+  }, [collectionType])
 
   const addToCart = (product: Product) => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]")
@@ -131,7 +132,7 @@ export default function CollectionPage() {
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">
-          {params.type === "new" ? "New Arrivals" : "Sale"}
+          {params?.type === "new" ? "New Arrivals" : "Sale"}
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
@@ -154,7 +155,7 @@ export default function CollectionPage() {
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                    <Link href={`/store/${params.storeId}/products/${product.id}`}>
+                    <Link href={`/store/${storeId}/product/${product.id}`}>
                       {product.title}
                     </Link>
                   </h3>

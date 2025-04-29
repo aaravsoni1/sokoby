@@ -63,7 +63,7 @@ export default function CartPage() {
   const total = subtotal + tax
 
   const handleCheckout = () => {
-    const storeId = params.storeId as string
+    const storeId = params?.storeId as string
     if (storeId) {
       router.push(`/store/${storeId}/checkout`)
     }
@@ -78,7 +78,7 @@ export default function CartPage() {
       {/* Header */}
       <header className="border-b bg-white">
         <div className="container flex h-16 items-center justify-between px-4">
-          <Link href={`/store/${params.storeId}`} className="text-xl font-bold">
+          <Link href={`/store/${params?.storeId || ''}`} className="text-xl font-bold">
             Store Name
           </Link>
         </div>
@@ -91,7 +91,7 @@ export default function CartPage() {
         {cartItems.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-500 mb-4">Your cart is empty</p>
-            <Link href={`/store/${params.storeId}`}>
+            <Link href={`/store/${params?.storeId || ''}`}>
               <Button>Continue Shopping</Button>
             </Link>
           </div>

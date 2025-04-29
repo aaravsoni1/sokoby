@@ -79,10 +79,17 @@ export default function CreateStorePage() {
         industry: formData.industry,
       }
 
+      const formDataObj = new FormData()
+      Object.entries(storeData).forEach(([key, value]) => {
+        formDataObj.append(key, value)
+      })
+      if (formData.storeLogo) {
+        formDataObj.append('logo', formData.storeLogo)
+      }
+
       const createdStore = await storeService.createStore(
         merchantId, 
-        storeData, 
-        formData.storeLogo || undefined
+        formDataObj
       )
 
       toast.success('Store created successfully!')

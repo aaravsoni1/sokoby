@@ -51,6 +51,7 @@ interface Product {
 
 export default function ProductDetailsPage() {
   const params = useParams()
+  const productId = params?.productId as string || ''
   const [product, setProduct] = useState<Product | null>(null)
   const [loading, setLoading] = useState(true)
   const [selectedImage, setSelectedImage] = useState(0)
@@ -63,7 +64,7 @@ export default function ProductDetailsPage() {
     const fetchProduct = async () => {
       try {
         const authToken = localStorage.getItem("auth_token")
-        const response = await fetch(`http://localhost:8080/api/product/${params.productId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/${productId}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -88,7 +89,7 @@ export default function ProductDetailsPage() {
     }
 
     fetchProduct()
-  }, [params.productId])
+  }, [productId])
 
   const addToCart = () => {
     if (!product) return

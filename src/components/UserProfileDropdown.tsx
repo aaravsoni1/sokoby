@@ -2,19 +2,19 @@
 
 import { Button } from "@/components/ui/button"
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import {
-    ChevronDown,
-    CreditCard,
-    Languages,
-    LogOut,
-    User
+  ChevronDown,
+  CreditCard,
+  Languages,
+  LogOut,
+  User
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -62,7 +62,7 @@ export function UserProfileDropdown() {
         return
       }
 
-      const response = await fetch(`http://localhost:8080/api/merchant/getById?id=${merchantId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/merchant/getById?id=${merchantId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${authToken}`,

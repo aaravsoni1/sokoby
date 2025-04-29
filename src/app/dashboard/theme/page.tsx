@@ -30,7 +30,7 @@ export default function ThemePage() {
             <div className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
               <div className="aspect-video relative">
                 <img
-                  src="/themes/dawn-preview.jpg"
+                  src="https://images.unsplash.com/photo-1675185521859-0342ab38c2fb?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Dawn Theme Preview"
                   className="object-cover w-full h-full"
                 />

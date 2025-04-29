@@ -74,7 +74,7 @@ export default function Home() {
       const amount = plan.price.replace("$", "")
       
       // Call the subscription API
-      const response = await fetch("http://localhost:8080/api/subscription", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/subscription`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

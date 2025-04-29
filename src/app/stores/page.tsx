@@ -2,13 +2,13 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { BarChart2, Edit, Plus, Store, Globe, Calendar, Briefcase, ChevronRight } from "lucide-react"
+import { Separator } from "@/components/ui/separator"
+import { BarChart2, Briefcase, Calendar, ChevronRight, Edit, Globe, Plus, Store } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { Separator } from "@/components/ui/separator"
 
 interface StoreType {
   id: string
@@ -49,7 +49,7 @@ export default function StoresPage() {
           return
         }
 
-        const response = await fetch(`http://localhost:8080/api/store/merchant/${merchantId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/store/merchant/${merchantId}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${authToken}`,

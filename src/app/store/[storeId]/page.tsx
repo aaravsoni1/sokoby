@@ -109,7 +109,7 @@ export default function StorePage() {
             <p className="text-lg mb-8">
               Discover our collection of high-quality products at great prices.
             </p>
-            <Link href={`/store/${params.storeId}/collections/all`}>
+            <Link href={`/store/${params?.storeId}/collections/all`}>
               <Button size="lg" className="bg-white text-black hover:bg-gray-100">
                 Shop Now
               </Button>
@@ -129,7 +129,7 @@ export default function StorePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.slice(0, 8).map((product) => (
               <div key={product.id} className="group">
-                <Link href={`/store/${params.storeId}/product/${product.id}`}>
+                <Link href={`/store/${params?.storeId}/product/${product.id}`}>
                   <div className="relative aspect-square mb-4 overflow-hidden rounded-lg">
                     <Image
                       src={product.imageUrls[0]?.imageUrl || "/placeholder.png"}

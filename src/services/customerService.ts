@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { CustomerDto } from './types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const customerService = {
   // Create a customer for a specific store

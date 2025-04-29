@@ -14,7 +14,7 @@ export default function OrderSuccessPage() {
         <p className="text-gray-600 mb-6">
           Thank you for your order. We&apos;ll send you an email with your order details and tracking information.
         </p>
-        <Link href={`/store/${params.storeId}`}>
+        <Link href={`/store/${params?.storeId || ''}`}>
           <Button>Continue Shopping</Button>
         </Link>
       </div>

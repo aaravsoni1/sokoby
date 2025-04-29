@@ -113,7 +113,7 @@ export default function CheckoutPage() {
       customerPhoneNumber: formData.customerPhoneNumber,
       customerEmail: formData.customerEmail,
       shippingAddress: formData.shippingAddress,
-      storeId: params.storeId as string,
+      storeId: params?.storeId as string,
       orderItems: cartItems.map(item => ({
         productId: item.id,
         quantity: item.quantity
@@ -126,7 +126,7 @@ export default function CheckoutPage() {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/api/orders/with-customer-details', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/with-customer-details`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ export default function CheckoutPage() {
         toast.success("Order created successfully!")
         
         // Redirect to payment page
-        router.push(`/store/${params.storeId}/payment`)
+        router.push(`/store/${params?.storeId || ''}/payment`)
       } else {
         console.error('Order response missing id:', orderResponse)
         toast.error("Order created but missing order ID. Please contact support.")

@@ -1,6 +1,6 @@
 "use client"
 
-import { Home, Package, Settings, Store } from "lucide-react"
+import { Home, Package, Store } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -12,7 +12,7 @@ const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: Home },
   { name: "Products", href: "/dashboard/products", icon: Package },
   { name: "Theme", href: "/dashboard/theme", icon: Store },
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
+  
 ]
 
 export default function DashboardLayout({
@@ -34,7 +34,7 @@ export default function DashboardLayout({
           </div>
           <nav className="flex-1 overflow-y-auto p-4">
             {navigation.map((item) => {
-              const isActive = pathname.startsWith(item.href)
+              const isActive = pathname?.startsWith(item.href) ?? false
               return (
                 <Link key={item.name} href={item.href}>
                   <Button

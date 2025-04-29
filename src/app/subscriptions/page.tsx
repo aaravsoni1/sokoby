@@ -44,7 +44,7 @@ export default function SubscriptionsPage() {
         return
       }
       
-      const response = await fetch("http://localhost:8080/api/subscription/getAll", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/subscription/getAll`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${authToken}`
@@ -86,7 +86,7 @@ export default function SubscriptionsPage() {
         return
       }
       
-      const response = await fetch(`http://localhost:8080/api/subscription/${subscriptionId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/subscription/${subscriptionId}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${authToken}`
@@ -196,13 +196,13 @@ export default function SubscriptionsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>No Active Subscription</CardTitle>
-                <CardDescription>You don't have any active subscriptions</CardDescription>
+                <CardDescription>You don&apos;t have any active subscriptions</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col items-center justify-center py-6">
                   <CreditCard className="h-12 w-12 text-gray-400 mb-4" />
                   <p className="text-gray-500 text-center">
-                    You don't have any active subscriptions. Subscribe to one of our plans to access premium features.
+                    You don&apos;t have any active subscriptions. Subscribe to one of our plans to access premium features.
                   </p>
                 </div>
               </CardContent>

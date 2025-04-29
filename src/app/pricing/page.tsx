@@ -5,11 +5,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
+import { Header } from "@/components/Header"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import React from "react"
-import { Header } from "@/components/Header"
 
 // Pricing plans data
 const plans = [
@@ -271,7 +271,7 @@ export default function PricingPage() {
       const amount = billingPeriod === "monthly" ? plan.monthlyPrice : plan.yearlyPrice
 
       // Call the subscription API
-      const response = await fetch("http://localhost:8080/api/subscription", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/subscription`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

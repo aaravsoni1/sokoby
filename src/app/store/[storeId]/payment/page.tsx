@@ -14,6 +14,7 @@ interface OrderDetails {
 export default function PaymentPage() {
   const params = useParams()
   const router = useRouter()
+  const storeId = params?.storeId as string || ''
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null)
   const [loading, setLoading] = useState(true)
   const [processing, setProcessing] = useState(false)
@@ -32,11 +33,11 @@ export default function PaymentPage() {
       })
     } else {
       toast.error("Order information not found")
-      router.push(`/store/${params.storeId}/cart`)
+      router.push(`/store/${storeId}/cart`)
     }
     
     setLoading(false)
-  }, [params.storeId, router])
+  }, [storeId, router])
 
   const handleStripeCheckout = async () => {
     if (!orderDetails) return
@@ -56,7 +57,7 @@ export default function PaymentPage() {
       console.log("Using auth token:", authToken.substring(0, 10) + "...")
       
       // Directly call the backend API to get the Stripe checkout URL
-      const response = await fetch(`http://localhost:8080/api/payments/checkout/${orderDetails.orderId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payments/checkout/${orderDetails.orderId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -102,7 +103,7 @@ export default function PaymentPage() {
       <div className="container py-8">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Order information not found</h1>
-          <Button onClick={() => router.push(`/store/${params.storeId}/cart`)}>
+          <Button onClick={() => router.push(`/store/${storeId}/cart`)}>
             Return to Cart
           </Button>
         </div>
