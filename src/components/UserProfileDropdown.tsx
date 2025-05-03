@@ -2,19 +2,23 @@
 
 import { Button } from "@/components/ui/button"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
+    DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
+import { useLanguage } from "@/contexts/LanguageContext"
 import {
-  ChevronDown,
-  CreditCard,
-  Languages,
-  LogOut,
-  User
+    ChevronDown,
+    CreditCard,
+    Languages,
+    LogOut,
+    User
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -23,6 +27,7 @@ import { toast } from "sonner"
 export function UserProfileDropdown() {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
+  const { setLanguage, t } = useLanguage()
 
   const handleLogout = () => {
     try {
@@ -96,12 +101,13 @@ export function UserProfileDropdown() {
     }
   }
 
-  const handleLanguageClick = () => {
-    router.push("/settings/language")
-  }
-
   const handleSubscriptionsClick = () => {
     router.push("/subscriptions")
+  }
+
+  const handleLanguageChange = (newLanguage: 'en' | 'es' | 'fr') => {
+    setLanguage(newLanguage)
+    toast.success(`Language changed to ${newLanguage.toUpperCase()}`)
   }
 
   return (
@@ -109,29 +115,42 @@ export function UserProfileDropdown() {
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className="flex items-center gap-2">
           <User className="h-4 w-4" />
-          My Account
+          {t('my_account')}
           <ChevronDown className="h-4 w-4 opacity-50" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>{t('my_account')}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleProfileClick}>
           <User className="mr-2 h-4 w-4" />
-          <span>My Profile</span>
+          <span>{t('my_profile')}</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleSubscriptionsClick}>
           <CreditCard className="mr-2 h-4 w-4" />
-          <span>Subscriptions</span>
+          <span>{t('subscriptions')}</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleLanguageClick}>
-          <Languages className="mr-2 h-4 w-4" />
-          <span>Languages</span>
-        </DropdownMenuItem>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <Languages className="mr-2 h-4 w-4" />
+            <span>{t('languages')}</span>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuItem onClick={() => handleLanguageChange('en')}>
+              English
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleLanguageChange('es')}>
+              Español
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleLanguageChange('fr')}>
+              Français
+            </DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout}>
           <LogOut className="mr-2 h-4 w-4" />
-          <span>Logout</span>
+          <span>{t('logout')}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
