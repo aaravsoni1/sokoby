@@ -1,10 +1,17 @@
 "use client"
 
+import { Menu } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { UserProfileDropdown } from "@/components/UserProfileDropdown"
 
 export function Header() {
@@ -66,23 +73,53 @@ export function Header() {
               <Link href="/auth" className="text-sm font-medium text-gray-700 hover:text-red-800">
                 Log in
               </Link>
-              <Button className="bg-red-800 hover:bg-red-700">Get Started</Button>
+              <Link href="/auth">
+                    <Button className="bg-red-800 hover:bg-red-700">Get Started</Button>
+                    </Link>
             </>
           )}
         </div>
 
         {/* Mobile Navigation */}
-        <div className="md:hidden">
-          {isAuthenticated ? (
-            <UserProfileDropdown />
-          ) : (
-            <div className="flex items-center space-x-2">
-              <Link href="/auth" className="text-sm font-medium text-gray-700 hover:text-red-800">
-                Log in
-              </Link>
-              <Button size="sm" className="bg-red-800 hover:bg-red-700">Get Started</Button>
-            </div>
-          )}
+        <div className="flex items-center space-x-2 md:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px]">
+              <SheetTitle className="text-lg font-semibold">Navigation Menu</SheetTitle>
+              <div className="flex flex-col space-y-4 mt-8">
+                <Link href="/support" className="text-sm font-medium text-gray-700 hover:text-red-800">
+                  Support
+                </Link>
+                <Link href="/solutions" className="text-sm font-medium text-gray-700 hover:text-red-800">
+                  Solutions
+                </Link>
+                <Link href="/pricing" className="text-sm font-medium text-gray-700 hover:text-red-800">
+                  Pricing
+                </Link>
+                <Link href="/about" className="text-sm font-medium text-gray-700 hover:text-red-800">
+                  About
+                </Link>
+                <Link href="/contact" className="text-sm font-medium text-gray-700 hover:text-red-800">
+                  Contact
+                </Link>
+                {!isAuthenticated && (
+                  <>
+                    <Link href="/auth" className="text-sm font-medium text-gray-700 hover:text-red-800">
+                      Log in
+                    </Link>
+                    <Link href="/auth">
+                    <Button className="bg-red-800 hover:bg-red-700">Get Started</Button>
+                    </Link>
+                  </>
+                )}
+                {isAuthenticated && <UserProfileDropdown />}
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>

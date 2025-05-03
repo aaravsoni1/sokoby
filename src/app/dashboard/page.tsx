@@ -482,20 +482,20 @@ export default function DashboardPage() {
             <Tabs value="overview" className="space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-                  <p className="mt-1 text-sm text-gray-500">
+                  <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Dashboard</h1>
+                  <p className="mt-1 text-xs sm:text-sm text-gray-500">
                     Welcome back, John! Here&apos;s what&apos;s happening with your store today.
                   </p>
                 </div>
-                <div className="flex flex-wrap items-center gap-3">
-                  <TabsList>
-                    <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="analytics">Analytics</TabsTrigger>
-                    <TabsTrigger value="reports">Reports</TabsTrigger>
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                  <TabsList className="w-full sm:w-auto">
+                    <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
+                    <TabsTrigger value="analytics" className="text-xs sm:text-sm">Analytics</TabsTrigger>
+                    <TabsTrigger value="reports" className="text-xs sm:text-sm">Reports</TabsTrigger>
                   </TabsList>
 
                   <Select value="30d">
-                    <SelectTrigger className="w-[150px]">
+                    <SelectTrigger className="w-full sm:w-[150px] text-xs sm:text-sm">
                       <SelectValue placeholder="Select time range" />
                     </SelectTrigger>
                     <SelectContent>
@@ -506,18 +506,21 @@ export default function DashboardPage() {
                     </SelectContent>
                   </Select>
 
-                  <Button 
-                    variant="outline" 
-                    size="icon" 
-                    onClick={handleManualRefresh}
-                    disabled={isRefreshing}
-                  >
-                    <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="icon" 
+                      onClick={handleManualRefresh}
+                      disabled={isRefreshing}
+                      className="w-8 h-8 sm:w-9 sm:h-9"
+                    >
+                      <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+                    </Button>
 
-                  <Button variant="outline" size="icon">
-                    <Download className="h-4 w-4" />
-                  </Button>
+                    <Button variant="outline" size="icon" className="w-8 h-8 sm:w-9 sm:h-9">
+                      <Download className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
               </div>
 

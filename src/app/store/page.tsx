@@ -1,13 +1,15 @@
-import Link from "next/link"
+import { Grid3X3, Heart, LayoutGrid, Menu, ShoppingBag, SlidersHorizontal, Star, X } from "lucide-react"
 import Image from "next/image"
-import { Grid3X3, LayoutGrid, Search, ShoppingBag, Star, SlidersHorizontal, X, Heart, Menu } from "lucide-react"
+import Link from "next/link"
+import { useState } from "react"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Slider } from "@/components/ui/slider"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Slider } from "@/components/ui/slider"
 
 // Sample product data
 const products = [
@@ -122,6 +124,10 @@ const categories = [
 ]
 
 export default function StorePage() {
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
+
+  const toggleMobileFilter = () => setIsMobileFilterOpen(!isMobileFilterOpen)
+
   return (
     <div className="flex min-h-screen flex-col">
       {/* Header */}
@@ -129,13 +135,13 @@ export default function StorePage() {
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center">
             <Link href="/" className="mr-6">
-            <Image
-              src="/sokobylogo.png" 
-              alt="Sokoby"
-              width={150} 
-              height={50} 
-              className="h-11 w-auto"
-            />
+              <Image
+                src="/sokobylogo.png" 
+                alt="Sokoby"
+                width={150} 
+                height={50} 
+                className="h-11 w-auto"
+              />
             </Link>
             <nav className="hidden space-x-6 md:flex">
               <Link href="/store" className="text-sm font-medium text-red-800 hover:text-red-700">
@@ -151,52 +157,101 @@ export default function StorePage() {
                 Sale
               </Link>
             </nav>
-          </div>
-
-          <div className="hidden flex-1 max-w-md mx-8 lg:block">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-              <Input
-                type="search"
-                placeholder="Search products..."
-                className="pl-10 pr-4 py-2 w-full border-gray-300 focus:border-red-800 focus:ring-red-800"
-              />
-            </div>
+            
+            {/* Mobile Navigation Menu */}
+            <Sheet>
+              <SheetTrigger asChild className="md:hidden">
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[300px]">
+                <SheetHeader>
+                  <SheetTitle>
+                    <Image
+                      src="/sokobylogo.png" 
+                      alt="Sokoby"
+                      width={150} 
+                      height={50} 
+                      className="h-11 w-auto"
+                    />
+                  </SheetTitle>
+                </SheetHeader>
+                <div className="mt-6 space-y-4">
+                  <SheetClose asChild>
+                    <Link 
+                      href="/store" 
+                      className="block py-2 text-lg font-medium text-gray-900 hover:text-red-800"
+                    >
+                      Shop
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link 
+                      href="/collections" 
+                      className="block py-2 text-lg font-medium text-gray-900 hover:text-red-800"
+                    >
+                      Collections
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link 
+                      href="/new-arrivals" 
+                      className="block py-2 text-lg font-medium text-gray-900 hover:text-red-800"
+                    >
+                      New Arrivals
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link 
+                      href="/sale" 
+                      className="block py-2 text-lg font-medium text-gray-900 hover:text-red-800"
+                    >
+                      Sale
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link 
+                      href="/cart" 
+                      className="block py-2 text-lg font-medium text-gray-900 hover:text-red-800"
+                    >
+                      Cart
+                    </Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link 
+                      href="/auth" 
+                      className="block py-2 text-lg font-medium text-gray-900 hover:text-red-800"
+                    >
+                      Account
+                    </Link>
+                  </SheetClose>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
 
           <div className="flex items-center space-x-4">
-            <button className="hidden md:flex items-center text-sm font-medium text-gray-700 hover:text-red-800">
-              <Heart className="mr-1 h-5 w-5" />
-              <span className="sr-only md:not-sr-only">Wishlist</span>
-            </button>
-            <button className="flex items-center text-sm font-medium text-gray-700 hover:text-red-800">
+            <Link 
+              href="/cart" 
+              className="flex items-center text-sm font-medium text-gray-700 hover:text-red-800"
+            >
               <ShoppingBag className="mr-1 h-5 w-5" />
               <span className="sr-only md:not-sr-only">Cart (3)</span>
-            </button>
+            </Link>
             <Link href="/auth" className="hidden md:block text-sm font-medium text-gray-700 hover:text-red-800">
               Account
             </Link>
-            <Button className="md:hidden" size="icon" variant="ghost">
-              <Menu className="h-5 w-5" />
-            </Button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Search (visible on small screens) */}
-      <div className="border-b p-4 md:hidden">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-          <Input type="search" placeholder="Search products..." className="pl-10 pr-4 py-2 w-full" />
-        </div>
-      </div>
-
       {/* Collection Header */}
-      <div className="bg-gray-50 py-8 md:py-12">
+      <div className="bg-gray-50 py-6 md:py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl">
-            <h1 className="text-3xl font-bold text-gray-900 md:text-4xl">All Products</h1>
-            <p className="mt-4 text-lg text-gray-600">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 md:text-4xl">All Products</h1>
+            <p className="mt-2 sm:mt-4 text-sm sm:text-lg text-gray-600">
               Discover our curated collection of high-quality products designed to enhance your lifestyle. From everyday
               essentials to unique finds, we&apos;ve got something for everyone.
             </p>
@@ -207,7 +262,42 @@ export default function StorePage() {
       {/* Collection Content */}
       <div className="container mx-auto px-4 py-8">
         <div className="lg:grid lg:grid-cols-4 lg:gap-8">
-          {/* Sidebar Filters (Desktop) */}
+          {/* Sidebar Filters (Mobile Drawer) */}
+          <Sheet open={isMobileFilterOpen} onOpenChange={setIsMobileFilterOpen}>
+            <SheetTrigger asChild className="lg:hidden">
+              <Button variant="outline" size="sm" className="flex items-center mb-4" onClick={toggleMobileFilter}>
+                <SlidersHorizontal className="mr-2 h-4 w-4" />
+                Filters
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[300px] overflow-y-auto">
+              <SheetHeader>
+                <SheetTitle>Filters</SheetTitle>
+              </SheetHeader>
+              <div className="space-y-8 mt-6">
+                {/* Categories */}
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-4">Categories</h3>
+                  <div className="space-y-2">
+                    {categories.map((category) => (
+                      <div key={category.name} className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <Checkbox id={`category-${category.name}`} className="mr-2" />
+                          <label htmlFor={`category-${category.name}`} className="text-sm text-gray-700 cursor-pointer">
+                            {category.name}
+                          </label>
+                        </div>
+                        <span className="text-xs text-gray-500">{category.count}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* Other filter sections remain the same */}
+              </div>
+            </SheetContent>
+          </Sheet>
+
+          {/* Existing desktop filter sidebar */}
           <div className="hidden lg:block">
             <div className="sticky top-24 space-y-8">
               {/* Categories */}
@@ -338,13 +428,13 @@ export default function StorePage() {
 
             {/* Sort and Results Count */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6">
-              <p className="text-sm text-gray-500 mb-4 sm:mb-0">
+              <p className="text-xs sm:text-sm text-gray-500 mb-4 sm:mb-0">
                 Showing <span className="font-medium">1-24</span> of <span className="font-medium">156</span> products
               </p>
               <div className="flex items-center">
-                <span className="text-sm text-gray-500 mr-2">Sort by:</span>
+                <span className="text-xs sm:text-sm text-gray-500 mr-2">Sort by:</span>
                 <Select defaultValue="featured">
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger className="w-[140px] sm:w-[180px] text-xs sm:text-sm">
                     <SelectValue placeholder="Sort by" />
                   </SelectTrigger>
                   <SelectContent>
@@ -378,7 +468,7 @@ export default function StorePage() {
             </div>
 
             {/* Products Grid */}
-            <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:gap-x-8 lg:gap-y-12">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-12">
               {products.map((product) => (
                 <div key={product.id} className="group relative">
                   <div className="aspect-square w-full overflow-hidden rounded-lg bg-gray-100">
@@ -393,7 +483,7 @@ export default function StorePage() {
                     </Link>
                     {/* Quick shop button */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Button className="bg-white text-gray-900 hover:bg-gray-100">Quick Shop</Button>
+                      <Button className="bg-white text-gray-900 hover:bg-gray-100 hidden md:block">Quick Shop</Button>
                     </div>
                     {/* Badges */}
                     <div className="absolute top-2 left-2 flex flex-col gap-1">
@@ -415,31 +505,31 @@ export default function StorePage() {
                     </div>
                     {/* Wishlist button */}
                     <button className="absolute top-2 right-2 rounded-full bg-white p-1.5 text-gray-900 shadow-sm hover:bg-gray-100">
-                      <Heart className="h-5 w-5" />
+                      <Heart className="h-4 w-4 md:h-5 md:w-5" />
                     </button>
                   </div>
                   <div className="mt-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-medium text-gray-900">
+                      <h3 className="text-xs sm:text-sm font-medium text-gray-900">
                         <Link href={`/store/product/${product.id}`}>{product.name}</Link>
                       </h3>
                       <div className="flex items-center">
-                        <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                        <span className="ml-1 text-sm text-gray-500">{product.rating}</span>
+                        <Star className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-400 fill-yellow-400" />
+                        <span className="ml-1 text-xs sm:text-sm text-gray-500">{product.rating}</span>
                       </div>
                     </div>
                     <div className="mt-1 flex items-center">
                       {product.salePrice ? (
                         <>
-                          <span className="text-sm font-medium text-red-600">${product.salePrice.toFixed(2)}</span>
-                          <span className="ml-2 text-sm text-gray-500 line-through">${product.price.toFixed(2)}</span>
+                          <span className="text-xs sm:text-sm font-medium text-red-600">${product.salePrice.toFixed(2)}</span>
+                          <span className="ml-2 text-xs sm:text-sm text-gray-500 line-through">${product.price.toFixed(2)}</span>
                         </>
                       ) : (
-                        <span className="text-sm font-medium text-gray-900">${product.price.toFixed(2)}</span>
+                        <span className="text-xs sm:text-sm font-medium text-gray-900">${product.price.toFixed(2)}</span>
                       )}
                     </div>
                     <div className="mt-1">
-                      <p className="text-sm text-gray-500">
+                      <p className="text-xs sm:text-sm text-gray-500">
                         {product.colors.length} {product.colors.length === 1 ? "color" : "colors"}
                       </p>
                     </div>
@@ -472,14 +562,18 @@ export default function StorePage() {
       </div>
 
       {/* Newsletter */}
-      <section className="bg-gray-50 py-12">
+      <section className="bg-gray-50 py-8 sm:py-12">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-2xl font-bold text-gray-900">Subscribe to our newsletter</h2>
-            <p className="mt-4 text-gray-600">Get the latest updates on new products and upcoming sales.</p>
-            <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2">
-              <Input type="email" placeholder="Enter your email" className="sm:w-72" />
-              <Button className="bg-red-800 hover:bg-red-700">Subscribe</Button>
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Subscribe to our newsletter</h2>
+            <p className="mt-2 sm:mt-4 text-sm sm:text-base text-gray-600">Get the latest updates on new products and upcoming sales.</p>
+            <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2">
+              <input 
+                type="email" 
+                placeholder="Enter your email" 
+                className="w-full sm:w-72 text-xs sm:text-sm px-3 py-2 border rounded focus:ring-2 focus:ring-red-800 focus:border-transparent" 
+              />
+              <Button className="bg-red-800 hover:bg-red-700 text-xs sm:text-sm">Subscribe</Button>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { BarChart3, ChevronRight, CreditCard, Headphones, Mail, Shield, ShoppingBag, Star, Truck } from "lucide-react"
+import { BarChart3, ChevronRight, CreditCard, Headphones, Mail, Shield, ShoppingBag, Truck } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -120,12 +120,12 @@ export default function Home() {
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-red-900 py-16 md:py-24">
+      <section className="bg-red-900 py-12 md:py-24">
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-8 md:grid-cols-2">
             <div className="text-center md:text-left">
-              <h1 className="mb-4 text-3xl font-bold text-white md:text-5xl">Build your e-commerce empire</h1>
-              <p className="mb-6 text-lg text-white/90">
+              <h1 className="mb-4 text-2xl md:text-3xl lg:text-5xl font-bold text-white">Build your e-commerce empire</h1>
+              <p className="mb-6 text-base md:text-lg text-white/90">
                 The complete platform to launch and develop your online store. Start selling today with our powerful
                 tools and reach customers worldwide.
               </p>
@@ -160,7 +160,7 @@ export default function Home() {
                   <>
                     <Link href="/auth/store-setup">
                       <Button size="lg" className="bg-white text-red-900 hover:bg-gray-100">
-                        Start free trial
+                        Setup your store
                       </Button>
                     </Link>
                     {/* <Button size="lg" variant="outline" className="border-white text-black hover:bg-gray-100">
@@ -191,81 +191,81 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="bg-white py-12">
+      <section className="bg-white py-8 md:py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 md:gap-8 md:grid-cols-4">
             <div className="text-center">
-              <p className="text-3xl font-bold text-red-800">10k+</p>
-              <p className="text-sm text-gray-600">Active Stores</p>
+              <p className="text-2xl md:text-3xl font-bold text-red-800">10k+</p>
+              <p className="text-xs md:text-sm text-gray-600">Active Stores</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-red-800">$100M+</p>
-              <p className="text-sm text-gray-600">Processed</p>
+              <p className="text-2xl md:text-3xl font-bold text-red-800">$100M+</p>
+              <p className="text-xs md:text-sm text-gray-600">Processed</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-red-800">150+</p>
-              <p className="text-sm text-gray-600">Countries</p>
+              <p className="text-2xl md:text-3xl font-bold text-red-800">150+</p>
+              <p className="text-xs md:text-sm text-gray-600">Countries</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-red-800">24/7</p>
-              <p className="text-sm text-gray-600">Support</p>
+              <p className="text-2xl md:text-3xl font-bold text-red-800">24/7</p>
+              <p className="text-xs md:text-sm text-gray-600">Support</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* How It Works Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-12 md:py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="mb-2 text-3xl font-bold text-gray-900">How It Works</h2>
-            <p className="mx-auto max-w-2xl text-gray-600">
+          <div className="mb-8 md:mb-12 text-center">
+            <h2 className="mb-2 text-2xl md:text-3xl font-bold text-gray-900">How It Works</h2>
+            <p className="mx-auto max-w-2xl text-sm md:text-base text-gray-600">
               Get your online store up and running in just a few simple steps
             </p>
           </div>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-6 md:gap-8 md:grid-cols-3">
             <div className="relative flex flex-col items-center text-center">
-              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-red-800">
-                <span className="text-2xl font-bold">1</span>
+              <div className="mb-4 flex h-12 w-12 md:h-16 md:w-16 items-center justify-center rounded-full bg-red-100 text-red-800">
+                <span className="text-xl md:text-2xl font-bold">1</span>
               </div>
-              <h3 className="mb-2 text-xl font-semibold">Create Your Account</h3>
-              <p className="text-gray-600">
+              <h3 className="mb-2 text-lg md:text-xl font-semibold">Create Your Account</h3>
+              <p className="text-sm md:text-base text-gray-600">
                 Sign up for free and set up your store profile with your brand information
               </p>
             </div>
             <div className="relative flex flex-col items-center text-center">
-              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-red-800">
-                <span className="text-2xl font-bold">2</span>
+              <div className="mb-4 flex h-12 w-12 md:h-16 md:w-16 items-center justify-center rounded-full bg-red-100 text-red-800">
+                <span className="text-xl md:text-2xl font-bold">2</span>
               </div>
-              <h3 className="mb-2 text-xl font-semibold">Add Your Products</h3>
-              <p className="text-gray-600">Upload your products with descriptions, images, and pricing options</p>
+              <h3 className="mb-2 text-lg md:text-xl font-semibold">Add Your Products</h3>
+              <p className="text-sm md:text-base text-gray-600">Upload your products with descriptions, images, and pricing options</p>
             </div>
             <div className="relative flex flex-col items-center text-center">
-              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-red-800">
-                <span className="text-2xl font-bold">3</span>
+              <div className="mb-4 flex h-12 w-12 md:h-16 md:w-16 items-center justify-center rounded-full bg-red-100 text-red-800">
+                <span className="text-xl md:text-2xl font-bold">3</span>
               </div>
-              <h3 className="mb-2 text-xl font-semibold">Start Selling</h3>
-              <p className="text-gray-600">Launch your store, promote your products, and start accepting orders</p>
+              <h3 className="mb-2 text-lg md:text-xl font-semibold">Start Selling</h3>
+              <p className="text-sm md:text-base text-gray-600">Launch your store, promote your products, and start accepting orders</p>
             </div>
           </div>
-          <div className="mt-12 text-center">
+          <div className="mt-8 md:mt-12 text-center">
             <Link href="/auth/store-setup">
-            <Button className="bg-red-800 hover:bg-red-700">Create Your Store Now</Button>
+              <Button className="bg-red-800 hover:bg-red-700">Create Your Store Now</Button>
             </Link>
           </div>
         </div>
       </section>
 
       {/* Inspiration Section */}
-      <section className="py-16">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="mb-2 text-3xl font-bold text-gray-900">Shopping Inspirations</h2>
-            <p className="mx-auto max-w-2xl text-gray-600">
+          <div className="mb-8 md:mb-12 text-center">
+            <h2 className="mb-2 text-2xl md:text-3xl font-bold text-gray-900">Shopping Inspirations</h2>
+            <p className="mx-auto max-w-2xl text-sm md:text-base text-gray-600">
               Discover different ways to grow your business and reach more customers
             </p>
           </div>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-6 md:gap-8 md:grid-cols-3">
             <div className="group overflow-hidden rounded-lg border bg-white shadow-sm transition-all hover:shadow-md">
               <div className="aspect-video overflow-hidden">
                 <Image
@@ -276,13 +276,13 @@ export default function Home() {
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <div className="p-6">
-                <h3 className="mb-2 text-xl font-semibold">Family Shopping</h3>
-                <p className="mb-4 text-gray-600">
+              <div className="p-4 md:p-6">
+                <h3 className="mb-2 text-lg md:text-xl font-semibold">Family Shopping</h3>
+                <p className="mb-4 text-sm md:text-base text-gray-600">
                   Create special offers and collections that appeal to families and increase average order value.
                 </p>
-                <Link href="#" className="inline-flex items-center text-sm font-medium text-red-800 hover:text-red-700">
-                  Learn more <ChevronRight className="ml-1 h-4 w-4" />
+                <Link href="#" className="inline-flex items-center text-xs md:text-sm font-medium text-red-800 hover:text-red-700">
+                  Learn more <ChevronRight className="ml-1 h-3 w-3 md:h-4 md:w-4" />
                 </Link>
               </div>
             </div>
@@ -296,13 +296,13 @@ export default function Home() {
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <div className="p-6">
-                <h3 className="mb-2 text-xl font-semibold">Create Your Store</h3>
-                <p className="mb-4 text-gray-600">
+              <div className="p-4 md:p-6">
+                <h3 className="mb-2 text-lg md:text-xl font-semibold">Create Your Store</h3>
+                <p className="mb-4 text-sm md:text-base text-gray-600">
                   Design a beautiful online store that reflects your brand identity and attracts customers.
                 </p>
-                <Link href="#" className="inline-flex items-center text-sm font-medium text-red-800 hover:text-red-700">
-                  Learn more <ChevronRight className="ml-1 h-4 w-4" />
+                <Link href="#" className="inline-flex items-center text-xs md:text-sm font-medium text-red-800 hover:text-red-700">
+                  Learn more <ChevronRight className="ml-1 h-3 w-3 md:h-4 md:w-4" />
                 </Link>
               </div>
             </div>
@@ -316,13 +316,13 @@ export default function Home() {
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <div className="p-6">
-                <h3 className="mb-2 text-xl font-semibold">Success Stories</h3>
-                <p className="mb-4 text-gray-600">
+              <div className="p-4 md:p-6">
+                <h3 className="mb-2 text-lg md:text-xl font-semibold">Success Stories</h3>
+                <p className="mb-4 text-sm md:text-base text-gray-600">
                   Get inspired by merchants who have built thriving businesses using our platform.
                 </p>
-                <Link href="#" className="inline-flex items-center text-sm font-medium text-red-800 hover:text-red-700">
-                  Learn more <ChevronRight className="ml-1 h-4 w-4" />
+                <Link href="#" className="inline-flex items-center text-xs md:text-sm font-medium text-red-800 hover:text-red-700">
+                  Learn more <ChevronRight className="ml-1 h-3 w-3 md:h-4 md:w-4" />
                 </Link>
               </div>
             </div>
@@ -330,16 +330,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Product Categories */}
-      <section className="bg-gray-50 py-16">
+      {/* Popular Categories Section */}
+      <section className="bg-gray-50 py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="mb-2 text-3xl font-bold text-gray-900">Popular Categories</h2>
-            <p className="mx-auto max-w-2xl text-gray-600">
+          <div className="mb-8 md:mb-12 text-center">
+            <h2 className="mb-2 text-2xl md:text-3xl font-bold text-gray-900">Popular Categories</h2>
+            <p className="mx-auto max-w-2xl text-sm md:text-base text-gray-600">
               Explore our most popular product categories to start selling
             </p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-3 sm:gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {[
               { name: "Fashion", icon: "👕" },
               { name: "Electronics", icon: "📱" },
@@ -353,10 +353,10 @@ export default function Home() {
               <Link
                 key={index}
                 href="#"
-                className="flex items-center rounded-lg border bg-white p-4 shadow-sm transition-all hover:shadow-md hover:border-red-200"
+                className="flex items-center rounded-lg border bg-white p-3 md:p-4 shadow-sm transition-all hover:shadow-md hover:border-red-200"
               >
-                <span className="mr-3 text-2xl">{category.icon}</span>
-                <span className="font-medium">{category.name}</span>
+                <span className="mr-2 md:mr-3 text-xl md:text-2xl">{category.icon}</span>
+                <span className="text-sm md:text-base font-medium">{category.name}</span>
               </Link>
             ))}
           </div>
@@ -364,75 +364,75 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="mb-2 text-3xl font-bold text-gray-900">Our Features</h2>
-            <p className="mx-auto max-w-2xl text-gray-600">Everything you need to run a successful online business</p>
+          <div className="mb-8 md:mb-12 text-center">
+            <h2 className="mb-2 text-2xl md:text-3xl font-bold text-gray-900">Our Features</h2>
+            <p className="mx-auto max-w-2xl text-sm md:text-base text-gray-600">Everything you need to run a successful online business</p>
           </div>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3">
             <Card className="border-0 shadow-sm hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
-                <div className="mb-4 rounded-full bg-red-100 p-3 w-12 h-12 flex items-center justify-center">
-                  <ShoppingBag className="h-6 w-6 text-red-800" />
+              <CardContent className="p-4 md:p-6">
+                <div className="mb-4 rounded-full bg-red-100 p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                  <ShoppingBag className="h-5 w-5 md:h-6 md:w-6 text-red-800" />
                 </div>
-                <h3 className="mb-2 text-xl font-semibold">Product Management</h3>
-                <p className="text-gray-600">
+                <h3 className="mb-2 text-lg md:text-xl font-semibold">Product Management</h3>
+                <p className="text-sm md:text-base text-gray-600">
                   Easily manage your product catalog with bulk editing, inventory tracking, and variant options.
                 </p>
               </CardContent>
             </Card>
             <Card className="border-0 shadow-sm hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
-                <div className="mb-4 rounded-full bg-red-100 p-3 w-12 h-12 flex items-center justify-center">
-                  <Shield className="h-6 w-6 text-red-800" />
+              <CardContent className="p-4 md:p-6">
+                <div className="mb-4 rounded-full bg-red-100 p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                  <Shield className="h-5 w-5 md:h-6 md:w-6 text-red-800" />
                 </div>
-                <h3 className="mb-2 text-xl font-semibold">Secure Payments</h3>
-                <p className="text-gray-600">
+                <h3 className="mb-2 text-lg md:text-xl font-semibold">Secure Payments</h3>
+                <p className="text-sm md:text-base text-gray-600">
                   Accept payments securely online with multiple payment gateways and fraud protection.
                 </p>
               </CardContent>
             </Card>
             <Card className="border-0 shadow-sm hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
-                <div className="mb-4 rounded-full bg-red-100 p-3 w-12 h-12 flex items-center justify-center">
-                  <BarChart3 className="h-6 w-6 text-red-800" />
+              <CardContent className="p-4 md:p-6">
+                <div className="mb-4 rounded-full bg-red-100 p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                  <BarChart3 className="h-5 w-5 md:h-6 md:w-6 text-red-800" />
                 </div>
-                <h3 className="mb-2 text-xl font-semibold">Analytics</h3>
-                <p className="text-gray-600">
+                <h3 className="mb-2 text-lg md:text-xl font-semibold">Analytics</h3>
+                <p className="text-sm md:text-base text-gray-600">
                   Track your store&apos;s performance with detailed reports on sales, customers, and inventory.
                 </p>
               </CardContent>
             </Card>
             <Card className="border-0 shadow-sm hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
-                <div className="mb-4 rounded-full bg-red-100 p-3 w-12 h-12 flex items-center justify-center">
-                  <Truck className="h-6 w-6 text-red-800" />
+              <CardContent className="p-4 md:p-6">
+                <div className="mb-4 rounded-full bg-red-100 p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                  <Truck className="h-5 w-5 md:h-6 md:w-6 text-red-800" />
                 </div>
-                <h3 className="mb-2 text-xl font-semibold">Shipping Solutions</h3>
-                <p className="text-gray-600">
+                <h3 className="mb-2 text-lg md:text-xl font-semibold">Shipping Solutions</h3>
+                <p className="text-sm md:text-base text-gray-600">
                   Offer multiple shipping options with real-time rates and tracking information for customers.
                 </p>
               </CardContent>
             </Card>
             <Card className="border-0 shadow-sm hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
-                <div className="mb-4 rounded-full bg-red-100 p-3 w-12 h-12 flex items-center justify-center">
-                  <CreditCard className="h-6 w-6 text-red-800" />
+              <CardContent className="p-4 md:p-6">
+                <div className="mb-4 rounded-full bg-red-100 p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                  <CreditCard className="h-5 w-5 md:h-6 md:w-6 text-red-800" />
                 </div>
-                <h3 className="mb-2 text-xl font-semibold">Discount Codes</h3>
-                <p className="text-gray-600">
+                <h3 className="mb-2 text-lg md:text-xl font-semibold">Discount Codes</h3>
+                <p className="text-sm md:text-base text-gray-600">
                   Create and manage promotional codes, discounts, and special offers to boost sales.
                 </p>
               </CardContent>
             </Card>
             <Card className="border-0 shadow-sm hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
-                <div className="mb-4 rounded-full bg-red-100 p-3 w-12 h-12 flex items-center justify-center">
-                  <Headphones className="h-6 w-6 text-red-800" />
+              <CardContent className="p-4 md:p-6">
+                <div className="mb-4 rounded-full bg-red-100 p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                  <Headphones className="h-5 w-5 md:h-6 md:w-6 text-red-800" />
                 </div>
-                <h3 className="mb-2 text-xl font-semibold">24/7 Support</h3>
-                <p className="text-gray-600">
+                <h3 className="mb-2 text-lg md:text-xl font-semibold">24/7 Support</h3>
+                <p className="text-sm md:text-base text-gray-600">
                   Get help whenever you need it with our dedicated support team and knowledge base.
                 </p>
               </CardContent>
@@ -441,96 +441,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="mb-2 text-3xl font-bold text-gray-900">What Our Customers Say</h2>
-            <p className="mx-auto max-w-2xl text-gray-600">
-              Thousands of businesses trust our platform to power their online stores
-            </p>
-          </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <Card key={i} className="border-0 shadow-sm">
-                <CardContent className="p-6">
-                  <div className="mb-4 flex text-yellow-400">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-current" />
-                    ))}
-                  </div>
-                  <p className="mb-4 text-gray-600">
-                    &quot;Sokoby has transformed our business. The platform is easy to use and has all the features we need
-                    to grow our online presence. The support team is always helpful and responsive.&quot;
-                  </p>
-                  <div className="flex items-center">
-                    <div className="mr-4 h-12 w-12 overflow-hidden rounded-full bg-gray-200">
-                      <Image
-                        src="/placeholder.svg?height=48&width=48"
-                        alt="Customer"
-                        width={48}
-                        height={48}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-medium">Jane Smith</p>
-                      <p className="text-sm text-gray-500">Founder, Fashion Boutique</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Pricing Section */}
-      <section className="py-16">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="mb-2 text-3xl font-bold text-gray-900">Simple, Transparent Pricing</h2>
-            <p className="mx-auto max-w-2xl text-gray-600">Choose the plan that&apos;s right for your business</p>
+          <div className="mb-8 md:mb-12 text-center">
+            <h2 className="mb-2 text-2xl md:text-3xl font-bold text-gray-900">Simple, Transparent Pricing</h2>
+            <p className="mx-auto max-w-2xl text-sm md:text-base text-gray-600">Choose the plan that&apos;s right for your business</p>
           </div>
           
           {error && (
-            <div className="mb-8 max-w-md mx-auto bg-red-50 border border-red-200 rounded-md p-4">
+            <div className="mb-6 md:mb-8 max-w-md mx-auto bg-red-50 border border-red-200 rounded-md p-3 md:p-4">
               <div className="flex">
                 <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <svg className="h-4 w-4 md:h-5 md:w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                   </svg>
                 </div>
                 <div className="ml-3">
-                  <p className="text-sm font-medium text-red-800">{error}</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {hasSubscription && (
-            <div className="mb-8 max-w-md mx-auto bg-green-50 border border-green-200 rounded-md p-4">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <div className="ml-3 flex-1">
-                  <p className="text-sm font-medium text-green-800">You already have an active subscription.</p>
-                  <div className="mt-2">
-                    <Link href="/subscriptions">
-                      <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
-                        View Subscription
-                      </Button>
-                    </Link>
-                  </div>
+                  <p className="text-xs md:text-sm font-medium text-red-800">{error}</p>
                 </div>
               </div>
             </div>
           )}
           
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-6 md:gap-8 md:grid-cols-3">
             {[
               {
                 name: "Basic",
@@ -569,22 +503,22 @@ export default function Home() {
                 className={`border-0 ${plan.highlighted ? "relative shadow-lg border-2 border-red-800" : "shadow-sm"}`}
               >
                 {plan.highlighted && (
-                  <div className="absolute -top-4 left-0 right-0 mx-auto w-max rounded-full bg-red-800 px-4 py-1 text-sm font-medium text-white">
+                  <div className="absolute -top-3 md:-top-4 left-0 right-0 mx-auto w-max rounded-full bg-red-800 px-3 py-0.5 md:px-4 md:py-1 text-xs md:text-sm font-medium text-white">
                     Most Popular
                   </div>
                 )}
-                <CardContent className="p-6">
-                  <h3 className="mb-2 text-xl font-semibold">{plan.name}</h3>
+                <CardContent className="p-4 md:p-6">
+                  <h3 className="mb-2 text-lg md:text-xl font-semibold">{plan.name}</h3>
                   <div className="mb-4">
-                    <span className="text-3xl font-bold">{plan.price}</span>
-                    <span className="text-gray-600">/month</span>
+                    <span className="text-2xl md:text-3xl font-bold">{plan.price}</span>
+                    <span className="text-sm md:text-base text-gray-600">/month</span>
                   </div>
-                  <p className="mb-6 text-gray-600">{plan.description}</p>
-                  <ul className="mb-6 space-y-2">
+                  <p className="mb-4 md:mb-6 text-sm md:text-base text-gray-600">{plan.description}</p>
+                  <ul className="mb-4 md:mb-6 space-y-2">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-center">
-                        <ChevronRight className="mr-2 h-4 w-4 text-red-800" />
-                        <span>{feature}</span>
+                        <ChevronRight className="mr-2 h-3 w-3 md:h-4 md:w-4 text-red-800" />
+                        <span className="text-sm md:text-base">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -605,11 +539,11 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section className="bg-gray-50 py-16">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="mb-2 text-3xl font-bold text-gray-900">Frequently Asked Questions</h2>
-            <p className="mx-auto max-w-2xl text-gray-600">Find answers to common questions about our platform</p>
+          <div className="mb-8 md:mb-12 text-center">
+            <h2 className="mb-2 text-2xl md:text-3xl font-bold text-gray-900">Frequently Asked Questions</h2>
+            <p className="mx-auto max-w-2xl text-sm md:text-base text-gray-600">Find answers to common questions about our platform</p>
           </div>
           <div className="mx-auto max-w-3xl">
             <Accordion type="single" collapsible className="w-full">
@@ -617,22 +551,17 @@ export default function Home() {
                 {
                   question: "How do I get started with Sokoby?",
                   answer:
-                    "Getting started is easy! Simply sign up for a free account, follow our setup wizard to configure your store, add your products, and you're ready to start selling. Our platform is designed to be user-friendly, even if you have no technical experience.",
+                    "Getting started is easy! Simply sign up for a free account, choose a plan that fits your needs, and follow our step-by-step guide to set up your online store. No technical skills required.",
                 },
                 {
-                  question: "What payment methods can I accept?",
+                  question: "What payment methods do you support?",
                   answer:
-                    "Sokoby supports a wide range of payment gateways including Stripe, PayPal, Apple Pay, Google Pay, and many more. You can offer your customers multiple payment options to increase conversion rates.",
+                    "We support all major payment methods including credit cards, PayPal, Apple Pay, Google Pay, and more. We also support local payment methods in various countries.",
                 },
                 {
-                  question: "Can I use my own domain name?",
+                  question: "Can I migrate my existing store to Sokoby?",
                   answer:
-                    "Yes, you can use your own custom domain name with your Sokoby store. We provide easy tools to connect your domain, or you can purchase a new domain directly through our platform.",
-                },
-                {
-                  question: "Is there a limit to how many products I can sell?",
-                  answer:
-                    "The number of products you can sell depends on your plan. Our Basic plan supports up to 100 products, Professional up to 1,000, and Enterprise offers unlimited products. You can upgrade your plan at any time as your business grows.",
+                    "Yes, we offer a seamless migration process for stores coming from other platforms. Our team will help you transfer your products, customers, and order history.",
                 },
                 {
                   question: "Do you offer discounts for annual billing?",
@@ -641,8 +570,8 @@ export default function Home() {
                 },
               ].map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-left font-medium">{faq.question}</AccordionTrigger>
-                  <AccordionContent className="text-gray-600">{faq.answer}</AccordionContent>
+                  <AccordionTrigger className="text-left text-sm md:text-base font-medium">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-sm md:text-base text-gray-600">{faq.answer}</AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
@@ -650,69 +579,46 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Partners Section */}
-      {/* <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="mb-12 text-center">
-            <h2 className="mb-2 text-3xl font-bold text-gray-900">Trusted by Leading Brands</h2>
-            <p className="mx-auto max-w-2xl text-gray-600">Join thousands of businesses that trust our platform</p>
-          </div>
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="flex items-center justify-center">
-                <Image
-                  src="/placeholder.svg?height=60&width=120"
-                  alt={`Partner logo ${i + 1}`}
-                  width={120}
-                  height={60}
-                  className="h-12 w-auto grayscale opacity-70 transition-all hover:grayscale-0 hover:opacity-100"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
       {/* Newsletter Section */}
-      <section className="bg-red-900 py-16">
+      <section className="bg-red-900 py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-4 text-3xl font-bold text-white">Stay Updated</h2>
-            <p className="mb-8 text-white/80">
+            <h2 className="mb-4 text-2xl md:text-3xl font-bold text-white">Stay Updated</h2>
+            <p className="mb-6 md:mb-8 text-sm md:text-base text-white/80">
               Subscribe to our newsletter for the latest e-commerce tips, trends, and exclusive offers
             </p>
-            <form className="flex flex-col gap-4 sm:flex-row">
+            <form className="flex flex-col gap-3 md:gap-4 sm:flex-row">
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 border-white/20 bg-white/10 text-white placeholder:text-white/60"
+                className="flex-1 border-white/20 bg-white/10 text-white placeholder:text-white/60 text-sm md:text-base"
               />
               <Button className="bg-white text-red-900 hover:bg-gray-100">Subscribe</Button>
             </form>
-            <p className="mt-4 text-sm text-white/60">We respect your privacy. Unsubscribe at any time.</p>
+            <p className="mt-3 md:mt-4 text-xs md:text-sm text-white/60">We respect your privacy. Unsubscribe at any time.</p>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="rounded-xl bg-gradient-to-r from-red-800 to-red-900 p-8 md:p-12">
+          <div className="rounded-xl bg-gradient-to-r from-red-800 to-red-900 p-6 md:p-8 lg:p-12">
             <div className="mx-auto max-w-3xl text-center">
-              <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">Ready to start selling online?</h2>
-              <p className="mb-8 text-white/80">
+              <h2 className="mb-4 text-2xl md:text-3xl lg:text-4xl font-bold text-white">Ready to start selling online?</h2>
+              <p className="mb-6 md:mb-8 text-sm md:text-base text-white/80">
                 Join thousands of successful businesses on our platform and start growing your online presence today.
               </p>
               <div className="flex flex-col space-y-3 sm:flex-row sm:justify-center sm:space-x-4 sm:space-y-0">
-              <Link href={isAuthenticated ? "/auth/store-setup" : "/auth"}>
-                <Button size="lg" className="bg-white text-red-900 hover:bg-gray-100">
-                  Start free trial
-                </Button>
+                <Link href={isAuthenticated ? "/auth/store-setup" : "/auth"}>
+                  <Button size="lg" className="bg-white text-red-900 hover:bg-gray-100">
+                    Start free trial
+                  </Button>
                 </Link>
                 <Link href="/contact">
-                <Button size="lg" variant="outline" className="bg-white text-red-900 hover:bg-gray-100">
-                  Contact sales
-                </Button>
+                  <Button size="lg" variant="outline" className="bg-white text-red-900 hover:bg-gray-100">
+                    Contact sales
+                  </Button>
                 </Link>
               </div>
             </div>

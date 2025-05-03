@@ -13,19 +13,20 @@ export default function ThemePage() {
   return (
     <ThemeProvider>
       <BaseLayout>
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">Theme Customization</h1>
+        <div className="container mx-auto px-2 sm:px-4 py-6 sm:py-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8">
+            <h1 className="text-xl sm:text-3xl font-bold">Theme Customization</h1>
             <Button
               onClick={() => setShowCustomizer(!showCustomizer)}
               variant="outline"
+              className="w-full sm:w-auto text-xs sm:text-sm"
             >
-              <Settings className="h-4 w-4 mr-2" />
+              <Settings className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
               {showCustomizer ? 'Close Customizer' : 'Open Customizer'}
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {/* Theme Preview Cards */}
             <div className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all">
               <div className="aspect-video relative">
@@ -35,12 +36,12 @@ export default function ThemePage() {
                   className="object-cover w-full h-full"
                 />
               </div>
-              <div className="p-4">
-                <h3 className="text-xl font-semibold mb-2">Dawn</h3>
-                <p className="text-gray-600 mb-4">
+              <div className="p-3 sm:p-4">
+                <h3 className="text-base sm:text-xl font-semibold mb-2">Dawn</h3>
+                <p className="text-gray-600 mb-2 sm:mb-4 text-xs sm:text-base">
                   A clean, modern theme optimized for performance
                 </p>
-                <Button className="w-full">Select Theme</Button>
+                <Button className="w-full text-xs sm:text-sm">Select Theme</Button>
               </div>
             </div>
 

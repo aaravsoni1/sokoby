@@ -1,12 +1,13 @@
 "use client"
 
-import { Menu, Search, ShoppingBag } from "lucide-react"
+import { Menu, ShoppingBag } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { storeService } from "@/services/storeService"
 
 interface Store {
@@ -97,18 +98,56 @@ export default function StoreLayout({
 
             {/* Right side icons */}
             <div className="flex items-center space-x-4">
-              <button className="p-2 hover:bg-gray-100 rounded-full">
-                <Search className="h-5 w-5 text-gray-600" />
-              </button>
-              <Link href={`/store/${params?.storeId || ''}`} className="p-2 hover:bg-gray-100 rounded-full relative">
+              <Link href={`/store/${params?.storeId || ''}/cart`} className="p-2 hover:bg-gray-100 rounded-full relative">
                 <ShoppingBag className="h-5 w-5 text-gray-600" />
                 <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
                   {JSON.parse(localStorage.getItem('cart') || '[]').length}
                 </span>
               </Link>
-              <button className="md:hidden p-2 hover:bg-gray-100 rounded-full">
-                <Menu className="h-5 w-5 text-gray-600" />
-              </button>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <button className="md:hidden p-2 hover:bg-gray-100 rounded-full">
+                    <Menu className="h-5 w-5 text-gray-600" />
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[300px]">
+                  <SheetHeader>
+                    <SheetTitle>{store.name}</SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-6 space-y-4">
+                    <Link 
+                      href={`/store/${params?.storeId || ''}`} 
+                      className="block py-2 text-lg font-medium text-gray-900 hover:text-red-800"
+                    >
+                      Home
+                    </Link>
+                    <Link 
+                      href={`/store/${params?.storeId || ''}/collections/all`} 
+                      className="block py-2 text-lg font-medium text-gray-900 hover:text-red-800"
+                    >
+                      Products
+                    </Link>
+                    <Link 
+                      href={`/store/${params?.storeId || ''}/collections/new`} 
+                      className="block py-2 text-lg font-medium text-gray-900 hover:text-red-800"
+                    >
+                      New Arrivals
+                    </Link>
+                    <Link 
+                      href={`/store/${params?.storeId || ''}/collections/sale`} 
+                      className="block py-2 text-lg font-medium text-gray-900 hover:text-red-800"
+                    >
+                      Sale
+                    </Link>
+                    <Link 
+                      href={`/store/${params?.storeId || ''}/cart`} 
+                      className="block py-2 text-lg font-medium text-gray-900 hover:text-red-800"
+                    >
+                      Cart
+                    </Link>
+                  </div>
+                </SheetContent>
+              </Sheet>
             </div>
           </div>
         </div>

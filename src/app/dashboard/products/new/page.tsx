@@ -156,19 +156,19 @@ export default function NewProductPage() {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="border-b bg-white">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-4">
+        <div className="container flex flex-col gap-4 md:flex-row h-auto md:h-16 items-start md:items-center justify-between px-2 sm:px-4 md:px-4 py-4 md:py-0">
+          <div className="flex items-center gap-3 md:gap-4 w-full">
             <Link href="/dashboard/products" className="text-gray-600 hover:text-gray-900">
               <ArrowLeft className="h-5 w-5" />
             </Link>
-            <h1 className="text-xl font-semibold">Add product</h1>
+            <h1 className="text-lg md:text-xl font-semibold">Add product</h1>
           </div>
-          <div className="flex items-center gap-4">
-            <Button variant="outline" onClick={() => setFormData(prev => ({ ...prev, status: "DRAFT" }))}>
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-4 w-full md:w-auto">
+            <Button variant="outline" className="w-full md:w-auto" onClick={() => setFormData(prev => ({ ...prev, status: "DRAFT" }))}>
               Save as draft
             </Button>
             <Button 
-              className="bg-red-800 hover:bg-red-700"
+              className="bg-red-800 hover:bg-red-700 w-full md:w-auto"
               onClick={(e) => {
                 setFormData(prev => ({ ...prev, status: "ACTIVE" }))
                 handleSubmit(e)
@@ -180,14 +180,14 @@ export default function NewProductPage() {
         </div>
       </header>
 
-      <main className="container py-8">
-        <form onSubmit={handleSubmit} className="grid gap-8 lg:grid-cols-3">
+      <main className="container py-4 sm:py-8 px-2 sm:px-4">
+        <form onSubmit={handleSubmit} className="grid gap-6 md:gap-8 lg:grid-cols-3">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-6 md:space-y-8">
             {/* Basic Information */}
             <Card>
               <CardHeader>
-                <CardTitle>Basic information</CardTitle>
+                <CardTitle className="text-base md:text-lg">Basic information</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
@@ -198,6 +198,7 @@ export default function NewProductPage() {
                     value={formData.title}
                     onChange={handleInputChange}
                     placeholder="Enter product title" 
+                    className="text-sm"
                   />
                 </div>
                 <div className="space-y-2">
@@ -208,7 +209,7 @@ export default function NewProductPage() {
                     value={formData.description}
                     onChange={handleInputChange}
                     placeholder="Enter product description" 
-                    className="min-h-[150px]" 
+                    className="min-h-[100px] md:min-h-[150px] text-sm"
                   />
                 </div>
               </CardContent>
@@ -217,16 +218,16 @@ export default function NewProductPage() {
             {/* Pricing */}
             <Card>
               <CardHeader>
-                <CardTitle>Pricing</CardTitle>
+                <CardTitle className="text-base md:text-lg">Pricing</CardTitle>
               </CardHeader>
               <CardContent>
                 <Tabs defaultValue="simple">
-                  <TabsList className="mb-6">
+                  <TabsList className="mb-4 md:mb-6">
                     <TabsTrigger value="simple">Simple pricing</TabsTrigger>
                     <TabsTrigger value="variants">Variants</TabsTrigger>
                   </TabsList>
-                  <TabsContent value="simple" className="space-y-6">
-                    <div className="grid gap-6 md:grid-cols-2">
+                  <TabsContent value="simple" className="space-y-4 md:space-y-6">
+                    <div className="grid gap-4 md:gap-6 md:grid-cols-2">
                       <div className="space-y-2">
                         <Label htmlFor="price">Price</Label>
                         <Input 
@@ -236,6 +237,7 @@ export default function NewProductPage() {
                           value={formData.price}
                           onChange={handleInputChange}
                           placeholder="0.00" 
+                          className="text-sm"
                         />
                       </div>
                       <div className="space-y-2">
@@ -247,15 +249,16 @@ export default function NewProductPage() {
                           value={formData.comparedPrice}
                           onChange={handleInputChange}
                           placeholder="0.00" 
+                          className="text-sm"
                         />
                       </div>
                     </div>
                   </TabsContent>
-                  <TabsContent value="variants" className="space-y-6">
+                  <TabsContent value="variants" className="space-y-4 md:space-y-6">
                     <div className="space-y-4">
                       {variants.map((variant, index) => (
                         <div key={variant.id} className="grid gap-4 p-4 border rounded-lg">
-                          <div className="flex justify-between items-center">
+                          <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
                             <h3 className="font-medium">Variant {index + 1}</h3>
                             <Button 
                               type="button"
@@ -274,6 +277,7 @@ export default function NewProductPage() {
                                 value={variant.title}
                                 onChange={(e) => handleVariantChange(index, "title", e.target.value)}
                                 placeholder="e.g., Size, Color" 
+                                className="text-sm"
                               />
                             </div>
                             <div className="space-y-2">
@@ -283,6 +287,7 @@ export default function NewProductPage() {
                                 value={variant.price}
                                 onChange={(e) => handleVariantChange(index, "price", e.target.value)}
                                 placeholder="0.00" 
+                                className="text-sm"
                               />
                             </div>
                             <div className="space-y-2">
@@ -291,6 +296,7 @@ export default function NewProductPage() {
                                 value={variant.sku}
                                 onChange={(e) => handleVariantChange(index, "sku", e.target.value)}
                                 placeholder="Enter SKU" 
+                                className="text-sm"
                               />
                             </div>
                             <div className="space-y-2">
@@ -300,6 +306,7 @@ export default function NewProductPage() {
                                 value={variant.stock}
                                 onChange={(e) => handleVariantChange(index, "stock", e.target.value)}
                                 placeholder="Enter stock quantity" 
+                                className="text-sm"
                               />
                             </div>
                           </div>
@@ -323,7 +330,7 @@ export default function NewProductPage() {
             {/* Inventory */}
             <Card>
               <CardHeader>
-                <CardTitle>Inventory</CardTitle>
+                <CardTitle className="text-base md:text-lg">Inventory</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
@@ -334,6 +341,7 @@ export default function NewProductPage() {
                     value={formData.skuCode}
                     onChange={handleInputChange}
                     placeholder="Enter SKU" 
+                    className="text-sm"
                   />
                 </div>
                 <div className="space-y-2">
@@ -344,6 +352,7 @@ export default function NewProductPage() {
                     value={formData.barcode}
                     onChange={handleInputChange}
                     placeholder="Enter barcode" 
+                    className="text-sm"
                   />
                 </div>
                 <div className="space-y-2">
@@ -355,6 +364,7 @@ export default function NewProductPage() {
                     value={formData.stockQuantity}
                     onChange={handleInputChange}
                     placeholder="0" 
+                    className="text-sm"
                   />
                 </div>
               </CardContent>
@@ -362,11 +372,11 @@ export default function NewProductPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-8">
+          <div className="space-y-6 md:space-y-8">
             {/* Status */}
             <Card>
               <CardHeader>
-                <CardTitle>Status</CardTitle>
+                <CardTitle className="text-base md:text-lg">Status</CardTitle>
               </CardHeader>
               <CardContent>
                 <Select 
@@ -388,11 +398,11 @@ export default function NewProductPage() {
             {/* Product Images */}
             <Card>
               <CardHeader>
-                <CardTitle>Product images</CardTitle>
+                <CardTitle className="text-base md:text-lg">Product images</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-4">
                     {images.map((image, index) => (
                       <div key={index} className="relative aspect-square">
                         <Image
@@ -421,7 +431,7 @@ export default function NewProductPage() {
                         />
                         <div className="text-center">
                           <ImageIcon className="h-8 w-8 mx-auto text-gray-400" />
-                          <span className="mt-2 text-sm text-gray-600">Add images</span>
+                          <span className="mt-2 text-xs md:text-sm text-gray-600">Add images</span>
                         </div>
                       </label>
                     )}
@@ -433,7 +443,7 @@ export default function NewProductPage() {
             {/* Organization */}
             <Card>
               <CardHeader>
-                <CardTitle>Organization</CardTitle>
+                <CardTitle className="text-base md:text-lg">Organization</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
@@ -444,6 +454,7 @@ export default function NewProductPage() {
                     value={formData.productType}
                     onChange={handleInputChange}
                     placeholder="e.g., Shirt, Mug" 
+                    className="text-sm"
                   />
                 </div>
                 <div className="space-y-2">
@@ -454,6 +465,7 @@ export default function NewProductPage() {
                     value={formData.vendor}
                     onChange={handleInputChange}
                     placeholder="Enter vendor name" 
+                    className="text-sm"
                   />
                 </div>
                 <div className="space-y-2">
