@@ -95,8 +95,8 @@ export default function CreateStorePage() {
       toast.success('Store created successfully!')
       setStoreCreated(true)
       
-      // Redirect to store dashboard or next step
-      router.push(`/store/${createdStore.id}`)
+      // Redirect to store preview with the store ID in the URL
+      router.push(`/store/${createdStore.id}/preview`)
     } catch (error) {
       console.error('Store creation failed:', error)
       toast.error('Failed to create store. Please try again.')

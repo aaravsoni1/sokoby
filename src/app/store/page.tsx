@@ -1,3 +1,5 @@
+"use client"
+
 import { Grid3X3, Heart, LayoutGrid, Menu, ShoppingBag, SlidersHorizontal, Star, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"

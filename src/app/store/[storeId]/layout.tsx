@@ -38,7 +38,13 @@ export default function StoreLayout({
   useEffect(() => {
     const fetchStore = async () => {
       try {
-        const storeData = await storeService.getStore(params?.storeId as string)
+        // Get store ID from URL parameters
+        const storeId = params?.storeId as string
+        if (!storeId) {
+          throw new Error('Store ID not found in URL')
+        }
+        
+        const storeData = await storeService.getStore(storeId)
         setStore(storeData)
       } catch (error) {
         console.error("Error fetching store:", error)
