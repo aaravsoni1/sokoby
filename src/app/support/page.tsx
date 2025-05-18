@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, BookOpen, ChevronRight, FileText, HelpCircle, Mail, MessageSquare, Phone, Search, Users, Video } from 'lucide-react'
+import { ArrowRight, BookOpen, ChevronRight, Facebook, FileText, HelpCircle, Instagram, Linkedin, Mail, MessageSquare, Phone, Search, Twitter, Users, Video, Youtube } from 'lucide-react'
 import Image from "next/image"
 import Link from "next/link"
 
@@ -394,13 +394,27 @@ export default function SupportPage() {
                 The complete e-commerce platform that helps you sell online, on social media, or in person.
               </p>
               <div className="flex space-x-4">
-                {["twitter", "facebook", "instagram", "linkedin"].map((social) => (
-                  <Link key={social} href={`#${social}`} className="text-gray-400 hover:text-white">
-                    <span className="sr-only">{social}</span>
+                {[
+                  { name: 'facebook', icon: Facebook, url: 'https://www.facebook.com/sokobyonline/' },
+                  { name: 'linkedin', icon: Linkedin, url: 'https://www.linkedin.com/company/sokoby/' },
+                  { name: 'instagram', icon: Instagram, url: 'https://www.instagram.com/sokobyonline/' },
+                  { name: 'tiktok', icon: Mail, url: 'https://www.tiktok.com/@sokobyonline/' },
+                  { name: 'twitter', icon: Twitter, url: 'https://x.com/sokobyonline/' },
+                  { name: 'pinterest', icon: Mail, url: 'https://ca.pinterest.com/sokobyonline/' },
+                  { name: 'youtube', icon: Youtube, url: 'https://www.youtube.com/@Sokoby/' }
+                ].map((social) => (
+                  <a 
+                    key={social.name} 
+                    href={social.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-gray-400 hover:text-white"
+                  >
+                    <span className="sr-only">{social.name}</span>
                     <div className="h-6 w-6 rounded-full bg-gray-700 flex items-center justify-center">
-                      <ChevronRight className="h-4 w-4" />
+                      <social.icon className="h-4 w-4" />
                     </div>
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>
@@ -457,26 +471,18 @@ export default function SupportPage() {
             <div>
               <h3 className="mb-4 text-lg font-semibold">Company</h3>
               <ul className="space-y-2">
-                <li>
-                  <Link href="/about" className="text-gray-400 hover:text-white">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/careers" className="text-gray-400 hover:text-white">
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/press" className="text-gray-400 hover:text-white">
-                    Press
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="text-gray-400 hover:text-white">
-                    Contact
-                  </Link>
-                </li>
+                {[
+                  { name: "About", href: "/about" },
+                  { name: "Careers", href: "#" },
+                  { name: "Press", href: "#" },
+                  { name: "Contact", href: "/contact" }
+                ].map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="text-gray-400 hover:text-white">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { BarChart3, ChevronRight, CreditCard, Headphones, Mail, Shield, ShoppingBag, Truck } from "lucide-react"
+import { BarChart3, ChevronRight, CreditCard, Facebook, Headphones, Instagram, Linkedin, Mail, Shield, ShoppingBag, Truck, Twitter, Youtube } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -644,13 +644,27 @@ export default function Home() {
                 The complete e-commerce platform that helps you sell online, on social media, or in person.
               </p>
               <div className="flex space-x-4">
-                {["twitter", "facebook", "instagram", "linkedin"].map((social) => (
-                  <Link key={social} href={`#${social}`} className="text-gray-400 hover:text-white">
-                    <span className="sr-only">{social}</span>
+                {[
+                  { name: 'facebook', icon: Facebook, url: 'https://www.facebook.com/sokobyonline/' },
+                  { name: 'linkedin', icon: Linkedin, url: 'https://www.linkedin.com/company/sokoby/' },
+                  { name: 'instagram', icon: Instagram, url: 'https://www.instagram.com/sokobyonline/' },
+                  { name: 'tiktok', icon: Mail, url: 'https://www.tiktok.com/@sokobyonline/' },
+                  { name: 'twitter', icon: Twitter, url: 'https://x.com/sokobyonline/' },
+                  { name: 'pinterest', icon: Mail, url: 'https://ca.pinterest.com/sokobyonline/' },
+                  { name: 'youtube', icon: Youtube, url: 'https://www.youtube.com/@Sokoby/' }
+                ].map((social) => (
+                  <a 
+                    key={social.name} 
+                    href={social.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-gray-400 hover:text-white"
+                  >
+                    <span className="sr-only">{social.name}</span>
                     <div className="h-6 w-6 rounded-full bg-gray-700 flex items-center justify-center">
-                      <Mail className="h-4 w-4" />
+                      <social.icon className="h-4 w-4" />
                     </div>
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>
@@ -681,10 +695,15 @@ export default function Home() {
             <div>
               <h3 className="mb-4 text-lg font-semibold">Company</h3>
               <ul className="space-y-2">
-                {["About", "Careers", "Press", "Contact"].map((item) => (
-                  <li key={item}>
-                    <Link href="#" className="text-gray-400 hover:text-white">
-                      {item}
+                {[
+                  { name: "About", href: "/about" },
+                  { name: "Careers", href: "#" },
+                  { name: "Press", href: "#" },
+                  { name: "Contact", href: "/contact" }
+                ].map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="text-gray-400 hover:text-white">
+                      {item.name}
                     </Link>
                   </li>
                 ))}

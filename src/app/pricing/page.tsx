@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, Check, ChevronDown, HelpCircle, X } from "lucide-react"
+import { ArrowRight, Check, ChevronDown, Facebook, HelpCircle, Instagram, Linkedin, Mail, Twitter, X, Youtube } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -664,58 +664,69 @@ export default function PricingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 py-12 text-white">
+       {/* Footer */}
+       <footer className="bg-gray-900 py-12 text-white">
         <div className="container mx-auto px-4">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
             <div className="lg:col-span-2">
               <Link href="/" className="mb-4 inline-block">
-                <Image src="/sokobylogo.png" alt="Sokoby" width={150} height={50} className="h-11 w-auto" />
+              <Image
+              src="/sokobylogo.png" 
+              alt="Sokoby"
+              width={150} 
+              height={50} 
+              className="h-11 w-auto"
+            />
               </Link>
               <p className="mb-4 max-w-md text-gray-400">
                 The complete e-commerce platform that helps you sell online, on social media, or in person.
               </p>
+              <div className="flex space-x-4">
+                {[
+                  { name: 'facebook', icon: Facebook, url: 'https://www.facebook.com/sokobyonline/' },
+                  { name: 'linkedin', icon: Linkedin, url: 'https://www.linkedin.com/company/sokoby/' },
+                  { name: 'instagram', icon: Instagram, url: 'https://www.instagram.com/sokobyonline/' },
+                  { name: 'tiktok', icon: Mail, url: 'https://www.tiktok.com/@sokobyonline/' },
+                  { name: 'twitter', icon: Twitter, url: 'https://x.com/sokobyonline/' },
+                  { name: 'pinterest', icon: Mail, url: 'https://ca.pinterest.com/sokobyonline/' },
+                  { name: 'youtube', icon: Youtube, url: 'https://www.youtube.com/@Sokoby/' }
+                ].map((social) => (
+                  <a 
+                    key={social.name} 
+                    href={social.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-gray-400 hover:text-white"
+                  >
+                    <span className="sr-only">{social.name}</span>
+                    <div className="h-6 w-6 rounded-full bg-gray-700 flex items-center justify-center">
+                      <social.icon className="h-4 w-4" />
+                    </div>
+                  </a>
+                ))}
+              </div>
             </div>
             <div>
-              <h3 className="mb-4 text-lg font-semibold">Company</h3>
+              <h3 className="mb-4 text-lg font-semibold">Features</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="/about" className="text-gray-400 hover:text-white">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/careers" className="text-gray-400 hover:text-white">
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/press" className="text-gray-400 hover:text-white">
-                    Press
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="text-gray-400 hover:text-white">
-                    Contact
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="mb-4 text-lg font-semibold">Products</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link href="/features/online-store" className="text-gray-400 hover:text-white">
                     Online Store
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link href="/features/point-of-sale" className="text-gray-400 hover:text-white">
                     Point of Sale
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
-                    Buy Button
+                  <Link href="/features/marketing" className="text-gray-400 hover:text-white">
+                    Marketing
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/features/international" className="text-gray-400 hover:text-white">
+                    International
                   </Link>
                 </li>
               </ul>
@@ -724,20 +735,42 @@ export default function PricingPage() {
               <h3 className="mb-4 text-lg font-semibold">Resources</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link href="/blog" className="text-gray-400 hover:text-white">
                     Blog
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link href="/guides" className="text-gray-400 hover:text-white">
                     Guides
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link href="/help-center" className="text-gray-400 hover:text-white">
                     Help Center
                   </Link>
                 </li>
+                <li>
+                  <Link href="/api-docs" className="text-gray-400 hover:text-white">
+                    API Documentation
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="mb-4 text-lg font-semibold">Company</h3>
+              <ul className="space-y-2">
+                {[
+                  { name: "About", href: "/about" },
+                  { name: "Careers", href: "#" },
+                  { name: "Press", href: "#" },
+                  { name: "Contact", href: "/contact" }
+                ].map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="text-gray-400 hover:text-white">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -745,13 +778,13 @@ export default function PricingPage() {
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
               <p className="text-sm text-gray-400">© {new Date().getFullYear()} Sokoby. All rights reserved.</p>
               <div className="flex space-x-6">
-                <Link href="#" className="text-sm text-gray-400 hover:text-white">
+                <Link href="/privacy" className="text-sm text-gray-400 hover:text-white">
                   Privacy Policy
                 </Link>
-                <Link href="#" className="text-sm text-gray-400 hover:text-white">
+                <Link href="/terms" className="text-sm text-gray-400 hover:text-white">
                   Terms of Service
                 </Link>
-                <Link href="#" className="text-sm text-gray-400 hover:text-white">
+                <Link href="/cookies" className="text-sm text-gray-400 hover:text-white">
                   Cookies
                 </Link>
               </div>

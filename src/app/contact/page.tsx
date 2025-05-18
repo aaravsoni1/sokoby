@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, Clock, Mail, MapPin, MessageSquare, Phone, Send } from 'lucide-react'
+import { ArrowRight, Clock, Facebook, Instagram, Linkedin, Mail, MapPin,  Phone, Send, Twitter, Youtube } from 'lucide-react'
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
@@ -12,7 +12,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Textarea } from "@/components/ui/textarea"
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Header } from "@/components/Header"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent } from "@/components/ui/tabs"
 
 export default function ContactPage() {
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -50,7 +50,7 @@ export default function ContactPage() {
               </div>
               <h3 className="mb-2 text-lg font-semibold text-gray-900">Call Us</h3>
               <p className="mb-4 text-gray-600">Speak directly with our support team</p>
-              <p className="text-lg font-medium text-red-800">+1 (800) 123-4567</p>
+              <p className="text-lg font-medium text-red-800">+1-514-512-7993</p>
               <p className="mt-2 text-sm text-gray-500">Monday-Friday, 9am-5pm EST</p>
             </div>
             
@@ -60,11 +60,11 @@ export default function ContactPage() {
               </div>
               <h3 className="mb-2 text-lg font-semibold text-gray-900">Email Us</h3>
               <p className="mb-4 text-gray-600">Get a response within 24 hours</p>
-              <p className="text-lg font-medium text-red-800">support@sokoby.com</p>
+              <p className="text-lg font-medium text-red-800">sokoby@gmail.com</p>
               <p className="mt-2 text-sm text-gray-500">For general inquiries and support</p>
             </div>
             
-            <div className="rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm">
+            {/* <div className="rounded-lg border border-gray-200 bg-white p-6 text-center shadow-sm">
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
                 <MessageSquare className="h-6 w-6 text-red-800" />
               </div>
@@ -75,7 +75,7 @@ export default function ContactPage() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <p className="mt-2 text-sm text-gray-500">Available 24/7 for urgent issues</p>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -177,15 +177,10 @@ export default function ContactPage() {
             
             {/* Office Locations */}
             <div>
-              <h2 className="mb-6 text-2xl font-bold text-gray-900">Our Offices</h2>
+              <h2 className="mb-6 text-2xl font-bold text-gray-900">Our Office</h2>
               
               <Tabs defaultValue="headquarters">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="headquarters">Headquarters</TabsTrigger>
-                  <TabsTrigger value="europe">Europe</TabsTrigger>
-                  <TabsTrigger value="asia">Asia-Pacific</TabsTrigger>
-                </TabsList>
-                
+              
                 <TabsContent value="headquarters" className="mt-6">
                   <div className="rounded-lg overflow-hidden">
                     <div className="relative h-64 w-full">
@@ -197,20 +192,21 @@ export default function ContactPage() {
                       />
                     </div>
                     <div className="bg-white p-6 border border-gray-200">
-                      <h3 className="text-lg font-semibold text-gray-900">New York Headquarters</h3>
+                      <h3 className="text-lg font-semibold text-gray-900">Canada Headquarter</h3>
                       <div className="mt-4 space-y-3">
                         <div className="flex items-start">
                           <MapPin className="mr-3 h-5 w-5 text-red-800 flex-shrink-0" />
                           <div>
-                            <p className="text-gray-900">123 Commerce Street</p>
-                            <p className="text-gray-600">New York, NY 10001</p>
-                            <p className="text-gray-600">United States</p>
+                            <p className="text-gray-900">
+                            7188 Saint-Hubert Street</p>
+                            <p className="text-gray-600">Montreal, H2R2N1</p>
+                            <p className="text-gray-600">Quebec, Canada</p>
                           </div>
                         </div>
                         <div className="flex items-start">
                           <Phone className="mr-3 h-5 w-5 text-red-800 flex-shrink-0" />
                           <div>
-                            <p className="text-gray-900">+1 (800) 123-4567</p>
+                            <p className="text-gray-900">+1-514-512-7993</p>
                           </div>
                         </div>
                         <div className="flex items-start">
@@ -361,7 +357,8 @@ export default function ContactPage() {
       </section>
 
       {/* Footer - Reused from homepage */}
-      <footer className="bg-gray-900 py-12 text-white">
+     {/* Footer */}
+     <footer className="bg-gray-900 py-12 text-white">
         <div className="container mx-auto px-4">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
             <div className="lg:col-span-2">
@@ -377,48 +374,52 @@ export default function ContactPage() {
               <p className="mb-4 max-w-md text-gray-400">
                 The complete e-commerce platform that helps you sell online, on social media, or in person.
               </p>
+              <div className="flex space-x-4">
+                {[
+                  { name: 'facebook', icon: Facebook, url: 'https://www.facebook.com/sokobyonline/' },
+                  { name: 'linkedin', icon: Linkedin, url: 'https://www.linkedin.com/company/sokoby/' },
+                  { name: 'instagram', icon: Instagram, url: 'https://www.instagram.com/sokobyonline/' },
+                  { name: 'tiktok', icon: Mail, url: 'https://www.tiktok.com/@sokobyonline/' },
+                  { name: 'twitter', icon: Twitter, url: 'https://x.com/sokobyonline/' },
+                  { name: 'pinterest', icon: Mail, url: 'https://ca.pinterest.com/sokobyonline/' },
+                  { name: 'youtube', icon: Youtube, url: 'https://www.youtube.com/@Sokoby/' }
+                ].map((social) => (
+                  <a 
+                    key={social.name} 
+                    href={social.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-gray-400 hover:text-white"
+                  >
+                    <span className="sr-only">{social.name}</span>
+                    <div className="h-6 w-6 rounded-full bg-gray-700 flex items-center justify-center">
+                      <social.icon className="h-4 w-4" />
+                    </div>
+                  </a>
+                ))}
+              </div>
             </div>
             <div>
-              <h3 className="mb-4 text-lg font-semibold">Company</h3>
+              <h3 className="mb-4 text-lg font-semibold">Features</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="/about" className="text-gray-400 hover:text-white">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/careers" className="text-gray-400 hover:text-white">
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/press" className="text-gray-400 hover:text-white">
-                    Press
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="text-gray-400 hover:text-white">
-                    Contact
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="mb-4 text-lg font-semibold">Products</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link href="/features/online-store" className="text-gray-400 hover:text-white">
                     Online Store
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link href="/features/point-of-sale" className="text-gray-400 hover:text-white">
                     Point of Sale
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
-                    Buy Button
+                  <Link href="/features/marketing" className="text-gray-400 hover:text-white">
+                    Marketing
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/features/international" className="text-gray-400 hover:text-white">
+                    International
                   </Link>
                 </li>
               </ul>
@@ -427,25 +428,60 @@ export default function ContactPage() {
               <h3 className="mb-4 text-lg font-semibold">Resources</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link href="/blog" className="text-gray-400 hover:text-white">
                     Blog
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link href="/guides" className="text-gray-400 hover:text-white">
                     Guides
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-400 hover:text-white">
+                  <Link href="/help-center" className="text-gray-400 hover:text-white">
                     Help Center
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/api-docs" className="text-gray-400 hover:text-white">
+                    API Documentation
                   </Link>
                 </li>
               </ul>
             </div>
+            <div>
+              <h3 className="mb-4 text-lg font-semibold">Company</h3>
+              <ul className="space-y-2">
+                {[
+                  { name: "About", href: "/about" },
+                  { name: "Careers", href: "#" },
+                  { name: "Press", href: "#" },
+                  { name: "Contact", href: "/contact" }
+                ].map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="text-gray-400 hover:text-white">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="mt-12 border-t border-gray-800 pt-8 text-center">
-            <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} Sokoby. All rights reserved.</p>
+          <div className="mt-12 border-t border-gray-800 pt-8">
+            <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+              <p className="text-sm text-gray-400">© {new Date().getFullYear()} Sokoby. All rights reserved.</p>
+              <div className="flex space-x-6">
+                <Link href="/privacy" className="text-sm text-gray-400 hover:text-white">
+                  Privacy Policy
+                </Link>
+                <Link href="/terms" className="text-sm text-gray-400 hover:text-white">
+                  Terms of Service
+                </Link>
+                <Link href="/cookies" className="text-sm text-gray-400 hover:text-white">
+                  Cookies
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
